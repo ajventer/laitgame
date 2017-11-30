@@ -1,4 +1,4 @@
-#Lilly's Adventures in Toyland.
+# Lilly's Adventures in Toyland.
 
 Watching my 3 and a half year old daughter taking her first steps in gaming, I've been observing what she struggles with.
 I feel there is a real gap for games that are playable by children not yet old enough to read, but beyond the simple activities
@@ -13,7 +13,7 @@ I want to use stop-motion sprites created from her own toys. This could be time-
 the toys in various pozes (to the extent they are posable) in front of a solid green background that's easy to edit out. You don't need highly 
 complicated animations after all. A simple two or three frame animation in each direction suffices for "walking". 
 
-Core design ideas:
+ ## Core design ideas:
 - I think a semi-side-scrolling platformer like the original Super Mario Bros is the easiest to learn - but Mario (and games like SuperTux) 
   are still too complex, some things need to be reduced to fit a 3-year old's abilities.
 - No jumping. Nothing time-based. The game should be slow, and not require fully developed spatial reasoning to play. It shouldn't rely on
