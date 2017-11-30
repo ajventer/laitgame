@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+import pygame
+from pygame.locals import *
+import liblait.pyganim
+from liblait import scalehandler
+
+
+if __name__ == '__main__':
+	#TODO
+	pygame.quit()
