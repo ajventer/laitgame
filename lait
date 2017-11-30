@@ -2,9 +2,19 @@
 import pygame
 from pygame.locals import *
 import liblait.pyganim
-from liblait import scalehandler
+from liblait import scalehandler, settings
+import yaml
+import os
 
 
 if __name__ == '__main__':
-	#TODO
+	GAMEDIR=os.path.dirname(os.path.realpath(__file__))
+	settings = Settings.SETTINGS(GAMEDIR)
+	pygame.display.init()
+	flags = 0
+	if settings.fullscreen:
+		flags = pygame.FULLSCREEN|pygame.HWSURFACE
+	elif settings.borderless:
+		flags = pygame.NOFRAME|pygame.RESIZABLE
+	screen = display.set_mode(resolution(settings.res_x,settings.res_y),flags=flags)
 	pygame.quit()
