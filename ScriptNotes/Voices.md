@@ -1,4 +1,4 @@
-#Audio Phrases to record
+# Audio Phrases to record
 ## Level 1 - Tutorial
 - Start a new game
 - Continue playing
