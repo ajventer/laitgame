@@ -15,4 +15,4 @@
 - We've finished this area ! Yay ! There's a door to the next area. Lets see what other adventures await
 
 ## Level 2
-*When level one is playable and we start designing more, we'll figure out what level is needs
+*When level one is playable and we start designing more, we'll figure out what level is needs*
