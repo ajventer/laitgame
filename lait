@@ -19,7 +19,7 @@ if __name__ == '__main__':
     else:
         flags = pygame.RESIZABLE
     screen = pygame.display.set_mode((settings.res_x,settings.res_y),flags)
-    m = mainmenu.mainMenu(screen,settings)
+    m = mainmenu.mainMenu(screen,settings,flags)
     nextaction = m.run()
     if nextaction == 'quit':
         pygame.quit()

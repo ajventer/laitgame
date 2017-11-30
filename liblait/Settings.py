@@ -3,19 +3,12 @@ import os
 import yaml
 
 class SETTINGS(object):
-    datadir = ''
-    gamedir = ''
-    settingsdict = {}
-    settingsfile = ''
-    fullscreen = False
-    borderless = False
-    res_x = 0
-    res_y = 0
     def __init__(self, gamedir):
         self.gamedir = gamedir
         self.datadir = os.path.join(self.gamedir,'data')
         self.voicedir = os.path.join(os.path.join(self.datadir,'Sound'),'Voice')
         self.settingsfile = os.path.join(self.gamedir,'settings.yml')
+        self.buttonsdir = os.path.join(self.datadir,'Buttons')
         print self.settingsfile
         self.reload_settings()
 
