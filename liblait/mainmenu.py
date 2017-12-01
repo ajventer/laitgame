@@ -112,5 +112,8 @@ class mainMenu(object):
                     self.load()
             self.drawmenu()
             fpsclock.tick(FPS)
-            pygame.display.flip()
+            if self.settings.fullscreen:
+                pygame.display.flip()
+            else:
+                pygame.display.update()
      

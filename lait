@@ -11,6 +11,7 @@ if __name__ == '__main__':
     GAMEDIR=os.path.dirname(os.path.realpath(__file__))
     settings = Settings.SETTINGS(GAMEDIR)
     pygame.display.init()
+    pygame.display.set_caption("Lilly's Adventures in Toyland")
     pygame.mixer.init()
     flags = 0
     if settings.fullscreen:
