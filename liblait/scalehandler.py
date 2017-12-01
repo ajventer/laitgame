@@ -1,6 +1,6 @@
 #Provides simple functions for automatically scaling the game up and down to support multiple resolutions seamlessly.
 from pygame.locals import *
-from pygame import transform
+from pygame import transform, image
 
 
 class ScaleHandler(object):
@@ -30,6 +30,9 @@ class ScaleHandler(object):
         new_w = size[0] * self.MULTW
         new_h = size[1] * self.MULTH
         return (new_w,new_h)
+
+    def imgload(self,path):
+        return self.scale(image.load(path))
 
 
 

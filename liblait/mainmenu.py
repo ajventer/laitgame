@@ -15,7 +15,6 @@ class mainMenu(object):
         self.settings = settings
         self.flags = flags
         self.activeButton = 0
-        self.options = []
         self.BASEW = 960 #Centerpoint on a 1080 screen
 
     def __continue(self):
@@ -32,24 +31,24 @@ class mainMenu(object):
 
 
     def load(self):
-        self.logo = pygame.image.load(os.path.join(self.settings.buttonsdir,'logo.png'))
+        self.options = []
         self.sh = ScaleHandler(self.screen)
-        self.logo = self.sh.scale(self.logo)
+        self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
         if os.path.exists(os.path.join(self.settings.gamedir,'savegame.yml')):
-            s = pygame.image.load(os.path.join(self.settings.buttonsdir,'cont.png'))
-            h = pygame.image.load(os.path.join(self.settings.buttonsdir,'cont_hi.png'))
+            s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont.png'))
+            h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont_hi.png'))
             o = Option(s,h,self.__continue)
             self.options.append(o)
-        s = pygame.image.load(os.path.join(self.settings.buttonsdir,'newgame.png'))
-        h = pygame.image.load(os.path.join(self.settings.buttonsdir,'newgame_hi.png'))
+        s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame.png'))
+        h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame_hi.png'))
         o = Option(s,h,self.__newgame)
         self.options.append(o)
-        s = pygame.image.load(os.path.join(self.settings.buttonsdir,'settings.png'))
-        h = pygame.image.load(os.path.join(self.settings.buttonsdir,'settings_hi.png'))
+        s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'settings.png'))
+        h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'settings_hi.png'))
         o = Option(s,h,self.__settings)
         self.options.append(o)        
-        s = pygame.image.load(os.path.join(self.settings.buttonsdir,'quit.png'))
-        h = pygame.image.load(os.path.join(self.settings.buttonsdir,'quit_hi.png'))
+        s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'quit.png'))
+        h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'quit_hi.png'))
         o = Option(s,h,self.__quit)
         self.options.append(o) 
 
