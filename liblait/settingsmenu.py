@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 from scalehandler import ScaleHandler
-from inputhandler import InputHandler
 import os
 
 class Option(object):
@@ -10,7 +9,7 @@ class Option(object):
         self.surface_hi=surface_hi
         self.activate=activate
 
-class mainMenu(object):
+class settingsMenu(object):
     def __init__(self, screen, settings, flags):
         self.screen = screen
         self.settings = settings
@@ -34,29 +33,10 @@ class mainMenu(object):
 
 
     def load(self):
-        self.options = []
+        self.downsnd = pygame.mixer.Sound(os.path.join(self.settings.guifxdir,'misc_menu.wav'))
         self.sh = ScaleHandler(self.screen)
         self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
         self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
-        if os.path.exists(os.path.join(self.settings.gamedir,'savegame.yml')):
-            s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont.png'))
-            h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont_hi.png'))
-            o = Option(s,h,self.__continue)
-            self.options.append(o)
-        s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame.png'))
-        h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame_hi.png'))
-        o = Option(s,h,self.__newgame)
-        self.options.append(o)
-        s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'settings.png'))
-        h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'settings_hi.png'))
-        o = Option(s,h,self.__settings)
-        self.options.append(o)        
-        s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'quit.png'))
-        h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'quit_hi.png'))
-        o = Option(s,h,self.__quit)
-        self.options.append(o) 
-
-        self.downsnd = pygame.mixer.Sound(os.path.join(self.settings.guifxdir,'misc_menu.wav'))
 
     def drawmenu(self):
         self.screen.fill((0,255,0))
@@ -65,14 +45,7 @@ class mainMenu(object):
         logo_y=(400 * self.sh.MULTH) - self.logo.get_height()
         self.screen.blit(self.logo,(logo_x,logo_y))
         top_y=logo_y+self.logo.get_height()+(100*self.sh.MULTH)
-        for option in self.options:
-            me = self.options.index(option)
-            my_x = (self.BASEW * self.sh.MULTW) - (option.surface_hi.get_width() / 2)
-            my_y = (option.surface_hi.get_height() * me) + top_y 
-            if me == self.activeButton:
-                self.screen.blit(option.surface_hi,(my_x,my_y))
-            else:
-                self.screen.blit(option.surface,(my_x,my_y))
+
 
     def down(self):
         self.downsnd.play()
@@ -90,7 +63,6 @@ class mainMenu(object):
         FPS=30
         fpsclock = pygame.time.Clock()
         self.load()
-        inputhandler = InputHandler()
         while True:
             inputhandler.get_events()
             if inputhandler.quit:

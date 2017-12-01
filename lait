@@ -2,7 +2,7 @@
 import pygame
 from pygame.locals import *
 import liblait.pyganim
-from liblait import scalehandler, Settings, mainmenu
+from liblait import scalehandler, Settings, mainmenu, settingsmenu
 import yaml
 import os, sys
 
@@ -24,6 +24,7 @@ if __name__ == '__main__':
     nextaction = ''
     while nextaction != 'quit':
         nextaction = mainmenu.mainMenu(screen,settings,flags).run()
-        print nextaction
+        if nextaction == 'settings':
+            nextaction = settingsmenu.settingsMenu(screen, settings, flags).run()
     pygame.quit()
     sys.exit()
