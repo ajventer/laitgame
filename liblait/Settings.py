@@ -9,7 +9,6 @@ class SETTINGS(object):
         self.voicedir = os.path.join(os.path.join(self.datadir,'Sound'),'Voice')
         self.settingsfile = os.path.join(self.gamedir,'settings.yml')
         self.buttonsdir = os.path.join(self.datadir,'Buttons')
-        print self.settingsfile
         self.reload_settings()
 
     def reload_settings(self):

@@ -4,7 +4,7 @@ from pygame.locals import *
 import liblait.pyganim
 from liblait import scalehandler, Settings, mainmenu
 import yaml
-import os
+import os, sys
 
 
 if __name__ == '__main__':
@@ -19,7 +19,9 @@ if __name__ == '__main__':
     else:
         flags = pygame.RESIZABLE
     screen = pygame.display.set_mode((settings.res_x,settings.res_y),flags)
-    m = mainmenu.mainMenu(screen,settings,flags)
-    nextaction = m.run()
-    if nextaction == 'quit':
-        pygame.quit()
+    nextaction = ''
+    while nextaction != 'quit':
+        nextaction = mainmenu.mainMenu(screen,settings,flags).run()
+        print nextaction
+    pygame.quit()
+    sys.exit()
