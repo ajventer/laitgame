@@ -3,3 +3,4 @@ Fullscreen: false
 Resolution:
   h: 692
   w: 820
+Loglevel: DEBUG

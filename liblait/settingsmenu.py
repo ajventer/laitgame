@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from scalehandler import ScaleHandler
 import os
+import thorpy
 
 class Option(object):
     def __init__(self, surface, surface_hi,activate):
@@ -37,6 +38,12 @@ class settingsMenu(object):
         self.sh = ScaleHandler(self.screen)
         self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
         self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
+        self.fullscreen = thorpy.Checker.make("Fullscreen",func=self.__change_fullscreen)
+        self.fullscreen.checked = self.settings.fullscreen
+
+        self.box = thorpy.Box.make(self.fullscreen)
+        self.menu = thorpy.Menu(self.box)
+
 
     def drawmenu(self):
         self.screen.fill((0,255,0))
@@ -45,6 +52,13 @@ class settingsMenu(object):
         logo_y=(400 * self.sh.MULTH) - self.logo.get_height()
         self.screen.blit(self.logo,(logo_x,logo_y))
         top_y=logo_y+self.logo.get_height()+(100*self.sh.MULTH)
+        top_y=(self.BASEW * self.sh.MULTH) - (self.box.get_width() / 2)
+        box.set_topleft(top_y,top_x)
+        box.blit()
+        box.update()
+
+    def __change_fullscreen():
+        self.settings.logger.debug('Changing fullscreen from %s to %s' %(self.settings.fullscreen,not self.settings.fullscreen))
 
 
     def down(self):

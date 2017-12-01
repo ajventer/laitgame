@@ -22,7 +22,7 @@ class InputHandler(object):
             setattr(self, button, False)
             self.events[button] = None
 
-    def get_events(self):
+    def get_events(self, menu=None):
         self.__init__()
         for event in pygame.event.get():
             #TODO flag buttons on joystick events
@@ -38,4 +38,6 @@ class InputHandler(object):
             elif event.type == VIDEORESIZE:
                 self.resize = True
                 self.events['resize'] = event
+            if menu:
+                menu.react(event)
 
