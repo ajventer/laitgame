@@ -16,6 +16,8 @@ class mainMenu(object):
         self.flags = flags
         self.activeButton = 0
         self.BASEW = 960 #Centerpoint on a 1080 screen
+        pygame.mixer.music.load(os.path.join(self.settings.musicdir,'prologue.ogg'))
+        pygame.mixer.music.play(-1)
 
     def __continue(self):
         return "continue"
@@ -33,6 +35,7 @@ class mainMenu(object):
     def load(self):
         self.options = []
         self.sh = ScaleHandler(self.screen)
+        self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
         self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
         if os.path.exists(os.path.join(self.settings.gamedir,'savegame.yml')):
             s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont.png'))
@@ -52,12 +55,15 @@ class mainMenu(object):
         o = Option(s,h,self.__quit)
         self.options.append(o) 
 
+        self.downsnd = pygame.mixer.Sound(os.path.join(self.settings.guifxdir,'misc_menu.wav'))
+
     def drawmenu(self):
         self.screen.fill((0,255,0))
+        self.screen.blit(self.background,(0,0))
         logo_x=(self.BASEW * self.sh.MULTW) - (self.logo.get_width() / 2)
-        logo_y=(200 * self.sh.MULTH) - self.logo.get_height()
+        logo_y=(400 * self.sh.MULTH) - self.logo.get_height()
         self.screen.blit(self.logo,(logo_x,logo_y))
-        top_y=logo_y+self.logo.get_height()+(200*self.sh.MULTH)
+        top_y=logo_y+self.logo.get_height()+(100*self.sh.MULTH)
         for option in self.options:
             me = self.options.index(option)
             my_x = (self.BASEW * self.sh.MULTW) - (option.surface_hi.get_width() / 2)
@@ -68,11 +74,13 @@ class mainMenu(object):
                 self.screen.blit(option.surface,(my_x,my_y))
 
     def down(self):
+        self.downsnd.play()
         self.activeButton += 1
         if self.activeButton > len(self.options) -1:
             self.activeButton = 0
 
     def up(self):
+        self.downsnd.play()
         self.activeButton -= 1
         if self.activeButton < 0:
             self.activeButton = len(self.options) -1
