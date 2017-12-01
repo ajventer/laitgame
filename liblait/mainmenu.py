@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from scalehandler import ScaleHandler
-from inputhandler import InputHandler
+from .scalehandler import ScaleHandler
+from .inputhandler import InputHandler
 import os
 
 class Option(object):
@@ -34,6 +34,7 @@ class mainMenu(object):
 
 
     def load(self):
+        self.settings.logger.debug("Loading mainmenu screen elements")
         self.options = []
         self.sh = ScaleHandler(self.screen)
         self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
@@ -90,28 +91,18 @@ class mainMenu(object):
         FPS=30
         fpsclock = pygame.time.Clock()
         self.load()
-        inputhandler = InputHandler()
+        inputhandler = InputHandler(self.settings,self.screen, self.flags)
         while True:
-            inputhandler.get_events()
+            inputhandler.get_events(self.load)
             if inputhandler.quit:
                 return 'quit'
-            elif inputhandler.up:
+            if inputhandler.up:
                 self.up()
             if inputhandler.down:
                 self.down()
             if inputhandler.start:
                 return self.options[self.activeButton].activate()
-            if inputhandler.resize:
-                event = inputhandler.events['resize']
-                self.screen = pygame.display.set_mode(event.dict['size'],self.flags)
-                self.load()
-                self.settings.settingsdict['Resolution']['w'] = self.screen.get_width()
-                self.settings.settingsdict['Resolution']['h'] = self.screen.get_height()
-                self.settings.save_settings()
             self.drawmenu()
             fpsclock.tick(FPS)
-            if self.settings.fullscreen:
-                pygame.display.flip()
-            else:
-                pygame.display.update()
+            pygame.display.flip()
      

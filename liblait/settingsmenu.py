@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
-from scalehandler import ScaleHandler
+from .scalehandler import ScaleHandler
+from .inputhandler import InputHandler
 import os
 import thorpy
 
@@ -38,11 +39,12 @@ class settingsMenu(object):
         self.sh = ScaleHandler(self.screen)
         self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
         self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
-        self.fullscreen = thorpy.Checker.make("Fullscreen",func=self.__change_fullscreen)
+        self.fullscreen = thorpy.Checker.make("Fullscreen")
         self.fullscreen.checked = self.settings.fullscreen
-
-        self.box = thorpy.Box.make(self.fullscreen)
+        self.box = thorpy.Box.make([self.fullscreen])
         self.menu = thorpy.Menu(self.box)
+        for element in self.menu.get_population():
+            element.surface = self.screen
 
 
     def drawmenu(self):
@@ -51,11 +53,11 @@ class settingsMenu(object):
         logo_x=(self.BASEW * self.sh.MULTW) - (self.logo.get_width() / 2)
         logo_y=(400 * self.sh.MULTH) - self.logo.get_height()
         self.screen.blit(self.logo,(logo_x,logo_y))
-        top_y=logo_y+self.logo.get_height()+(100*self.sh.MULTH)
-        top_y=(self.BASEW * self.sh.MULTH) - (self.box.get_width() / 2)
-        box.set_topleft(top_y,top_x)
-        box.blit()
-        box.update()
+        top_y=logo_y+self.logo.get_height()+(200*self.sh.MULTH)
+        top_x=(self.BASEW * self.sh.MULTH) - (self.box.surface.get_width() / 2)
+        self.box.set_topleft((top_y,top_x))
+        self.box.blit()
+        self.box.update()
 
     def __change_fullscreen():
         self.settings.logger.debug('Changing fullscreen from %s to %s' %(self.settings.fullscreen,not self.settings.fullscreen))
@@ -77,8 +79,9 @@ class settingsMenu(object):
         FPS=30
         fpsclock = pygame.time.Clock()
         self.load()
+        inputhandler = InputHandler(self.settings)
         while True:
-            inputhandler.get_events()
+            inputhandler.get_events(self.menu)
             if inputhandler.quit:
                 return 'quit'
             elif inputhandler.up:
@@ -87,17 +90,7 @@ class settingsMenu(object):
                 self.down()
             if inputhandler.start:
                 return self.options[self.activeButton].activate()
-            if inputhandler.resize:
-                event = inputhandler.events['resize']
-                self.screen = pygame.display.set_mode(event.dict['size'],self.flags)
-                self.load()
-                self.settings.settingsdict['Resolution']['w'] = self.screen.get_width()
-                self.settings.settingsdict['Resolution']['h'] = self.screen.get_height()
-                self.settings.save_settings()
             self.drawmenu()
             fpsclock.tick(FPS)
-            if self.settings.fullscreen:
-                pygame.display.flip()
-            else:
-                pygame.display.update()
+            pygame.display.flip()
      

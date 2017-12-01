@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import pygame
 from pygame.locals import *
 import liblait.pyganim
@@ -13,6 +13,7 @@ if __name__ == '__main__':
     pygame.display.init()
     pygame.display.set_caption("Lilly's Adventures in Toyland")
     pygame.mixer.init()
+    pygame.font.init()
     flags = 0
     if settings.fullscreen:
         flags = pygame.FULLSCREEN|pygame.HWSURFACE
@@ -25,6 +26,6 @@ if __name__ == '__main__':
     while nextaction != 'quit':
         nextaction = mainmenu.mainMenu(screen,settings,flags).run()
         if nextaction == 'settings':
-            nextaction = settingsmenu.settingsMenu(screen, settings, flags).run()
+            nextaction = settingsmenu.settingsMenu(screen,settings, flags).run()
     pygame.quit()
     sys.exit()

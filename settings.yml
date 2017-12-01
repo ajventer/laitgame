@@ -1,6 +1,6 @@
 Borderless: false
 Fullscreen: false
-Resolution:
-  h: 692
-  w: 820
 Loglevel: DEBUG
+Resolution:
+  h: 1920
+  w: 1080

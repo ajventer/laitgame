@@ -2,7 +2,12 @@ import pygame
 from pygame.locals import *
 
 class InputHandler(object):
-    def __init__(self):
+    def __init__(self, settings,screen,flags):
+        self.screen = screen
+        self.settings = settings
+        self.flags = flags
+
+    def __reset_flags(self):
         self.keymap = {
         "up": [K_UP, K_w],
         "down": [K_DOWN, K_s],
@@ -15,29 +20,30 @@ class InputHandler(object):
         "start": [K_RETURN, K_SPACE],
         "select": [K_ESCAPE]
         }
-        self.events = {}
-        self.resize = False
         self.quit = False
+
         for button in self.keymap:
             setattr(self, button, False)
-            self.events[button] = None
 
-    def get_events(self, menu=None):
-        self.__init__()
+    def get_events(self, scalefunc, menu=None):
+        self.__reset_flags()
         for event in pygame.event.get():
             #TODO flag buttons on joystick events
             answer = ''
             if event.type == QUIT:
                 self.quit = True
-                self.events['quit'] = event
             elif event.type == KEYDOWN:
                 for button in self.keymap:
                     if event.key in self.keymap[button]:
                         setattr(self, button, True)
-                        self.events[button] = event
             elif event.type == VIDEORESIZE:
-                self.resize = True
-                self.events['resize'] = event
+                self.screen = pygame.display.set_mode(event.size,self.flags)
+                print ('Screen size: input handler', event.size)
+                self.settings.settingsdict['Resolution']['w'] = self.screen.get_width()
+                self.settings.settingsdict['Resolution']['h'] = self.screen.get_height()
+                self.settings.save_settings()
+                scalefunc()
+                pygame.display.flip()
             if menu:
                 menu.react(event)
 
