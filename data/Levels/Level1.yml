@@ -1,0 +1,6 @@
+background: Level1.png
+background_mode: stretch
+width: 3840 
+player_pos:
+  x: 0
+  y: center

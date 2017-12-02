@@ -11,5 +11,5 @@ Loglevels:
 - ERROR
 - CRTICAL
 Resolution:
-  h: 768
-  w: 1024
+  h: 800
+  w: 1280

@@ -2,7 +2,7 @@
 import pygame
 from pygame.locals import *
 import liblait.pyganim
-from liblait import scalehandler, Settings, mainmenu, settingsmenu
+from liblait import scalehandler, Settings, mainmenu, settingsmenu, game
 import yaml
 import os, sys
 
@@ -33,5 +33,7 @@ if __name__ == '__main__':
             nextaction = settingsmenu.settingsMenu(screen,settings, flags).run()
         if nextaction == 'save_settings':
             settings,screen,flags == initall()
+        if nextaction == 'new':
+            nextaction = game.Game('Level1.yml', settings, screen, flags).run()
     pygame.quit()
     sys.exit()
