@@ -16,7 +16,10 @@ class SETTINGS(object):
         }
 
         logfile=os.path.join(gamedir,'lait.log')
-        os.unlink(logfile)
+        try:
+            os.unlink(logfile)
+        except FileNotFoundError:
+            pass
         logging.basicConfig(filename=logfile)
         self.logger = logging.getLogger('LAIT')
 
@@ -32,6 +35,8 @@ class SETTINGS(object):
         self.musicdir = os.path.join(self.datadir,'Music')
 
         self.reload_settings()
+        self.buttonsdir = os.path.join(self.buttonsdir,self.language)
+        self.voicedir = os.path.join(self.voicedir,self.language)
 
     def reload_settings(self):
         self.settingsdict = yaml.safe_load(open(self.settingsfile))
@@ -39,6 +44,7 @@ class SETTINGS(object):
         self.res_y = self.settingsdict['Resolution']['h']
         self.fullscreen = self.settingsdict['Fullscreen']
         self.borderless = self.settingsdict['Borderless']
+        self.language = self.settingsdict['Language']
         self.loglevel = self.settingsdict['Loglevel']
         assert(self.loglevel in self.loglevelmap)
         self.logger.setLevel(self.loglevelmap[self.loglevel])

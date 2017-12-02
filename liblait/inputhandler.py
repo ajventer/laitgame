@@ -38,7 +38,6 @@ class InputHandler(object):
                         setattr(self, button, True)
             elif event.type == VIDEORESIZE:
                 self.screen = pygame.display.set_mode(event.size,self.flags)
-                print ('Screen size: input handler', event.size)
                 self.settings.settingsdict['Resolution']['w'] = self.screen.get_width()
                 self.settings.settingsdict['Resolution']['h'] = self.screen.get_height()
                 self.settings.save_settings()

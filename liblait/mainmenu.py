@@ -5,10 +5,15 @@ from .inputhandler import InputHandler
 import os
 
 class Option(object):
-    def __init__(self, surface, surface_hi,activate):
+    def __init__(self, surface, surface_hi,activate, voice, settings):
         self.surface=surface
         self.surface_hi=surface_hi
         self.activate=activate
+        if voice:
+            self.voice = pygame.mixer.Sound(os.path.join(settings.voicedir,voice))
+            self.voice.set_volume(1.0)
+        else:
+            self.voice = None
 
 class mainMenu(object):
     def __init__(self, screen, settings, flags):
@@ -18,6 +23,7 @@ class mainMenu(object):
         self.activeButton = 0
         self.BASEW = 960 #Centerpoint on a 1080 screen
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,'prologue.ogg'))
+        pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play(-1)
 
     def __continue(self):
@@ -42,22 +48,23 @@ class mainMenu(object):
         if os.path.exists(os.path.join(self.settings.gamedir,'savegame.yml')):
             s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont.png'))
             h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont_hi.png'))
-            o = Option(s,h,self.__continue)
+            o = Option(s,h,self.__continue,None,self.settings)
             self.options.append(o)
         s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame.png'))
         h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame_hi.png'))
-        o = Option(s,h,self.__newgame)
+        o = Option(s,h,self.__newgame,'Start.wav',self.settings)
         self.options.append(o)
         s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'settings.png'))
         h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'settings_hi.png'))
-        o = Option(s,h,self.__settings)
+        o = Option(s,h,self.__settings,None,self.settings)
         self.options.append(o)        
         s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'quit.png'))
         h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'quit_hi.png'))
-        o = Option(s,h,self.__quit)
+        o = Option(s,h,self.__quit,'quit.wav',self.settings)
         self.options.append(o) 
 
         self.downsnd = pygame.mixer.Sound(os.path.join(self.settings.guifxdir,'misc_menu.wav'))
+        self.__menusnd()
 
     def drawmenu(self):
         self.screen.fill((0,255,0))
@@ -75,17 +82,25 @@ class mainMenu(object):
             else:
                 self.screen.blit(option.surface,(my_x,my_y))
 
+    def __menusnd(self):
+        if self.options[self.activeButton].voice:
+            self.options[self.activeButton].voice.play()
+        else:
+            self.downsnd.play()
+
     def down(self):
-        self.downsnd.play()
         self.activeButton += 1
         if self.activeButton > len(self.options) -1:
             self.activeButton = 0
+        self.__menusnd()
+
+
 
     def up(self):
-        self.downsnd.play()
         self.activeButton -= 1
         if self.activeButton < 0:
             self.activeButton = len(self.options) -1
+        self.__menusnd()
 
     def run(self):
         FPS=30

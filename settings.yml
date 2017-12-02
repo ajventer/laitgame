@@ -1,6 +1,7 @@
 Borderless: false
 Fullscreen: false
+Language: English
 Loglevel: DEBUG
 Resolution:
-  h: 1920
-  w: 1080
+  h: 1055
+  w: 1858
