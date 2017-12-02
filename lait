@@ -6,26 +6,32 @@ from liblait import scalehandler, Settings, mainmenu, settingsmenu
 import yaml
 import os, sys
 
-
-if __name__ == '__main__':
-    GAMEDIR=os.path.dirname(os.path.realpath(__file__))
+def initall():
     settings = Settings.SETTINGS(GAMEDIR)
     pygame.display.init()
     pygame.display.set_caption("Lilly's Adventures in Toyland")
     pygame.mixer.init()
     pygame.font.init()
+    pygame.joystick.init()
     flags = 0
     if settings.fullscreen:
         flags = pygame.FULLSCREEN|pygame.HWSURFACE
     elif settings.borderless:
-        flags = pygame.NOFRAME|pygame.RESIZABLE
+        flags = pygame.NOFRAME
     else:
-        flags = pygame.RESIZABLE
+        flags = 0
     screen = pygame.display.set_mode((settings.res_x,settings.res_y),flags)
+    return settings,screen,flags    
+
+if __name__ == '__main__':
+    GAMEDIR=os.path.dirname(os.path.realpath(__file__))
+    settings, screen,flags = initall()
     nextaction = ''
     while nextaction != 'quit':
         nextaction = mainmenu.mainMenu(screen,settings,flags).run()
         if nextaction == 'settings':
             nextaction = settingsmenu.settingsMenu(screen,settings, flags).run()
+        if nextaction == 'save_settings':
+            settings,screen,flags == initall()
     pygame.quit()
     sys.exit()

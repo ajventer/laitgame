@@ -42,6 +42,7 @@ class SETTINGS(object):
         self.settingsdict = yaml.safe_load(open(self.settingsfile))
         self.res_x = self.settingsdict['Resolution']['w']
         self.res_y = self.settingsdict['Resolution']['h']
+        self.resolution = (self.res_x, self.res_y)
         self.fullscreen = self.settingsdict['Fullscreen']
         self.borderless = self.settingsdict['Borderless']
         self.language = self.settingsdict['Language']

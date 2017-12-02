@@ -1,7 +1,15 @@
 Borderless: false
 Fullscreen: false
 Language: English
+Languages:
+- English
 Loglevel: DEBUG
+Loglevels:
+- DEBUG
+- INFO
+- WARNING
+- ERROR
+- CRTICAL
 Resolution:
-  h: 1055
-  w: 1858
+  h: 768
+  w: 1024

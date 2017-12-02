@@ -25,6 +25,7 @@ class mainMenu(object):
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,'prologue.ogg'))
         pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play(-1)
+        self.last_active = 1
 
     def __continue(self):
         return "continue"
@@ -48,7 +49,7 @@ class mainMenu(object):
         if os.path.exists(os.path.join(self.settings.gamedir,'savegame.yml')):
             s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont.png'))
             h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont_hi.png'))
-            o = Option(s,h,self.__continue,None,self.settings)
+            o = Option(s,h,self.__continue,'ContPlay.wav',self.settings)
             self.options.append(o)
         s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame.png'))
         h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'newgame_hi.png'))
@@ -83,6 +84,9 @@ class mainMenu(object):
                 self.screen.blit(option.surface,(my_x,my_y))
 
     def __menusnd(self):
+        if self.last_active ==  self.activeButton:
+            return
+        self.last_active = self.activeButton
         if self.options[self.activeButton].voice:
             self.options[self.activeButton].voice.play()
         else:
@@ -93,8 +97,6 @@ class mainMenu(object):
         if self.activeButton > len(self.options) -1:
             self.activeButton = 0
         self.__menusnd()
-
-
 
     def up(self):
         self.activeButton -= 1
@@ -115,7 +117,7 @@ class mainMenu(object):
                 self.up()
             if inputhandler.down:
                 self.down()
-            if inputhandler.start:
+            if inputhandler.start or inputhandler.a or inputhandler.b or inputhandler.x or inputhandler.y or inputhandler.select:
                 return self.options[self.activeButton].activate()
             self.drawmenu()
             fpsclock.tick(FPS)

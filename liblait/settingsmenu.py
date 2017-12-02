@@ -13,6 +13,7 @@ class Option(object):
 
 class settingsMenu(object):
     def __init__(self, screen, settings, flags):
+        self.savemode = False
         self.screen = screen
         self.settings = settings
         self.flags = flags
@@ -33,21 +34,56 @@ class settingsMenu(object):
     def __quit(self):
         return "quit"
 
+    def showres(self,res):
+        return "%sX%s" %(res[0],res[1])
+
 
     def load(self):
+        self.settings.reload_settings()
         self.downsnd = pygame.mixer.Sound(os.path.join(self.settings.guifxdir,'misc_menu.wav'))
         self.sh = ScaleHandler(self.screen)
         self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
         self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
         self.fullscreen = thorpy.Checker.make("Fullscreen")
-        self.fullscreen.checked = self.settings.fullscreen
-        self.box = thorpy.Box.make([self.fullscreen])
+        self.fullscreen.set_value(self.settings.fullscreen)
+        self.borderless = thorpy.Checker.make("Windowed borderless")
+        self.borderless.set_value(self.settings.borderless)
+        self.resolutions = pygame.display.list_modes()
+        self.resview = thorpy.Inserter.make(name="Resolution: ",value=self.showres(self.settings.resolution)) 
+        numres = len(self.resolutions) -1
+        self.resolution = thorpy.SliderX.make(10*numres,(0,numres),"Resolution")
+        if self.settings.resolution in self.resolutions:
+            self.resolution.set_value(self.resolutions.index(self.settings.resolution))
+        self.savebtn = thorpy.make_button("Save Settings",func=self.save_settings)
+        self.box = thorpy.Box.make([self.fullscreen,self.borderless,self.resolution,self.resview,self.savebtn])
         self.menu = thorpy.Menu(self.box)
         for element in self.menu.get_population():
             element.surface = self.screen
 
+    def save_settings(self):
+        self.savemode = True
+        w, h = self.parsed_res(self.resview.get_value())
+        self.settings.settingsdict['Resolution']['w'] = w
+        self.settings.settingsdict['Resolution']['h'] = h
+        self.settings.settingsdict['Borderless'] = self.borderless.get_value()
+        self.settings.settingsdict['Fullscreen'] = self.fullscreen.get_value()
+        self.settings.save_settings()
+        self.settings.reload_settings()
+
+    def parsed_res(self, toparse):
+        parsed_res = (0,0)
+        try:
+            parsed_res = tuple([int(i) for i in toparse.lower().split('x')])
+        except:
+            pass
+        return parsed_res
 
     def drawmenu(self):
+        if self.fullscreen.get_value():
+            self.borderless.set_value(False)
+        if self.borderless.get_value():
+            self.fullscreen.set_value(False)
+        self.resview.set_value(self.showres(self.resolutions[int(self.resolution.get_value())]))
         self.screen.fill((0,255,0))
         self.screen.blit(self.background,(0,0))
         logo_x=(self.BASEW * self.sh.MULTW) - (self.logo.get_width() / 2)
@@ -55,13 +91,11 @@ class settingsMenu(object):
         self.screen.blit(self.logo,(logo_x,logo_y))
         top_y=logo_y+self.logo.get_height()+(200*self.sh.MULTH)
         top_x=(self.BASEW * self.sh.MULTH) - (self.box.surface.get_width() / 2)
-        self.box.set_topleft((top_y,top_x))
+        self.box.center()
+        self.box.fit_children(margins=(30,30))
+        self.box.set_main_color((220,220,220))
         self.box.blit()
         self.box.update()
-
-    def __change_fullscreen():
-        self.settings.logger.debug('Changing fullscreen from %s to %s' %(self.settings.fullscreen,not self.settings.fullscreen))
-
 
     def down(self):
         self.downsnd.play()
@@ -79,17 +113,19 @@ class settingsMenu(object):
         FPS=30
         fpsclock = pygame.time.Clock()
         self.load()
-        inputhandler = InputHandler(self.settings)
+        inputhandler = InputHandler(self.settings,self.screen,self.flags)
         while True:
-            inputhandler.get_events(self.menu)
+            if self.savemode:
+                return "save_settings"
+            inputhandler.get_events(self.load, self.menu)
             if inputhandler.quit:
                 return 'quit'
             elif inputhandler.up:
                 self.up()
             if inputhandler.down:
                 self.down()
-            if inputhandler.start:
-                return self.options[self.activeButton].activate()
+            if inputhandler.select:
+                return 'mainmenu'
             self.drawmenu()
             fpsclock.tick(FPS)
             pygame.display.flip()
