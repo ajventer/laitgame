@@ -1,5 +1,6 @@
 background: Level1.png
 background_mode: stretch
+music: Arabesque.ogg
 width: 3840 
 player_pos:
   x: 0

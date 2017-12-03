@@ -19,6 +19,7 @@ class Level(object):
         self.background = pygame.image.load(os.path.join(settings.bgdir,self.leveldict['background']))
         self.background = pygame.transform.smoothscale(self.background,(1920,834))
         self.width = self.leveldict['width']
+        self.music = self.leveldict['music']
         assert self.background_mode in ['follow','tile','stretch']
 
     def save():

@@ -47,6 +47,9 @@ class Game(object):
         c_rect = Rect(0,0,1920,848)
         self.camera = Camera(self.level,self,c_rect)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
+        pygame.mixer.music.load(os.path.join(self.settings.musicdir,self.level.music))
+        pygame.mixer.music.set_volume(self.settings.musicvol)
+        pygame.mixer.music.play(-1)
 
     def draw(self):
         self.camera.update_play_area()
