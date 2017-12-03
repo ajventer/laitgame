@@ -34,6 +34,7 @@ class SETTINGS(object):
         self.bgdir = os.path.join(self.datadir,'Backgrounds')
         self.musicdir = os.path.join(self.datadir,'Music')
         self.leveldir = os.path.join(self.datadir,'Levels')
+        self.spritesdir = os.path.join(self.datadir,'Sprites')
 
         self.reload_settings()
         self.buttonsdir = os.path.join(self.buttonsdir,self.language)

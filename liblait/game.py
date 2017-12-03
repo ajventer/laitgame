@@ -2,32 +2,10 @@ import pygame
 from pygame.locals import *
 from .scalehandler import ScaleHandler
 from .inputhandler import InputHandler
+from .player import Player
 from .level import Level
+from .animation import Rect
 import os
-
-class Rect(pygame.Rect):
-    def __init__(self,x,y,w,h):
-        super().__init__(x,y,w,h)
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
-
-    def get_size(self):
-        return (self.w,self.h)
-
-    def get_width(self):
-        return self.w
-
-    def get_height(self):
-        return self.h
-
-    def get_topleft(self):
-        return (self.x, self.y)
-
-    def __call__(self):
-        return (self.x, self.y, self.w, self.h)
-
 
 class Camera(object):
     def __init__(self, level, game,rect):
@@ -56,15 +34,11 @@ class Camera(object):
         pass
         #Todo if player too far from camera center, update self.rect to move camera and follow player.
 
- 
-
-
-
-
 class Game(object):
     def __init__(self, levelfile, settings, screen, flags):
         self.flags = flags
         self.level = Level(levelfile, settings, screen)
+        self.player = Player(settings,self.level.playerx, self.level.playery)
         self.sh = ScaleHandler(screen)
         self.screen = screen
         self.settings = settings
@@ -78,12 +52,13 @@ class Game(object):
         self.camera.update_play_area()
         self.display.blit(self.camera.playarea,(0,self.camera_top),self.camera.rect())
         self.display.blit(self.frame,(0,0))
+        self.display.blit(self.player.image(),(300,300))
         
         scaled = pygame.transform.smoothscale(self.display, self.screen.get_size())
         self.screen.blit(scaled,(0,0))
 
     def run(self):
-        FPS=30
+        FPS=60
         fpsclock = pygame.time.Clock()
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         while True:
