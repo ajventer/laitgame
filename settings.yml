@@ -13,3 +13,7 @@ Loglevels:
 Resolution:
   h: 800
   w: 1280
+Volume:
+  fx: 20.0
+  music: 20.0
+  voice: 12.0

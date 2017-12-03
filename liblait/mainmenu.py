@@ -11,7 +11,7 @@ class Option(object):
         self.activate=activate
         if voice:
             self.voice = pygame.mixer.Sound(os.path.join(settings.voicedir,voice))
-            self.voice.set_volume(1.0)
+            self.voice.set_volume(settings.voicevol)
         else:
             self.voice = None
 
@@ -23,7 +23,7 @@ class mainMenu(object):
         self.activeButton = 0
         self.BASEW = 960 #Centerpoint on a 1080 screen
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,'prologue.ogg'))
-        pygame.mixer.music.set_volume(1.0)
+        pygame.mixer.music.set_volume(self.settings.musicvol)
         pygame.mixer.music.play(-1)
         self.last_active = 1
 

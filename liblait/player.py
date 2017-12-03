@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.moving = False
 
         sheetfile = os.path.join(settings.spritesdir,'Player.png')
-        self.sheet = Sheet(sheetfile,rows=3,cols=2)
+        self.sheet = Sheet(sheetfile,rows=6,cols=3)
         self.animation = Animation(self.sheet, 0, 10)
         self.animation.play(True)
 

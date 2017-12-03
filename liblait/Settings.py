@@ -36,6 +36,7 @@ class SETTINGS(object):
         self.leveldir = os.path.join(self.datadir,'Levels')
         self.spritesdir = os.path.join(self.datadir,'Sprites')
 
+
         self.reload_settings()
         self.buttonsdir = os.path.join(self.buttonsdir,self.language)
         self.voicedir = os.path.join(self.voicedir,self.language)
@@ -49,6 +50,9 @@ class SETTINGS(object):
         self.borderless = self.settingsdict['Borderless']
         self.language = self.settingsdict['Language']
         self.loglevel = self.settingsdict['Loglevel']
+        self.musicvol = self.settingsdict['Volume']['music'] / 100
+        self.fxvol = self.settingsdict['Volume']['fx'] / 100
+        self.voicevol = self.settingsdict['Volume']['voice'] / 100
         assert(self.loglevel in self.loglevelmap)
         self.logger.setLevel(self.loglevelmap[self.loglevel])
         self.logger.debug('Loading from settings.yml')

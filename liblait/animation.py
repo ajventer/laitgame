@@ -45,7 +45,6 @@ class Sheet(object):
         y = row * self.size[1]
         x = col * self.size[0]
         rect = Rect(x,y,self.size[0],self.size[1])
-        print (row, col, rect)
         s = pygame.Surface(rect.get_size(),pygame.SRCALPHA, 32)
         s.blit(self.sheetimg,(0,0),rect)
         return s
@@ -63,6 +62,7 @@ class Animation(object):
         self.fpf = fpf
         self.framecount = 0
         self.frame = 0
+        self.advance = 1
 
     def play(self, loop=False):
         self.playing = True
@@ -77,10 +77,13 @@ class Animation(object):
             self.framecount += 1
             if self.framecount >= self.fpf:
                 self.framecount = 0
-                self.frame += 1               
-        if self.frame >= self.sheet.row_count():
+                self.frame += self.advance               
+        if self.framecount == 0 and (self.frame == self.sheet.row_count() or self.frame == 0):
             if self.loop:
-                self.frame = 0
+                if self.advance == 1:
+                    self.advance = -1
+                else:
+                    self.advance = 1
             else:
                 self.stop()
                 self.frame = self.sheet.row_count()

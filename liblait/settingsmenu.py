@@ -54,8 +54,14 @@ class settingsMenu(object):
         self.resolution = thorpy.SliderX.make(10*numres,(0,numres),"Resolution")
         if self.settings.resolution in self.resolutions:
             self.resolution.set_value(self.resolutions.index(self.settings.resolution))
+        self.fxvol = thorpy.SliderX.make(100,(0,100),"Volume: FX")
+        self.fxvol.set_value(self.settings.fxvol * 100)
+        self.mvol = thorpy.SliderX.make(100,(0,100),"Volume: Music")
+        self.mvol.set_value(self.settings.musicvol * 100)
+        self.voicevol = thorpy.SliderX.make(100,(0,100),"Volume: Voice")
+        self.voicevol.set_value(self.settings.voicevol * 100)        
         self.savebtn = thorpy.make_button("Save Settings",func=self.save_settings)
-        self.box = thorpy.Box.make([self.fullscreen,self.borderless,self.resolution,self.resview,self.savebtn])
+        self.box = thorpy.Box.make([self.fullscreen,self.borderless,self.resolution,self.resview,self.fxvol,self.mvol,self.voicevol,self.savebtn])
         self.menu = thorpy.Menu(self.box)
         for element in self.menu.get_population():
             element.surface = self.screen
@@ -67,6 +73,9 @@ class settingsMenu(object):
         self.settings.settingsdict['Resolution']['h'] = h
         self.settings.settingsdict['Borderless'] = self.borderless.get_value()
         self.settings.settingsdict['Fullscreen'] = self.fullscreen.get_value()
+        self.settings.settingsdict['Volume']['music'] = self.mvol.get_value()
+        self.settings.settingsdict['Volume']['fx'] = self.mvol.get_value()
+        self.settings.settingsdict['Volume']['voice'] = self.voicevol.get_value()
         self.settings.save_settings()
         self.settings.reload_settings()
 
@@ -83,6 +92,8 @@ class settingsMenu(object):
             self.borderless.set_value(False)
         if self.borderless.get_value():
             self.fullscreen.set_value(False)
+        pygame.mixer.music.set_volume(self.mvol.get_value() / 100)
+
         self.resview.set_value(self.showres(self.resolutions[int(self.resolution.get_value())]))
         self.screen.fill((0,255,0))
         self.screen.blit(self.background,(0,0))
