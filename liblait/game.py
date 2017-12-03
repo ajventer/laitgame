@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from .scalehandler import ScaleHandler
 from .inputhandler import InputHandler
-from .player import Player
+from . import player
 from .level import Level
 from .animation import Rect
 import os
@@ -34,28 +34,59 @@ class Camera(object):
         pass
         #Todo if player too far from camera center, update self.rect to move camera and follow player.
 
+class Floor(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)   
+        self.rect = pygame.Rect(0,848,1920,1080) 
+
 class Game(object):
     def __init__(self, levelfile, settings, screen, flags):
         self.flags = flags
         self.level = Level(levelfile, settings, screen)
-        self.player = Player(settings,self.level.playerx, self.level.playery)
+        self.player = player.Player(settings,self.level.playerx, self.level.playery)
         self.sh = ScaleHandler(screen)
         self.screen = screen
         self.settings = settings
         self.display = pygame.Surface((1920,1080))
         self.camera_top = 33
         c_rect = Rect(0,0,1920,848)
+        self.floor = Floor()        
+        self.barriergroup = pygame.sprite.Group(self.floor)
+        self.livinggroup = pygame.sprite.Group(self.player)  
+
         self.camera = Camera(self.level,self,c_rect)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
+
+
+
+
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,self.level.music))
         pygame.mixer.music.set_volume(self.settings.musicvol)
         pygame.mixer.music.play(-1)
 
+    def gravity(self):
+        unsupported = []
+        for sprite in self.livinggroup.sprites():
+            supported = False
+            for barrier in self.barriergroup.sprites():
+                if barrier.rect.collidepoint(sprite.gravitypoint()):
+                    supported = True
+                    continue
+            if not supported:
+                unsupported.append (sprite)
+            else:
+                sprite.stop()
+        for sprite in unsupported:
+            if sprite.mode != player.FALLING:
+                sprite.fall()
+
     def draw(self):
         self.camera.update_play_area()
+        self.player.move()
         self.display.blit(self.camera.playarea,(0,self.camera_top),self.camera.rect())
         self.display.blit(self.frame,(0,0))
-        self.display.blit(self.player.image(),(300,300))
+        self.display.blit(self.player.image(),self.player.get_pos())
+
         
         scaled = pygame.transform.smoothscale(self.display, self.screen.get_size())
         self.screen.blit(scaled,(0,0))
@@ -65,6 +96,7 @@ class Game(object):
         fpsclock = pygame.time.Clock()
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         while True:
+            self.gravity()
             inputhandler.get_events(self.draw)
             if inputhandler.quit:
                 return 'quit'

@@ -63,6 +63,7 @@ class Animation(object):
         self.framecount = 0
         self.frame = 0
         self.advance = 1
+        self.flipped = False
 
     def play(self, loop=False):
         self.playing = True
@@ -71,6 +72,9 @@ class Animation(object):
     def stop(self):
         self.playing = False
         self.loop = False
+
+    def flip(self):
+        self.flipped = True
 
     def image(self):
         if self.playing:
@@ -87,6 +91,8 @@ class Animation(object):
             else:
                 self.stop()
                 self.frame = self.sheet.row_count()
+        if self.flipped:
+            return pygame.transform.flip(self.sheet.get_image(self.row,self.frame), True, False)
         return self.sheet.get_image(self.row,self.frame)
 
 
