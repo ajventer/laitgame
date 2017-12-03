@@ -3,6 +3,7 @@ from pygame.locals import *
 from .scalehandler import ScaleHandler
 from .inputhandler import InputHandler
 from . import player
+from . import living
 from .level import Level
 from .animation import Rect
 import os
@@ -37,7 +38,7 @@ class Camera(object):
 class Floor(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)   
-        self.rect = pygame.Rect(0,848,1920,1080) 
+        self.rect = pygame.Rect(0,878,1920,1080) 
 
 class Game(object):
     def __init__(self, levelfile, settings, screen, flags):
@@ -77,7 +78,7 @@ class Game(object):
             else:
                 sprite.stop()
         for sprite in unsupported:
-            if sprite.mode != player.FALLING:
+            if sprite.mode != living.FALLING:
                 sprite.fall()
 
     def draw(self):
