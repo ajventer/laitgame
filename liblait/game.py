@@ -80,6 +80,8 @@ class Game(object):
     def gravity(self):
         unsupported = []
         for sprite in self.livinggroup.sprites():
+            if sprite.antigrav:
+                continue
             supported = False
             for barrier in self.barriergroup.sprites():
                 if barrier.rect.collidepoint(sprite.gravitypoint()):

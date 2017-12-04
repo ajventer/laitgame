@@ -27,6 +27,7 @@ class Living(pygame.sprite.Sprite):
         self.speed = 1
         self.moving = False
         self.mode = STANDING
+        self.antigrav = False 
 
         sheetfile = os.path.join(settings.spritesdir,sheet)
         self.sheet = Sheet(sheetfile,rows=6,cols=3)
