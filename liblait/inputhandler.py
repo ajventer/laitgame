@@ -24,19 +24,21 @@ class InputHandler(object):
         "start": [K_RETURN, K_SPACE],
         "select": [K_ESCAPE]
         }
-        self.joybtnmap = {
+        self.joymap = {
+        "joybtnmap": {
         0: "a",
         1: "b",
         2: "x",
         3: "y",
         6: "select",
         7: "start"
-        }
-        #4 and 5 are the shoulder buttons on a gamepad
-        self.joyaxismap = {
+        },
+        "joyaxismap": {
         "lr":[0,3],
         "ud":[1,4]
         }
+        }
+        
         self.quit = False
 
         for button in self.keymap:
