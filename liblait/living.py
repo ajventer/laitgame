@@ -24,7 +24,7 @@ SLIDING_RIGHT=7
 class Living(pygame.sprite.Sprite):
     def __init__(self, settings, x, y, sheet):
         pygame.sprite.Sprite.__init__(self)
-        self.speed = 1
+        self.speed = 5
         self.moving = False
         self.mode = STANDING
         self.antigrav = False 
@@ -36,10 +36,19 @@ class Living(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-    def gravitypoint(self):
+    def gravitypoints(self):
+        l = []
         x = self.rect.centerx
         y = self.rect.bottom + 1
-        return (x,y)
+        l.append((x,y))
+        l.append(self.rect.bottomleft)
+        l.append(self.rect.bottomright)
+        return l
+
+    def on_collide(self, sprite, direction):
+        #Called when we collide with a sprite
+        #This is an empty function - to be overriden by specific classes
+        pass
 
     def get_pos(self):
         return self.rect.center

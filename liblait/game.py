@@ -4,6 +4,7 @@ from .scalehandler import ScaleHandler
 from .inputhandler import InputHandler
 from . import player
 from . import living
+from . barrier import Barrier
 from .level import Level
 from .animation import Rect
 import os
@@ -48,12 +49,6 @@ class Camera(object):
             if self.rect.centerx > self.player.rect.centerx and self.rect.left > self.panspeed:
                 self.rect.centerx -= self.panspeed
 
-
-class Edge(pygame.sprite.Sprite):
-    def __init__(self,x,y,w,h):
-        pygame.sprite.Sprite.__init__(self)   
-        self.rect = pygame.Rect(x,y,w,h) 
-
 class Game(object):
     def __init__(self, levelfile, settings, screen, flags):
         self.flags = flags
@@ -67,9 +62,9 @@ class Game(object):
         c_rect = Rect(0,0,1920,848)        
         self.camera = Camera(self.level,self,c_rect, self.player)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
-        self.floor = Edge(0,878,1920,self.camera.playarea.get_width())
-        self.roof = Edge(0,0,30,self.camera.playarea.get_width())
-        self.leftEdge = Edge (0,0,1,self.camera.playarea.get_height())
+        self.floor = Barrier(0,840,1920,self.camera.playarea.get_width(),self.settings, 'floor')
+        self.roof = Barrier(0,0,self.camera.playarea.get_width(),30,self.settings, 'roof')
+        self.leftEdge = Barrier (0,0,20,self.camera.playarea.get_height(),self.settings, 'leftedge')
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge)
         self.livinggroup = pygame.sprite.Group(self.player)  
 
@@ -84,17 +79,31 @@ class Game(object):
                 continue
             supported = False
             for barrier in self.barriergroup.sprites():
-                if barrier.rect.collidepoint(sprite.gravitypoint()):
-                    supported = True
-                    continue
+                gpoints = sprite.gravitypoints()
+                for point in gpoints:
+                    if barrier.rect.collidepoint(point):
+                        colidx = gpoints.index(point)
+                        supported = True
+                        # while barrier.rect.collidepoint(sprite.gravitypoints()[colidx]):
+                        #     sprite.rect.y -= 1
+                        # sprite.rect.y += 1
+                        continue
             if not supported:
                 unsupported.append (sprite)
             else:
                 if sprite.mode == living.FALLING:
                     sprite.stop()
+
         for sprite in unsupported:
             if sprite.mode != living.FALLING:
                 sprite.fall()
+
+    def collision_checks(self):
+        for barrier in self.barriergroup.sprites():
+            for sprite in self.livinggroup.sprites():
+                if sprite.rect.colliderect(barrier.rect):
+                    barrier.on_collide(sprite)
+
 
     def draw(self):
         self.camera.update_play_area()
@@ -112,6 +121,7 @@ class Game(object):
             if self.player.mode != living.FALLING:
                 self.player.stop()
             self.gravity()
+            self.collision_checks()
             inputhandler.get_events(self.draw)
             if inputhandler.quit:
                 return 'quit'
@@ -121,6 +131,8 @@ class Game(object):
                 return 'mainmenu'
             if inputhandler.right:
                 self.player.walk(living.RIGHT)
+            if inputhandler.left:
+                self.player.walk(living.LEFT)                
             self.draw()
             fpsclock.tick(FPS)
             pygame.display.flip()       
