@@ -4,7 +4,7 @@ barriers:
 - image: wall_h_l_yellow.png
   name: b2 
   x: 500
-  y: 695
+  y: 808
 - image: wall_h_m_blue.png
   name: b4
   x: 0

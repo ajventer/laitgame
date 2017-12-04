@@ -39,7 +39,7 @@ class Barrier(pygame.sprite.Sprite):
             while self.rect.colliderect(sprite.rect):
                 sprite.rect.x -= 1
         #self.settings.logger.debug ("%s collided with %s with it's  %s side" %(sprite,self,col_side))
-        print ("%s collided with %s with it's  %s side" %(sprite,self,col_side))
+        print ("%s (%s) collided with %s with it's  %s side" %(sprite,sprite.rect,self,col_side))
         sprite.on_collide(self,col_side)
 
     def __str__(self):

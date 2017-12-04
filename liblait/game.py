@@ -60,10 +60,10 @@ class Game(object):
         self.settings = settings
         self.display = pygame.Surface((1920,1080))
         self.camera_top = 33
-        c_rect = Rect(0,0,1920,848)        
+        c_rect = Rect(0,0,1920,950)        
         self.camera = Camera(self.level,self,c_rect, self.player)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
-        self.floor = Barrier(0,840,self.camera.playarea.get_width(),1920,self.settings, 'floor')
+        self.floor = Barrier(0,950,self.camera.playarea.get_width(),1920,self.settings, 'floor')
         self.roof = Barrier(0,0,self.camera.playarea.get_width(),20,self.settings, 'roof')
         self.leftEdge = Barrier (0,0,20,self.camera.playarea.get_height(),self.settings, 'leftedge')
         self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')
@@ -114,7 +114,7 @@ class Game(object):
     def draw(self):
         self.camera.update_play_area()
         self.display.blit(self.camera.playarea,(0,self.camera_top),self.camera.rect())
-        self.display.blit(self.frame,(0,0))
+        self.display.blit(self.frame,(0,980))
         
         if self.screen.get_size() != (1920,1080):
             #If the player is not using 1080p resolution, scale the display to match the screen
