@@ -1,6 +1,8 @@
 Borderless: false
 Fullscreen: false
 Language: English
+Joystick: 360.yml
+JoystickNumber: 0
 Languages:
 - English
 Loglevel: DEBUG

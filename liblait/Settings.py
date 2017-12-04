@@ -35,7 +35,8 @@ class SETTINGS(object):
         self.musicdir = os.path.join(self.datadir,'Music')
         self.leveldir = os.path.join(self.datadir,'Levels')
         self.spritesdir = os.path.join(self.datadir,'Sprites')
-
+        self.confdir = os.path.join(self.gamedir,'Config')
+        self.joydir = os.path.join(self.confdir,'JoystickMaps')
 
         self.reload_settings()
         self.buttonsdir = os.path.join(self.buttonsdir,self.language)
@@ -43,6 +44,9 @@ class SETTINGS(object):
 
     def reload_settings(self):
         self.settingsdict = yaml.safe_load(open(self.settingsfile))
+        self.joystick = self.settingsdict['Joystick']
+        self.joymap = yaml.safe_load(open(os.path.join(self.joydir,self.joystick)))
+        self.joysticknumber = self.settingsdict['JoystickNumber']
         self.res_x = self.settingsdict['Resolution']['w']
         self.res_y = self.settingsdict['Resolution']['h']
         self.resolution = (self.res_x, self.res_y)

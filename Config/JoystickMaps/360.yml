@@ -1,0 +1,15 @@
+joyaxismap:
+  lr:
+  - 0
+  - 3
+  ud:
+  - 1
+  - 4
+deadzone: 0.15
+joybtnmap:
+  0: a
+  1: b
+  2: x
+  3: y
+  6: select
+  7: start
