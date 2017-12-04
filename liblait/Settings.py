@@ -37,6 +37,7 @@ class SETTINGS(object):
         self.spritesdir = os.path.join(self.datadir,'Sprites')
         self.confdir = os.path.join(self.gamedir,'Config')
         self.joydir = os.path.join(self.confdir,'JoystickMaps')
+        self.staticsdir = os.path.join(self.datadir,'Statics')
 
         self.reload_settings()
         self.buttonsdir = os.path.join(self.buttonsdir,self.language)
