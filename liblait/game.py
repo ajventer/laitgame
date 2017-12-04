@@ -116,8 +116,12 @@ class Game(object):
         self.display.blit(self.camera.playarea,(0,self.camera_top),self.camera.rect())
         self.display.blit(self.frame,(0,0))
         
-        scaled = pygame.transform.smoothscale(self.display, self.screen.get_size())
-        self.screen.blit(scaled,(0,0))
+        if self.screen.get_size() != (1920,1080):
+            #If the player is not using 1080p resolution, scale the display to match the screen
+            scaled = pygame.transform.smoothscale(self.display, self.screen.get_size())
+            self.screen.blit(scaled,(0,0))
+        else:
+            self.screen.blit(self.display,(0,0))
 
     def run(self):
         FPS=60
