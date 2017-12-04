@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from .barrier import Barrier
 import yaml
 import os
 
@@ -21,6 +22,14 @@ class Level(object):
         self.width = self.leveldict['width']
         self.music = self.leveldict['music']
         assert self.background_mode in ['follow','tile','stretch']
+
+    def get_barriers(self):
+        for b in self.leveldict['barriers']:
+            name = None
+            if 'name' in b:
+                name = b['name']
+            yield Barrier(b['x'],b['y'],0,0, self.settings, name=name, image=b['image'])
+
 
     def save():
         #TODO - for editor

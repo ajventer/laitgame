@@ -131,10 +131,6 @@ class settingsMenu(object):
             inputhandler.get_events(self.load, self.menu, True)
             if inputhandler.quit:
                 return 'quit'
-            elif inputhandler.up:
-                self.up()
-            if inputhandler.down:
-                self.down()
             if inputhandler.select:
                 return 'mainmenu'
             self.drawmenu()

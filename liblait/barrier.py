@@ -11,10 +11,13 @@ class Barrier(pygame.sprite.Sprite):
         if name:
             self.name = name
         else:
-            self.name == 'UNKNOWN BARRIER'
+            self.name = 'UNKNOWN BARRIER'
         if image:
             self.image = pygame.image.load(os.path.join(self.settings.staticsdir,image))
-            rect = self.image.get_rect()
+            self.rect = self.image.get_rect()
+            self.rect.x = x
+            self.rect.y = y
+
 
     def on_collide(self,sprite):
         #Called when a sprite collides with the barrier

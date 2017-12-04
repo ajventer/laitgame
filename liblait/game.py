@@ -17,7 +17,7 @@ class Camera(object):
         self.game = game
         self.rect = rect
         self.player = player
-        self.sprites = pygame.sprite.Group(self.player)
+        self.sprites = pygame.sprite.OrderedUpdates(self.player)
         self.playarea = pygame.Surface((self.level.width,self.rect.get_height()))
         if self.level.background_mode == 'follow':
             self.level.background = pygame.transform.smoothscale(self.level.background,self.rect.get_size())
@@ -64,11 +64,15 @@ class Game(object):
         self.camera = Camera(self.level,self,c_rect, self.player)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
         self.floor = Barrier(0,840,self.camera.playarea.get_width(),1920,self.settings, 'floor')
-        self.roof = Barrier(0,0,self.camera.playarea.get_width(),30,self.settings, 'roof')
+        self.roof = Barrier(0,0,self.camera.playarea.get_width(),20,self.settings, 'roof')
         self.leftEdge = Barrier (0,0,20,self.camera.playarea.get_height(),self.settings, 'leftedge')
         self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
-        self.livinggroup = pygame.sprite.Group(self.player)  
+        self.livinggroup = pygame.sprite.Group(self.player) 
+
+        for b in self.level.get_barriers():
+            self.barriergroup.add(b) 
+            self.camera.sprites.add(b)
 
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,self.level.music))
         pygame.mixer.music.set_volume(self.settings.musicvol)
