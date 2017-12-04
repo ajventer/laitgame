@@ -55,12 +55,13 @@ class Living(pygame.sprite.Sprite):
 
     def walk(self, direction):
         self.moving = True
-        self.mode = direction
-        self.animation.stop()
-        self.animation = Animation(self.sheet, WALK, 10)
-        if direction == LEFT:
-            self.animation.flip()
-        self.animation.play(True)
+        if self.mode != direction:
+            self.mode = direction
+            self.animation = Animation(self.sheet, WALK, 10)
+            if direction == LEFT:
+                self.animation.flip()
+        if not self.animation.playing:
+            self.animation.play(True)
 
     def fall(self):
         self.moving = True

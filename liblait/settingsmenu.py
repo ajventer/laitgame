@@ -128,7 +128,7 @@ class settingsMenu(object):
         while True:
             if self.savemode:
                 return "save_settings"
-            inputhandler.get_events(self.load, self.menu)
+            inputhandler.get_events(self.load, self.menu, True)
             if inputhandler.quit:
                 return 'quit'
             elif inputhandler.up:

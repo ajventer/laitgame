@@ -25,9 +25,10 @@ def initall():
 if __name__ == '__main__':
     GAMEDIR=os.path.dirname(os.path.realpath(__file__))
     settings, screen,flags = initall()
-    nextaction = ''
+    nextaction = 'mainmenu'
     while nextaction != 'quit':
-        nextaction = mainmenu.mainMenu(screen,settings,flags).run()
+        if nextaction == 'mainmenu':
+            nextaction = mainmenu.mainMenu(screen,settings,flags).run()
         if nextaction == 'settings':
             nextaction = settingsmenu.settingsMenu(screen,settings, flags).run()
         if nextaction == 'save_settings':

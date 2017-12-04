@@ -76,7 +76,8 @@ class Game(object):
             if not supported:
                 unsupported.append (sprite)
             else:
-                sprite.stop()
+                if sprite.mode == living.FALLING:
+                    sprite.stop()
         for sprite in unsupported:
             if sprite.mode != living.FALLING:
                 sprite.fall()
@@ -97,6 +98,8 @@ class Game(object):
         fpsclock = pygame.time.Clock()
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         while True:
+            if self.player.mode != living.FALLING:
+                self.player.stop()
             self.gravity()
             inputhandler.get_events(self.draw)
             if inputhandler.quit:
@@ -104,7 +107,9 @@ class Game(object):
             if inputhandler.select:
                 return 'settings'
             if inputhandler.start:
-                return ''
+                return 'mainmenu'
+            if inputhandler.right:
+                self.player.walk(living.RIGHT)
             self.draw()
             fpsclock.tick(FPS)
             pygame.display.flip()       

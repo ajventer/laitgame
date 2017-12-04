@@ -110,7 +110,7 @@ class mainMenu(object):
         self.load()
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         while True:
-            inputhandler.get_events(self.load)
+            inputhandler.get_events(self.load, onceOnly=True)
             if inputhandler.quit:
                 return 'quit'
             if inputhandler.up:

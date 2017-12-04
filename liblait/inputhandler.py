@@ -3,6 +3,7 @@ from pygame.locals import *
 
 class InputHandler(object):
     def __init__(self, settings,screen,flags):
+        self.__reset_flags()
         self.screen = screen
         self.settings = settings
         self.flags = flags
@@ -41,8 +42,7 @@ class InputHandler(object):
         for button in self.keymap:
             setattr(self, button, False)
 
-    def get_events(self, scalefunc, menu=None):
-        self.__reset_flags()
+    def get_events(self, scalefunc, menu=None, onceOnly=False):
         for event in pygame.event.get():
             #TODO flag buttons on joystick events
             answer = ''
@@ -52,6 +52,10 @@ class InputHandler(object):
                 for button in self.keymap:
                     if event.key in self.keymap[button]:
                         setattr(self, button, True)
+            elif event.type == KEYUP:
+                for button in self.keymap:
+                    if event.key in self.keymap[button]:
+                        setattr(self, button, False)                       
             elif event.type == VIDEORESIZE:
                 self.screen = pygame.display.set_mode(event.size,self.flags)
                 self.settings.settingsdict['Resolution']['w'] = self.screen.get_width()
@@ -75,39 +79,53 @@ class InputHandler(object):
                 else:
                     self.settings.logger.debug('Unknown joy button %s pressed' % event.button)
                     print (event.button)
-            elif event.type == pygame.JOYAXISMOTION:
-                #Our simple control scheme treats all axes and hats as equal
-                for i in range(self.joystick.get_numaxes()):
-                    axis = self.joystick.get_axis(i)
-                    if axis != 0:
-                        axisdir = None
-                        for direction in self.joyaxismap:
-                            if i in self.joyaxismap[direction]:
-                                axisdir = direction
-                                break
-                        if axisdir and axisdir == 'lr':
-                            if axis <0:
-                                self.left = True
-                            elif axis > 0:
-                                self.right = True
-                        elif axisdir == 'ud':
-                            if axis <0:
-                                self.up = True
-                            elif axis > 0:
-                                self.down = True
             elif event.type == pygame.JOYHATMOTION:
                 lr,ud = event.value
                 if lr == -1:
                     self.left = True
                 elif lr == 1:
                     self.right = True
+                elif lr == 0:
+                    self.left = False
+                    self.right = False
                 if ud == 1:
                     self.up = True
                 elif ud == -1:
                     self.down = True
-
-
-
+                elif ud == 0:
+                    self.up = False
+                    self.down = False
+            elif event.type == pygame.JOYAXISMOTION:
+                #Our simple control scheme treats all axes and hats as equal
+                axis = event.axis
+                value = event.value
+                print (axis, value)
+                axisdir = None
+                for direction in self.joyaxismap:
+                    if axis in self.joyaxismap[direction]:
+                        axisdir = direction
+                        break
+                if axisdir == 'lr':
+                    if value <0:
+                        self.left = True
+                        self.right = False
+                    elif value > 0:
+                        self.right = True
+                        self.left = False
+                    elif int(value) == 0.0:
+                        self.left = False
+                        self.right = False
+                    break
+                elif axisdir == 'ud':
+                    if value <0:
+                        self.up = True
+                        self.down = False
+                    elif value > 0:
+                        self.down = True
+                        self.up = False
+                    elif int(value) == 0:
+                        self.down = False
+                        self.up = False
             if menu:
                 menu.react(event)
 
