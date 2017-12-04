@@ -31,7 +31,7 @@ class Living(pygame.sprite.Sprite):
         sheetfile = os.path.join(settings.spritesdir,sheet)
         self.sheet = Sheet(sheetfile,rows=6,cols=3)
         self.stand()
-        self.rect = self.image().get_rect()
+        self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
 
@@ -41,7 +41,7 @@ class Living(pygame.sprite.Sprite):
         return (x,y)
 
     def get_pos(self):
-        return self.rect.topleft
+        return self.rect.center
 
     def stop(self):
         self.animation.stop()
@@ -88,7 +88,12 @@ class Living(pygame.sprite.Sprite):
                 self.rect.y += self.speed
                 self.rect.x -= self.speed
 
+    def update(self):
+        #When overriding - ensure you call move at the end
+        self.move()
 
+
+    @property
     def image(self):
         return self.animation.image()
 
