@@ -11,8 +11,8 @@ import os
 
 class Camera(object):
     def __init__(self, level, game,rect, player):
-        self.slack = 200
-        self.panspeed = 10
+        self.slack = 0
+        self.panspeed = 50
         self.level = level
         self.game = game
         self.rect = rect
@@ -44,10 +44,11 @@ class Camera(object):
 
     def update_camera_position(self):
         if abs(self.rect.centerx - self.player.rect.centerx) > self.slack:
-            if self.rect.centerx < self.player.rect.centerx and self.rect.right < self.playarea.get_width() -self.panspeed:
-                self.rect.centerx += self.panspeed
-            if self.rect.centerx > self.player.rect.centerx and self.rect.left > self.panspeed:
-                self.rect.centerx -= self.panspeed
+            self.rect.centerx = self.player.rect.centerx
+        if self.rect.left < 0:
+            self.rect.x = 0
+        if self.rect.right > self.playarea.get_width():
+            self.rect.right = self.playarea.get_width()
 
 class Game(object):
     def __init__(self, levelfile, settings, screen, flags):
@@ -62,10 +63,11 @@ class Game(object):
         c_rect = Rect(0,0,1920,848)        
         self.camera = Camera(self.level,self,c_rect, self.player)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
-        self.floor = Barrier(0,840,1920,self.camera.playarea.get_width(),self.settings, 'floor')
+        self.floor = Barrier(0,840,self.camera.playarea.get_width(),1920,self.settings, 'floor')
         self.roof = Barrier(0,0,self.camera.playarea.get_width(),30,self.settings, 'roof')
         self.leftEdge = Barrier (0,0,20,self.camera.playarea.get_height(),self.settings, 'leftedge')
-        self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge)
+        self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')
+        self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player)  
 
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,self.level.music))
@@ -129,10 +131,11 @@ class Game(object):
                 return 'settings'
             if inputhandler.start:
                 return 'mainmenu'
-            if inputhandler.right:
-                self.player.walk(living.RIGHT)
-            if inputhandler.left:
-                self.player.walk(living.LEFT)                
+            if not self.player.mode == living.FALLING:
+                if inputhandler.right:
+                    self.player.walk(living.RIGHT)
+                if inputhandler.left:
+                    self.player.walk(living.LEFT)                
             self.draw()
             fpsclock.tick(FPS)
             pygame.display.flip()       
