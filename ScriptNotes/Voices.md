@@ -1,10 +1,10 @@
 # Audio Phrases to record
 
 ## Main Menu
-- ~~Start a new game
-- Continue playing
-- Quit the game
-- Change Settings
+- ~~Start a new game~~
+- ~~Continue playing~~
+- ~~Quit the game~~
+
 
 ## Level 1 - Tutorial
 - ~~Hi, I'm Lilly and I'm going on a grand adventure through toyland. Come along !~~
