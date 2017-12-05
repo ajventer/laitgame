@@ -10,6 +10,9 @@ class Player(living.Living):
         living.Living.__init__(self, settings, x, y, 'Player.png')
         self.settings = settings
         self.collidetime = 0
+        self.spells = []
+        self.health = 10
+        self.magic = 10
 
     def on_collide(self, sprite, direction):
         #Called when we collide with a sprite
