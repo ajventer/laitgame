@@ -10,6 +10,7 @@ barriers:
   x: 0
   y: 250
 
+
 music: Arabesque.ogg
 player_pos:
   x: 20

@@ -17,7 +17,7 @@ class Camera(object):
         self.game = game
         self.rect = rect
         self.player = player
-        self.sprites = pygame.sprite.OrderedUpdates(self.player)
+        self.sprites = pygame.sprite.OrderedUpdates()
         self.playarea = pygame.Surface((self.level.width,self.rect.get_height()))
         if self.level.background_mode == 'follow':
             self.level.background = pygame.transform.smoothscale(self.level.background,self.rect.get_size())
@@ -37,6 +37,7 @@ class Camera(object):
     def update_play_area(self):
         if self.level.background_mode == 'follow':
             self.playarea.blit(self.level.background,self.rect.get_topleft())
+        #Ensure player is always the last sprite in the list
         self.sprites.clear(self.playarea,self.background)
         self.sprites.update()
         self.sprites.draw(self.playarea)
@@ -70,9 +71,17 @@ class Game(object):
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player) 
 
+        #Remember the order of addition matters ! 
+        #First add barriers
         for b in self.level.get_barriers():
             self.barriergroup.add(b) 
             self.camera.sprites.add(b)
+
+        #Always add the player last
+        self.camera.sprites.add(self.player)
+
+
+
 
         pygame.mixer.music.load(os.path.join(self.settings.musicdir,self.level.music))
         pygame.mixer.music.set_volume(self.settings.musicvol)
