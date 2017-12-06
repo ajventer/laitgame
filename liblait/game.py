@@ -127,6 +127,16 @@ class Game(object):
         self.camera.update_play_area()
         self.display.blit(self.camera.playarea,(0,self.camera_top),self.camera.rect())
         self.display.blit(self.frame,(0,980))
+
+        #Draw the healthbar 
+        self.display.fill((220,220,220),pygame.Rect(48,1018,204,44))
+        self.display.fill((128,0,0),pygame.Rect(50,1020,20 * self.player.health,40))
+
+        #Draw the magica bar
+        self.display.fill((220,220,220),pygame.Rect(1678,1018,204,44))
+        offset = 20*(10 - self.player.magic)
+        self.display.fill((0,0,128),pygame.Rect(1680 + offset,1020,200 - offset,40))                
+        
         
         if self.screen.get_size() != (1920,1080):
             #If the player is not using 1080p resolution, scale the display to match the screen

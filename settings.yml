@@ -1,4 +1,4 @@
-Borderless: true
+Borderless: False
 Fullscreen: false
 Joystick: 360.yml
 JoystickNumber: 0
@@ -13,8 +13,8 @@ Loglevels:
 - ERROR
 - CRTICAL
 Resolution:
-  h: 1080
-  w: 1920
+  h: 768
+  w: 1024
 Volume:
   fx: 20.0
   music: 20.0
