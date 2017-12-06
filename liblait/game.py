@@ -37,7 +37,6 @@ class Camera(object):
     def update_play_area(self):
         if self.level.background_mode == 'follow':
             self.playarea.blit(self.level.background,self.rect.get_topleft())
-        #Ensure player is always the last sprite in the list
         self.sprites.clear(self.playarea,self.background)
         self.sprites.update()
         self.sprites.draw(self.playarea)
@@ -46,10 +45,8 @@ class Camera(object):
     def update_camera_position(self):
         if abs(self.rect.centerx - self.player.rect.centerx) > self.slack:
             self.rect.centerx = self.player.rect.centerx
-        if self.rect.left < 0:
-            self.rect.x = 0
-        if self.rect.right > self.playarea.get_width():
-            self.rect.right = self.playarea.get_width()
+        self.rect.left = max(self.rect.left, 0)
+        self.rect.right = min(self.rect.right, self.playarea.get_width())
 
 class Game(object):
     def __init__(self, levelfile, settings, screen, flags):
@@ -70,11 +67,17 @@ class Game(object):
         self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player) 
+        self.laddergroup = pygame.sprite.Group()
 
         #Remember the order of addition matters ! 
         #First add barriers
         for b in self.level.get_barriers():
             self.barriergroup.add(b) 
+            self.camera.sprites.add(b)
+
+        for l in self.level.get_ladders():
+            print ("Found ladder", l, l.image)
+            self.laddergroup.add(b) 
             self.camera.sprites.add(b)
 
         #Always add the player last

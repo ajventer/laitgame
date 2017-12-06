@@ -1,5 +1,10 @@
 background: Level1.png
-background_mode: stretch
+background_mode: tile
+ladders:
+- image: ladder1.png
+  name: l1 
+  x: 500
+  y: 500
 barriers:
 - image: wall_h_l_yellow.png
   name: b2 
@@ -9,8 +14,6 @@ barriers:
   name: b4
   x: 0
   y: 250
-
-
 music: Arabesque.ogg
 player_pos:
   x: 20

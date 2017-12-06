@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from .barrier import Barrier
+from .ladder import Ladder
 import yaml
 import os
 
@@ -29,6 +30,13 @@ class Level(object):
             if 'name' in b:
                 name = b['name']
             yield Barrier(b['x'],b['y'],0,0, self.settings, name=name, image=b['image'])
+
+    def get_ladders(self):
+        for b in self.leveldict['ladders']:
+            name = None
+            if 'name' in b:
+                name = b['name']
+            yield Ladder(b['x'],b['y'], self.settings, name=name, image=b['image'])
 
 
     def save():
