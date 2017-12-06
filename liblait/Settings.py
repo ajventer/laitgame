@@ -24,6 +24,7 @@ class SETTINGS(object):
         self.logger = logging.getLogger('LAIT')
 
         self.gamedir = gamedir
+        self.savefile = os.path.join(self.gamedir,'savegame.yml')
         self.datadir = os.path.join(self.gamedir,'data')
         self.snddir = os.path.join(self.datadir,'Sound')
         self.voicedir = os.path.join(self.snddir,'Voice')

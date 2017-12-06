@@ -34,6 +34,6 @@ if __name__ == '__main__':
         if nextaction == 'save_settings':
             settings,screen,flags == initall()
         if nextaction == 'new':
-            nextaction = game.Game('Level1.yml', settings, screen, flags).run()
+            nextaction = game.Game(settings, screen, flags, levelfile='Level1.yml').run()
     pygame.quit()
     sys.exit()
