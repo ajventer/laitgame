@@ -52,10 +52,15 @@ class Camera(object):
             self.rect.right = self.playarea.get_width()
 
 class Game(object):
-    def __init__(self, levelfile, settings, screen, flags):
+    def __init__(self, settings, screen, flags, levelfile=None):
         self.flags = flags
-        self.level = Level(levelfile, settings, screen)
-        self.player = player.Player(settings,self.level.playerx, self.level.playery)
+        self.level = Level(settings)
+        if levelfile:
+            self.level.load(levelfile)
+        else: 
+            self.level.load_from_save()
+        self.level.save_game()
+        self.player = self.level.player
         self.sh = ScaleHandler(screen)
         self.screen = screen
         self.settings = settings

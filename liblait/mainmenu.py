@@ -46,7 +46,7 @@ class mainMenu(object):
         self.sh = ScaleHandler(self.screen)
         self.background = self.sh.imgload(os.path.join(self.settings.bgdir,'battleback1.png'))
         self.logo = self.sh.imgload(os.path.join(self.settings.buttonsdir,'logo.png'))
-        if os.path.exists(os.path.join(self.settings.gamedir,'savegame.yml')):
+        if os.path.exists(self.settings.savefile):
             s = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont.png'))
             h = self.sh.imgload(os.path.join(self.settings.buttonsdir,'cont_hi.png'))
             o = Option(s,h,self.__continue,'ContPlay.wav',self.settings)
