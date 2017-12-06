@@ -73,6 +73,7 @@ class Game(object):
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player) 
         self.laddergroup = pygame.sprite.Group()
+        self.nextlevel = None
 
         #Remember the order of addition matters ! 
         #First add barriers
@@ -165,6 +166,8 @@ class Game(object):
         FPS=60
         fpsclock = pygame.time.Clock()
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
+        if self.nextlevel:
+            return "loadlevel %s" %self.loadlevel
         while True:
             if self.player.mode != living.FALLING:
                 self.player.stop()
