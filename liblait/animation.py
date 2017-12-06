@@ -64,6 +64,7 @@ class Animation(object):
         self.frame = 0
         self.advance = 1
         self.flipped = False
+        self.allrows = False
 
     def play(self, loop=False):
         self.playing = True
@@ -76,21 +77,32 @@ class Animation(object):
     def flip(self):
         self.flipped = True
 
+    def find_frame(self,frame):
+        row = frame / self.sheet.cols
+        self.row = int(str(row).split('.')[0]) # Truncate the row
+        self.frame = frame % self.sheet.cols
+        if self.loop and self.frame > (self.sheet.rows * self.sheet.cols) - 1:
+            self.row, self.frame = 0, 0
+        else:
+            self.frame = (self.sheet.rows * self.sheet.cols) - 1 
+            self.stop()
+
     def image(self):
         if self.playing:
             self.framecount += 1
             if self.framecount >= self.fpf:
                 self.framecount = 0
                 self.frame += self.advance               
-        if self.framecount == 0 and (self.frame == self.sheet.row_count() or self.frame == 0):
-            if self.loop:
-                if self.advance == 1:
-                    self.advance = -1
-                else:
-                    self.advance = 1
-            else:
-                self.stop()
-                self.frame = self.sheet.row_count()
+        if self.framecount == 0:
+            if self.allrows:
+                self.find_frame()
+            else: 
+                if self.frame == self.sheet.row_count() or self.frame == 0:
+                    if self.loop:
+                        self.advance *= -1
+                    else:
+                        self.stop()
+                    self.frame = self.sheet.row_count()
         if self.flipped:
             return pygame.transform.flip(self.sheet.get_image(self.row,self.frame), True, False)
         return self.sheet.get_image(self.row,self.frame)
