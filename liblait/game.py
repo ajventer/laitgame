@@ -82,8 +82,8 @@ class Game(object):
 
         for l in self.level.get_ladders():
             print ("Found ladder", l, l.image)
-            self.laddergroup.add(b) 
-            self.camera.sprites.add(b)
+            self.laddergroup.add(l) 
+            self.camera.sprites.add(l)
 
         #Always add the player last
         self.camera.sprites.add(self.player)
@@ -99,6 +99,9 @@ class Game(object):
         unsupported = []
         for sprite in self.livinggroup.sprites():
             if sprite.antigrav:
+                if sprite.mode == living.FALLING:
+                    sprite.stop()
+                    sprite.stand()
                 continue
             supported = False
             for barrier in self.barriergroup.sprites():
@@ -116,16 +119,23 @@ class Game(object):
             else:
                 if sprite.mode == living.FALLING:
                     sprite.stop()
+                    sprite.stand()
 
         for sprite in unsupported:
-            if sprite.mode != living.FALLING:
+            if sprite.mode != living.FALLING and not sprite.antigrav:
                 sprite.fall()
 
     def collision_checks(self):
-        for barrier in self.barriergroup.sprites():
-            for sprite in self.livinggroup.sprites():
-                if sprite.rect.colliderect(barrier.rect):
+        for sprite in self.livinggroup.sprites():
+            if sprite.onladder:
+               if not sprite.onladder.collision_func(sprite):
+                sprite.set_offladder()
+            for barrier in self.barriergroup.sprites():
+                if barrier.collision_func(sprite):
                     barrier.on_collide(sprite)
+            for ladder in self.laddergroup.sprites():
+                if ladder.collision_func(sprite):
+                    ladder.on_collide(sprite)                
 
 
     def draw(self):
@@ -170,7 +180,12 @@ class Game(object):
                 if inputhandler.right:
                     self.player.walk(living.RIGHT)
                 if inputhandler.left:
-                    self.player.walk(living.LEFT)                
+                    self.player.walk(living.LEFT)
+            if self.player.onladder:
+                if inputhandler.up:
+                    self.player.climb(living.UP)
+                if inputhandler.down:
+                    self.player.climb(living.DOWN)                
             self.draw()
             fpsclock.tick(FPS)
             pygame.display.flip()       

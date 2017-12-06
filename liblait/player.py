@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from . import living
+from . import static
 import os
 import time
 
@@ -18,7 +19,7 @@ class Player(living.Living):
         #Called when we collide with a sprite
         #This is an empty function - to be overriden by specific classes
         self.stop()
-        if sprite.barrier and direction != 'bottom':
+        if sprite.statictype == static.BARRIER and direction != 'bottom':
             now = time.time()
             if now - self.collidetime > 3:
                 self.collidetime = now            
