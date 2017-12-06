@@ -30,7 +30,7 @@ class Living(pygame.sprite.Sprite):
         self.mode = STANDING
         self.antigrav = False 
         self.antigrav_default = False
-        self.onladder = None
+        self.onladder = pygame.sprite.Group()
 
         sheetfile = os.path.join(settings.spritesdir,sheet)
         self.sheet = Sheet(sheetfile,rows=6,cols=3)
@@ -77,13 +77,14 @@ class Living(pygame.sprite.Sprite):
             self.animation.play(True)
 
     def set_onladder(self, sprite):
-        self.onladder = sprite
+        self.onladder.add(sprite)
         self.antigrav = True
 
-    def set_offladder(self):
-        print ("%s is no longer on ladder %s" %(self, self.onladder))
-        self.onladder = None
-        self.antigrav = self.antigrav_default
+    def set_offladder(self, sprite):
+        print ("%s is no longer on ladder %s" %(self, sprite))
+        self.onladder.remove(sprite)
+        if not self.onladder.sprites():
+            self.antigrav = self.antigrav_default
 
     def fall(self):
         self.moving = True

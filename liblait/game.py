@@ -128,8 +128,9 @@ class Game(object):
     def collision_checks(self):
         for sprite in self.livinggroup.sprites():
             if sprite.onladder:
-               if not sprite.onladder.collision_func(sprite):
-                sprite.set_offladder()
+                for ladder in sprite.onladder.sprites():
+                    if not ladder.collision_func(sprite):
+                        sprite.set_offladder(ladder)
             for barrier in self.barriergroup.sprites():
                 if barrier.collision_func(sprite):
                     barrier.on_collide(sprite)
