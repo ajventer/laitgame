@@ -23,7 +23,7 @@ CLIMBING=8
 
 
 class Living(pygame.sprite.Sprite):
-    def __init__(self, settings, x, y, sheet):
+    def __init__(self, settings, x, y, sheet, rows, cols):
         pygame.sprite.Sprite.__init__(self)
         self.speed = 5
         self.moving = False
@@ -33,7 +33,7 @@ class Living(pygame.sprite.Sprite):
         self.onladder = pygame.sprite.Group()
 
         sheetfile = os.path.join(settings.spritesdir,sheet)
-        self.sheet = Sheet(sheetfile,rows=6,cols=3)
+        self.sheet = Sheet(sheetfile,rows=rows,cols=cols)
         self.stand()
         self.rect = self.image.get_rect()
         self.rect.x = x

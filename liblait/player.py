@@ -8,12 +8,13 @@ import time
 
 class Player(living.Living):
     def __init__(self, settings, x, y):
-        living.Living.__init__(self, settings, x, y, 'Player.png')
+        living.Living.__init__(self, settings, x, y, 'Player.png', rows=6, cols=3)
         self.settings = settings
         self.collidetime = 0
         self.spells = []
         self.health = 10
         self.magic = 10
+        self.name = 'Player'      
 
     def on_collide(self, sprite, direction):
         #Called when we collide with a sprite
