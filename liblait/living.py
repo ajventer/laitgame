@@ -31,6 +31,7 @@ class Living(pygame.sprite.Sprite):
         self.antigrav = False 
         self.antigrav_default = False
         self.onladder = pygame.sprite.Group()
+        self.onslide = pygame.sprite.Group()
 
         sheetfile = os.path.join(settings.spritesdir,sheet)
         self.sheet = Sheet(sheetfile,rows=rows,cols=cols)
@@ -80,11 +81,31 @@ class Living(pygame.sprite.Sprite):
         self.onladder.add(sprite)
         self.antigrav = True
 
+    def set_onslide(self, sprite):
+        self.moving = True
+        self.onslide.add(sprite)
+        self.antigrav = True
+        self.animation = Animation(self.sheet, SLIDE, 10)
+        self.animation.stop()
+        if sprite.flipped:
+            self.mode=SLIDING_LEFT
+            self.animation.flip()
+        else:
+            self.mode=SLIDING_RIGHT        
+
     def set_offladder(self, sprite):
         print ("%s is no longer on ladder %s" %(self, sprite))
         self.onladder.remove(sprite)
         if not self.onladder.sprites():
             self.antigrav = self.antigrav_default
+
+    def set_offslide(self, sprite):
+        print ("%s is no longer on slide %s" %(self, sprite))
+        self.onslide.remove(sprite)
+        if not self.onslide.sprites():
+            self.antigrav = self.antigrav_default 
+            self.stop()
+            self.stand()           
 
     def fall(self):
         self.moving = True
@@ -113,10 +134,10 @@ class Living(pygame.sprite.Sprite):
             elif self.mode == FALLING:
                 self.rect.y += 2*self.speed
             elif self.mode == SLIDING_RIGHT:
-                self.rect.y += self.speed
+                self.rect.y += self.speed + 2
                 self.rect.x += self.speed
             elif self.mode == SLIDING_LEFT:
-                self.rect.y += self.speed
+                self.rect.y += self.speed + 2
                 self.rect.x -= self.speed
 
     def update(self):

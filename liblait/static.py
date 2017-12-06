@@ -7,14 +7,12 @@ LADDER=1
 
 
 class Static(pygame.sprite.Sprite):
-    def __init__(self,x,y,w,h, settings, name=None, image=None):
+    def __init__(self,x,y,w,h, settings, name, image=None):
         pygame.sprite.Sprite.__init__(self)   
         self.rect = pygame.Rect(x,y,w,h)
         self.settings = settings
-        if name:
-            self.name = name
-        else:
-            self.name = 'UNKNOWN'
+
+        self.name = name
         if image:
             self.image = pygame.image.load(os.path.join(self.settings.staticsdir,image))
             self.rect = self.image.get_rect()

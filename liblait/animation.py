@@ -93,16 +93,15 @@ class Animation(object):
             if self.framecount >= self.fpf:
                 self.framecount = 0
                 self.frame += self.advance               
-        if self.framecount == 0:
-            if self.allrows:
-                self.find_frame()
-            else: 
-                if self.frame == self.sheet.row_count() or self.frame == 0:
-                    if self.loop:
-                        self.advance *= -1
-                    else:
-                        self.stop()
-                    self.frame = self.sheet.row_count()
+                if self.allrows:
+                    self.find_frame()
+                else: 
+                    if self.frame >= self.sheet.row_count() or self.frame <= 0:
+                        if self.loop:
+                            self.advance *= -1
+                        else:
+                            self.stop()
+                        self.frame = self.sheet.row_count()
         if self.flipped:
             return pygame.transform.flip(self.sheet.get_image(self.row,self.frame), True, False)
         return self.sheet.get_image(self.row,self.frame)

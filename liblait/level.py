@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from .barrier import Barrier
 from .ladder import Ladder
+from .slide import Slide
 from . import player
 import yaml
 import os
@@ -41,17 +42,18 @@ class Level(object):
 
     def get_barriers(self):
         for b in self.leveldict['barriers']:
-            name = None
-            if 'name' in b:
-                name = b['name']
+            name = b['name']
             yield Barrier(b['x'],b['y'],0,0, self.settings, name=name, image=b['image'])
 
     def get_ladders(self):
         for b in self.leveldict['ladders']:
-            name = None
-            if 'name' in b:
-                name = b['name']
+            name = b['name']
             yield Ladder(b['x'],b['y'], self.settings, name=name, image=b['image'])
+
+    def get_slides(self):
+        for b in self.leveldict['slides']:
+            name = b['name']
+            yield Slide(b['x'],b['y'], self.settings, b['flipped'], name, b['image'])
 
 
     def save():

@@ -72,19 +72,26 @@ class Game(object):
         self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player) 
-        self.laddergroup = pygame.sprite.Group()
+
+        self.collidergroup = pygame.sprite.Group()
         self.nextlevel = None
 
         #Remember the order of addition matters ! 
         #First add barriers
         for b in self.level.get_barriers():
-            self.barriergroup.add(b) 
+            self.barriergroup.add(b) # Barriers need a seperate group for gravity purposes
             self.camera.sprites.add(b)
+            self.collidergroup.add(b)
 
         for l in self.level.get_ladders():
-            print ("Found ladder", l, l.image)
-            self.laddergroup.add(l) 
+            self.collidergroup.add(l) 
             self.camera.sprites.add(l)
+
+        for s in self.level.get_slides():
+            self.collidergroup.add(s)
+            self.camera.sprites.add(s)
+
+
 
         #Always add the player last
         self.camera.sprites.add(self.player)
@@ -128,16 +135,17 @@ class Game(object):
 
     def collision_checks(self):
         for sprite in self.livinggroup.sprites():
-            if sprite.onladder:
+            if sprite.onslide.sprites():
+                for slide in sprite.onslide.sprites():
+                    if not slide.collision_func(sprite):
+                        sprite.set_offslide(slide)            
+            if sprite.onladder.sprites():
                 for ladder in sprite.onladder.sprites():
                     if not ladder.collision_func(sprite):
                         sprite.set_offladder(ladder)
-            for barrier in self.barriergroup.sprites():
-                if barrier.collision_func(sprite):
-                    barrier.on_collide(sprite)
-            for ladder in self.laddergroup.sprites():
-                if ladder.collision_func(sprite):
-                    ladder.on_collide(sprite)                
+            for collider in self.collidergroup.sprites():
+                if collider.collision_func(sprite):
+                    collider.on_collide(sprite)
 
 
     def draw(self):

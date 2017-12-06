@@ -3,17 +3,34 @@ background_mode: tile
 ladders:
 - image: ladder1.png
   name: l1 
-  x: 500
-  y: 500
+  x: 360
+  y: 808
 barriers:
 - image: wall_h_l_yellow.png
   name: b2 
-  x: 500
-  y: 808
-- image: wall_h_m_blue.png
-  name: b4
   x: 0
   y: 250
+slides:
+  - image: slide_pink.png
+    name: s1
+    x: 904
+    y: 280
+    flipped: false 
+  - image: slide_pink.png
+    name: s2
+    x: 1018
+    y: 403
+    flipped: false 
+  - image: slide_pink.png
+    name: s3
+    x: 1132
+    y: 600
+    flipped: True
+  - image: slide_pink.png
+    name: s4
+    x: 1018
+    y: 723
+    flipped: True    
 music: Arabesque.ogg
 player_pos:
   x: 20
