@@ -9,6 +9,7 @@ from .level import Level
 from .animation import Rect
 import os
 import time
+import glob
 
 class Camera(object):
     def __init__(self, level, game,rect, player):
@@ -169,9 +170,19 @@ class Game(object):
             self.screen.blit(self.display,(0,0))
 
     def take_screenshot(self):
+        count = 0
+        scdir = os.path.join(self.settings.gamedir,'Screenshots')
+        if not os.path.exists(scdir):
+            os.mkdir(scdir)
         if time.time() - self.sctimer > 3:
-            pass #TODO take the screenshot
-        self.sctimer = time.time()
+            shots = sorted(glob.glob('scdir' + os.pathsep + '*'))
+            if shots:
+                lastshot = shots[-1]
+                lastcount = int(lastshot.split('_')[-1].split('.jpg')[0])
+                count = lastcount + 1
+            scname = 'screenshot_%s.jpg' % str(count).zfill(3)
+            pygame.image.save(self.screen,os.path.join(scdir,scname))
+            self.sctimer = time.time()
 
     def run(self):
         FPS=60
