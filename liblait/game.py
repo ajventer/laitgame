@@ -45,6 +45,8 @@ class Camera(object):
 
 class Game(object):
     def __init__(self, settings, screen, flags, levelfile=None):
+        self.paused = False
+        self.pauseimg = pygame.image.load(os.path.join(settings.staticsdir,'Paused.png'))
         self.flags = flags
         self.level = Level(settings)
         if levelfile:
@@ -180,20 +182,23 @@ class Game(object):
             if inputhandler.quit:
                 return 'quit'
             if inputhandler.select:
-                return 'settings'
-            if inputhandler.start:
-                return 'mainmenu'
-            if not self.player.mode == living.FALLING:
-                if inputhandler.right:
-                    self.player.walk(living.RIGHT)
-                if inputhandler.left:
-                    self.player.walk(living.LEFT)
-            if self.player.onladder:
-                if inputhandler.up:
-                    self.player.climb(living.UP)
-                if inputhandler.down:
-                    self.player.climb(living.DOWN)                
-            self.draw()
+                self.paused = not self.paused
+            if self.paused:
+                self.screen.blit(self.pauseimg,(self.screen.centerx - (self.pauseimg.get_width()/2),self.screen.centery)
+            else:
+                if inputhandler.start:
+                    return 'mainmenu'
+                if not self.player.mode == living.FALLING:
+                    if inputhandler.right:
+                        self.player.walk(living.RIGHT)
+                    if inputhandler.left:
+                        self.player.walk(living.LEFT)
+                if self.player.onladder:
+                    if inputhandler.up:
+                        self.player.climb(living.UP)
+                    if inputhandler.down:
+                        self.player.climb(living.DOWN)                
+                self.draw()
             fpsclock.tick(FPS)
             pygame.display.flip()       
         
