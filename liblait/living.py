@@ -94,13 +94,13 @@ class Living(pygame.sprite.Sprite):
             self.mode=SLIDING_RIGHT        
 
     def set_offladder(self, sprite):
-        print ("%s is no longer on ladder %s" %(self, sprite))
+        self.settings.debug ("%s is no longer on ladder %s" %(self, sprite))
         self.onladder.remove(sprite)
         if not self.onladder.sprites():
             self.antigrav = self.antigrav_default
 
     def set_offslide(self, sprite):
-        print ("%s is no longer on slide %s" %(self, sprite))
+        self.settings.debug ("%s is no longer on slide %s" %(self, sprite))
         self.onslide.remove(sprite)
         if not self.onslide.sprites():
             self.antigrav = self.antigrav_default 

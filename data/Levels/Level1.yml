@@ -3,36 +3,64 @@ background_mode: tile
 ladders:
 - image: ladder1.png
   name: l1 
-  x: 360
+  x: 860
   y: 808
+- image: ladder2.png
+  name: l2 
+  x: 860
+  y: 668 
+- image: ladder3.png
+  name: l3 
+  x: 860
+  y: 528 
+- image: ladder4.png
+  name: l4 
+  x: 860
+  y: 388 
+- image: ladder5.png
+  name: l4 
+  x: 860
+  y: 248 
+- image: ladder6.png
+  name: l4 
+  x: 860
+  y: 108             
 barriers:
+- image: wall_single_yellow.png
+  name: b2 
+  x: 1000
+  y: 800   
+- image: wall_v_l_blue.png
+  name: b2 
+  x: 1000
+  y: 370  
 - image: wall_h_l_yellow.png
   name: b2 
-  x: 0
+  x: 1000
   y: 250
 slides:
   - image: slide_pink.png
     name: s1
-    x: 904
+    x: 1904
     y: 280
     flipped: false 
   - image: slide_pink.png
     name: s2
-    x: 1018
+    x: 2018
     y: 403
     flipped: false 
   - image: slide_pink.png
     name: s3
-    x: 1132
+    x: 2132
     y: 600
     flipped: True
   - image: slide_pink.png
     name: s4
-    x: 1018
+    x: 2018
     y: 723
     flipped: True    
 music: Arabesque.ogg
 player_pos:
   x: 20
-  y: 20
-width: 3840
+  y: 700
+width: 5840

@@ -19,9 +19,6 @@ class Camera(object):
         self.player = player
         self.sprites = pygame.sprite.OrderedUpdates()
         self.playarea = pygame.Surface((self.level.width,self.rect.get_height()))
-        if self.level.background_mode == 'follow':
-            self.level.background = pygame.transform.smoothscale(self.level.background,self.rect.get_size())
-            self.background = self.level.background.copy()
         if self.level.background_mode == 'stretch':
             self.level.background = pygame.transform.smoothscale(self.level.background,self.playarea.get_size())
             self.playarea.blit(self.level.background,(0,0))
@@ -35,8 +32,6 @@ class Camera(object):
             self.background = self.playarea.copy()
 
     def update_play_area(self):
-        if self.level.background_mode == 'follow':
-            self.playarea.blit(self.level.background,self.rect.get_topleft())
         self.sprites.clear(self.playarea,self.background)
         self.sprites.update()
         self.sprites.draw(self.playarea)
@@ -73,7 +68,7 @@ class Game(object):
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player) 
 
-        self.collidergroup = pygame.sprite.Group()
+        self.collidergroup = self.barriergroup.copy()
         self.nextlevel = None
 
         #Remember the order of addition matters ! 

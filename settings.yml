@@ -6,12 +6,7 @@ Language: English
 Languages:
 - English
 Loglevel: DEBUG
-Loglevels:
-- DEBUG
-- INFO
-- WARNING
-- ERROR
-- CRTICAL
+Logfile: lait.log
 Resolution:
   h: 768
   w: 1024

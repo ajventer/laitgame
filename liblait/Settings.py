@@ -20,8 +20,12 @@ class SETTINGS(object):
             os.unlink(logfile)
         except FileNotFoundError:
             pass
-        logging.basicConfig(filename=logfile)
-        self.logger = logging.getLogger('LAIT')
+        self.logger = logging.getLogger()
+        consoleHandler = logging.StreamHandler()
+        self.logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+        consoleHandler.setFormatter(self.logFormatter)
+        self.logger.addHandler(consoleHandler)
+
 
         self.gamedir = gamedir
         self.savefile = os.path.join(self.gamedir,'savegame.yml')
@@ -44,8 +48,23 @@ class SETTINGS(object):
         self.buttonsdir = os.path.join(self.buttonsdir,self.language)
         self.voicedir = os.path.join(self.voicedir,self.language)
 
+    def log(self,message):
+        self.logger.info(message)
+
+    def debug(self,message):
+        self.logger.debug(message)
+
+    def warn(self,message):
+        self.logger.warning(message)
+
     def reload_settings(self):
         self.settingsdict = yaml.safe_load(open(self.settingsfile))
+        if self.settingsdict['Logfile']:
+            open(self.settingsdict['Logfile'],'w').write('')
+            fileHandler = logging.FileHandler(self.settingsdict['Logfile'])
+            fileHandler.setFormatter(self.logFormatter)
+            self.logger.addHandler(fileHandler)
+
         self.joystick = self.settingsdict['Joystick']
         self.joymap = yaml.safe_load(open(os.path.join(self.joydir,self.joystick)))
         self.joysticknumber = self.settingsdict['JoystickNumber']

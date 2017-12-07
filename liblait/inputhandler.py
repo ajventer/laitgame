@@ -67,7 +67,7 @@ class InputHandler(object):
                         setattr(self, button, True)
                     else:
                         self.settings.logger.debug('Unknown joy button %s pressed' % event.button)
-                        print (event.button)
+                        self.settings.debug (event.button)
                 elif event.type == pygame.JOYBUTTONUP:
                     if event.button in self.joybtnmap:
                         button = self.joybtnmap[event.button]
@@ -75,7 +75,7 @@ class InputHandler(object):
                         setattr(self, button, False)
                     else:
                         self.settings.logger.debug('Unknown joy button %s pressed' % event.button)
-                        print (event.button)
+                        self.settings.debug (event.button)
                 elif event.type == pygame.JOYHATMOTION:
                     lr,ud = event.value
                     if lr == -1:
