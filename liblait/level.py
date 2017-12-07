@@ -3,6 +3,7 @@ from pygame.locals import *
 from .barrier import Barrier
 from .ladder import Ladder
 from .slide import Slide
+from .trigger import Trigger
 from . import player
 import yaml
 import os
@@ -33,6 +34,14 @@ class Level(object):
         assert self.background_mode in ['follow','tile','stretch']
         self.player = player.Player(self.settings,self.playerx, self.playery)
 
+        self.thingmap = {
+        "barriers": Barrier,
+        "ladders": Ladder,
+        "slides": Slide,
+        "triggers": Trigger
+
+        }
+
     def load_from_save():
         save = yaml.safe_load(open(self.settings.savefile))
         self.settings.logger.debug('Loaded game. %s' % save)
@@ -40,20 +49,12 @@ class Level(object):
         self.player.spells = save['player_spells']
 
 
-    def get_barriers(self):
-        for b in self.leveldict['barriers']:
-            name = b['name']
-            yield Barrier(b['x'],b['y'],0,0, self.settings, name=name, image=b['image'])
-
-    def get_ladders(self):
-        for b in self.leveldict['ladders']:
-            name = b['name']
-            yield Ladder(b['x'],b['y'], self.settings, name=name, image=b['image'])
-
-    def get_slides(self):
-        for b in self.leveldict['slides']:
-            name = b['name']
-            yield Slide(b['x'],b['y'], self.settings, b['flipped'], name, b['image'])
+    def get(self, thing):
+        if not thing in self.leveldict:
+            return []
+        for item in self.leveldict[thing]:
+            name = item['name']
+            yield self.thingmap[thing](b['x'],b['y'],0,0, self.settings, name=name, image=b['image'])
 
 
     def save():
