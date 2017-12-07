@@ -4,6 +4,7 @@
 - ~~Start a new game~~
 - ~~Continue playing~~
 - ~~Quit the game~~
+- Game Paused
 
 
 ## Level 1 - Tutorial
