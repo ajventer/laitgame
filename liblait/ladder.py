@@ -4,7 +4,7 @@ from . import static
 import os
 
 class Ladder(static.Static):
-    def __init__(self,x,y, settings, name=None, image=None):
+    def __init__(self,x,y,w,h, settings, name=None, image=None):
         self.statictype = static.LADDER
         self.settings = settings
         if name:

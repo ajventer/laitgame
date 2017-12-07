@@ -57,8 +57,10 @@ class Level(object):
             image = None
             if 'image' in item:
                 image = item['image']
-            yield self.thingmap[thing](b['x'],b['y'],0,0, self.settings, name=name, image=image)
-
+            if not thing == 'slides':
+                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, name=name, image=image)
+            else: 
+                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image)
 
     def save():
         #TODO - for editor

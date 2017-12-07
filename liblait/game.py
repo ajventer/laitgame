@@ -202,7 +202,7 @@ class Game(object):
             if inputhandler.select:
                 self.paused = not self.paused
             if self.paused:
-                self.screen.blit(self.pauseimg,(self.screen.centerx - (self.pauseimg.get_width()/2),self.screen.centery))
+                self.screen.blit(self.pauseimg,(self.screen.get_rect().centerx - (self.pauseimg.get_width()/2),self.screen.get_rect().centery))
             else:
                 if inputhandler.screenshot:
                     self.take_screenshot()
