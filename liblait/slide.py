@@ -5,6 +5,7 @@ import os
 
 class Slide(static.Static):
     def __init__(self,x,y, settings, flipped, name, image):
+        assert image is not None
         self.statictype = static.LADDER
         self.settings = settings
         if name:

@@ -77,16 +77,16 @@ class Game(object):
 
         #Remember the order of addition matters ! 
         #First add barriers
-        for b in self.level.get('barriers'):
+        for b in self.level.get_statics('barriers'):
             self.barriergroup.add(b) # Barriers need a seperate group for gravity purposes
             self.camera.sprites.add(b)
             self.collidergroup.add(b)
 
-        for l in self.level.get('ladders'):
+        for l in self.level.get_statics('ladders'):
             self.collidergroup.add(l) 
             self.camera.sprites.add(l)
 
-        for s in self.level.get('slides'):
+        for s in self.level.get_statics('slides'):
             self.collidergroup.add(s)
             self.camera.sprites.add(s)
 

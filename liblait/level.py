@@ -49,12 +49,15 @@ class Level(object):
         self.player.spells = save['player_spells']
 
 
-    def get(self, thing):
+    def get_statics(self, thing):
         if not thing in self.leveldict:
             return []
         for item in self.leveldict[thing]:
             name = item['name']
-            yield self.thingmap[thing](b['x'],b['y'],0,0, self.settings, name=name, image=b['image'])
+            image = None
+            if 'image' in item:
+                image = item['image']
+            yield self.thingmap[thing](b['x'],b['y'],0,0, self.settings, name=name, image=image)
 
 
     def save():
