@@ -8,6 +8,7 @@ from . barrier import Barrier
 from .level import Level
 from .animation import Rect
 import os
+import time
 
 class Camera(object):
     def __init__(self, level, game,rect, player):
@@ -167,9 +168,15 @@ class Game(object):
         else:
             self.screen.blit(self.display,(0,0))
 
+    def take_screenshot(self):
+        if time.time() - self.sctimer > 3:
+            pass #TODO take the screenshot
+        self.sctimer = time.time()
+
     def run(self):
         FPS=60
         fpsclock = pygame.time.Clock()
+        self.sctimer = time.time()
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         if self.nextlevel:
             return "loadlevel %s" %self.loadlevel
@@ -184,8 +191,10 @@ class Game(object):
             if inputhandler.select:
                 self.paused = not self.paused
             if self.paused:
-                self.screen.blit(self.pauseimg,(self.screen.centerx - (self.pauseimg.get_width()/2),self.screen.centery)
+                self.screen.blit(self.pauseimg,(self.screen.centerx - (self.pauseimg.get_width()/2),self.screen.centery))
             else:
+                if inputhandler.screenshot:
+                    self.take_screenshot()
                 if inputhandler.start:
                     return 'mainmenu'
                 if not self.player.mode == living.FALLING:

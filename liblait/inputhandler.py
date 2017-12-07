@@ -17,7 +17,8 @@ class InputHandler(object):
         "x": [K_3],
         "y": [K_4],
         "start": [K_RETURN, K_SPACE],
-        "select": [K_ESCAPE]
+        "select": [K_ESCAPE],
+        "screenshot": [K_F10]
         }  
         if self.has_joystick:
             if pygame.joystick.get_count():
