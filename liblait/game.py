@@ -64,7 +64,7 @@ class Game(object):
         c_rect = Rect(0,0,1920,983)        
         self.camera = Camera(self.level,self,c_rect, self.player)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
-        self.floor = Barrier(0,950,self.camera.playarea.get_width(),1920,self.settings, 'floor')
+        self.floor = Barrier(0,983,self.camera.playarea.get_width(),1920,self.settings, 'floor')
         self.roof = Barrier(0,0,self.camera.playarea.get_width(),20,self.settings, 'roof')
         self.leftEdge = Barrier (0,0,20,self.camera.playarea.get_height(),self.settings, 'leftedge')
         self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')

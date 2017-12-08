@@ -23,7 +23,7 @@ class Trigger(static.Static):
         firstCollision = True
 
     def playvoice(self, voicefile):
-        voice = pygame.mixer.Sound(os.path.join(settings.voicedir,voicefile))
+        voice = pygame.mixer.Sound(os.path.join(self.settings.voicedir,voicefile))
         voice.set_volume(self.settings.voicevol)
         voice.play()
 

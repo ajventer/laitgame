@@ -42,7 +42,7 @@ class Level(object):
 
         }
 
-    def load_from_save():
+    def load_from_save(self):
         save = yaml.safe_load(open(self.settings.savefile))
         self.settings.logger.debug('Loaded game. %s' % save)
         self.load(save['levelfile'])

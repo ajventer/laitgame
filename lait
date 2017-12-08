@@ -33,7 +33,12 @@ if __name__ == '__main__':
             nextaction = settingsmenu.settingsMenu(screen,settings, flags).run()
         if nextaction == 'save_settings':
             settings,screen,flags == initall()
+        if nextaction == "continue":
+            nextaction = game.Game(settings, screen, flags).run()
         if nextaction == 'new':
+            voice = pygame.mixer.Sound(os.path.join(settings.voicedir,'hi.wav'))
+            voice.set_volume(settings.voicevol)
+            voice.play()
             nextaction = game.Game(settings, screen, flags, levelfile='Level1.yml').run()
     pygame.quit()
     sys.exit()
