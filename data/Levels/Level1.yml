@@ -4,27 +4,27 @@ ladders:
 - image: ladder1.png
   name: l1 
   x: 860
-  y: 808
+  y: 841
 - image: ladder2.png
   name: l2 
   x: 860
-  y: 668 
+  y: 701 
 - image: ladder3.png
   name: l3 
   x: 860
-  y: 528 
+  y: 561 
 - image: ladder4.png
   name: l4 
   x: 860
-  y: 388 
+  y: 421 
 - image: ladder5.png
   name: l4 
   x: 860
-  y: 248 
+  y: 281 
 - image: ladder6.png
   name: l4 
   x: 860
-  y: 108             
+  y: 141             
 barriers:
 - image: wall_single_yellow.png
   name: b2 

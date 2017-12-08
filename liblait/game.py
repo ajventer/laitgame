@@ -61,8 +61,7 @@ class Game(object):
         self.screen = screen
         self.settings = settings
         self.display = pygame.Surface((1920,1080))
-        self.camera_top = 33
-        c_rect = Rect(0,0,1920,950)        
+        c_rect = Rect(0,0,1920,983)        
         self.camera = Camera(self.level,self,c_rect, self.player)
         self.frame = pygame.image.load(os.path.join(self.settings.bgdir,'frame.png'))
         self.floor = Barrier(0,950,self.camera.playarea.get_width(),1920,self.settings, 'floor')
@@ -149,7 +148,7 @@ class Game(object):
 
     def draw(self):
         self.camera.update_play_area()
-        self.display.blit(self.camera.playarea,(0,self.camera_top),self.camera.rect())
+        self.display.blit(self.camera.playarea,(0,0),self.camera.rect())
         self.display.blit(self.frame,(0,980))
 
         #Draw the healthbar 
