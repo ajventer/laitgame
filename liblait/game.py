@@ -170,24 +170,33 @@ class Game(object):
             self.screen.blit(self.display,(0,0))
 
     def take_screenshot(self):
+        self.settings.debug('Screenshot button pressed')
         count = 0
         scdir = os.path.join(self.settings.gamedir,'Screenshots')
         if not os.path.exists(scdir):
+            self.settings.debug('Created screenshots directory')
             os.mkdir(scdir)
         if time.time() - self.sctimer > 3:
-            shots = sorted(glob.glob('scdir' + os.pathsep + '*'))
+            self.settings.debug ("Cooldown passed, taking screenshot")
+            shots = sorted(glob.glob(scdir + os.sep + '*'))
+            self.settings.debug('Found current screenshots: %s' %shots)
             if shots:
                 lastshot = shots[-1]
+                self.settings.debug('Last shot %s' %lastshot)
                 lastcount = int(lastshot.split('_')[-1].split('.jpg')[0])
+                self.settings.debug('Last count %s' %lastcount)
                 count = lastcount + 1
+                self.settings.debug('Next shot count %s' % count)
             scname = 'screenshot_%s.jpg' % str(count).zfill(3)
+            self.settings.debug('New screenshot name: %s' %scname)
             pygame.image.save(self.screen,os.path.join(scdir,scname))
+            self.settings.debug('Screenshot saved')
             self.sctimer = time.time()
 
     def run(self):
         FPS=60
         fpsclock = pygame.time.Clock()
-        self.sctimer = time.time()
+        self.sctimer = 0
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         if self.nextlevel:
             return "loadlevel %s" %self.loadlevel
