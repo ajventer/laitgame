@@ -38,8 +38,6 @@ class Level(object):
         "barriers": Barrier,
         "ladders": Ladder,
         "slides": Slide,
-        "triggers": Trigger
-
         }
 
     def load_from_save(self):
@@ -48,6 +46,14 @@ class Level(object):
         self.load(save['levelfile'])
         self.player.spells = save['player_spells']
 
+    def get_triggers(self, game):
+        if not 'triggers' in self.leveldict:
+            return []
+        for item in self.leveldict['triggers']:
+            image = None
+            if 'image' in item:
+                image = item['image']
+            yield Trigger(item['x'],item['y'],item['w'],item['h'],self.settings,game,item['actions'],item['name'],image)
 
     def get_statics(self, thing):
         if not thing in self.leveldict:

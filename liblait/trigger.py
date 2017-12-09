@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from . import static
-import time
+import time, os
 
 PLAYVOICE="PLAYVOICE"
 PLAYSOUND="PLAYSOUND"
@@ -12,15 +12,16 @@ LOADLEVEL="LOADLEVEL"
 
 class Trigger(static.Static):
     def __init__(self,x,y,w,h, settings, game, actions, name, image=None):
-        static.Static.__init__(x,y,w,h, settings, name, image)
+        static.Static.__init__(self, x, y, w, h, settings, name, image)
         self.game = game
-        actionMap = {
+        self.actions = actions
+        self.actionMap = {
         PLAYVOICE: self.playvoice,
         PLAYMUSIC: self.playmusic,
         PLAYSOUND: self.playsound,
         LOADLEVEL: self.loadlevel
         }
-        firstCollision = True
+        self.firstCollision = True
 
     def playvoice(self, voicefile):
         voice = pygame.mixer.Sound(os.path.join(self.settings.voicedir,voicefile))
@@ -47,10 +48,11 @@ class Trigger(static.Static):
         self.game.nextlevel = loadlevel
 
     def on_collide(self,sprite):
-        if sprite.name == 'Player' and firstCollision:
-            firstCollision = False
-            for action in actions:
-                actionkey, actionvalue = action
-                actionMap[actionkey](actionvalue)
+        if sprite.name == 'Player' and self.firstCollision:
+            self.firstCollision = False
+            for action in self.actions:
+                actionkey, actionvalue = action['key'], action['value']
+
+                self.actionMap[actionkey](actionvalue)
 
             

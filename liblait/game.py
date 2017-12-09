@@ -78,8 +78,9 @@ class Game(object):
         #First add barriers
         for b in self.level.get_statics('barriers'):
             self.barriergroup.add(b) # Barriers need a seperate group for gravity purposes
-            self.camera.sprites.add(b)
             self.collidergroup.add(b)
+            if b.image:
+                self.camera.sprites.add(b)
 
         for l in self.level.get_statics('ladders'):
             self.collidergroup.add(l) 
@@ -88,6 +89,11 @@ class Game(object):
         for s in self.level.get_statics('slides'):
             self.collidergroup.add(s)
             self.camera.sprites.add(s)
+
+        for t in self.level.get_triggers(self):
+            self.collidergroup.add(t)
+            if t.image:
+                self.camera_sprites.add(t)
 
 
 
@@ -196,6 +202,7 @@ class Game(object):
         FPS=60
         fpsclock = pygame.time.Clock()
         self.sctimer = 0
+        ptimer = 0
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         if self.nextlevel:
             return "loadlevel %s" %self.loadlevel
@@ -208,7 +215,9 @@ class Game(object):
             if inputhandler.quit:
                 return 'quit'
             if inputhandler.select:
-                self.paused = not self.paused
+                if time.time() - ptimer > 1:
+                    self.paused = not self.paused
+                    ptimer = time.time()
             if self.paused:
                 self.screen.blit(self.pauseimg,(self.screen.get_rect().centerx - (self.pauseimg.get_width()/2),self.screen.get_rect().centery))
             else:

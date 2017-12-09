@@ -4,6 +4,8 @@ import os
 
 BARRIER=0
 LADDER=1
+SLIDE=2
+TRIGGER=3
 
 
 class Static(pygame.sprite.Sprite):
@@ -13,7 +15,8 @@ class Static(pygame.sprite.Sprite):
         self.settings = settings
 
         self.name = name
-        if image:
+        self.image = image
+        if self.image:
             self.image = pygame.image.load(os.path.join(self.settings.staticsdir,image))
             self.rect = self.image.get_rect()
             self.rect.x = x

@@ -104,7 +104,6 @@ class Animation(object):
                             self.frame = self.sheet.row_count()
         if self.flipped:
             return pygame.transform.flip(self.sheet.get_image(self.row,self.frame), True, False)
-        print('Playing frame %s from row %s'  % (self.frame, self.row))
         return self.sheet.get_image(self.row,self.frame)
 
 

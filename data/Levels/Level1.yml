@@ -1,5 +1,30 @@
 background: Level1.png
 background_mode: tile
+triggers:
+- name: t1
+  x: 20
+  y: 0
+  w: 100
+  h: 1080
+  actions:
+    - key: PLAYVOICE
+      value: JoystickWalk.wav
+- name: t2
+  x: 860
+  y: 841
+  w: 140
+  h: 172
+  actions:
+    - key: PLAYVOICE
+      value: ladder.wav
+- name: t3
+  x: 1800
+  y: 0
+  w: 100
+  h: 280
+  actions:
+    - key: PLAYVOICE
+      value: slide.wav      
 ladders:
 - image: ladder1.png
   name: l1 
@@ -62,5 +87,5 @@ slides:
 music: Arabesque.ogg
 player_pos:
   x: 20
-  y: 700
+  y: 841
 width: 5840

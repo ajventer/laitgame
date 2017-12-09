@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 from liblait import scalehandler, Settings, mainmenu, settingsmenu, game
 import yaml
-import os, sys
+import os, sys, time
 
 def initall():
     settings = Settings.SETTINGS(GAMEDIR)
@@ -36,9 +36,13 @@ if __name__ == '__main__':
         if nextaction == "continue":
             nextaction = game.Game(settings, screen, flags).run()
         if nextaction == 'new':
+            pygame.mixer.music.stop()
             voice = pygame.mixer.Sound(os.path.join(settings.voicedir,'hi.wav'))
             voice.set_volume(settings.voicevol)
             voice.play()
+            timer = time.time()
+            while time.time() - timer < 7:
+                pass
             nextaction = game.Game(settings, screen, flags, levelfile='Level1.yml').run()
     pygame.quit()
     sys.exit()
