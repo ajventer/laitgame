@@ -15,8 +15,8 @@ class Slide(static.Static):
         static.Static.__init__(self, x, y, w, h, settings, name, image, rows=rows, cols=cols, row=row)
         self.mask = pygame.mask.from_surface(self.image)
         self.flipped = flipped
-        #self.fx = pygame.mixer.Sound(os.path.join(settings.fxdir,'slide_down.wav'))
-        #self.fx.set_volume(settings.voicevol)
+        self.fx = pygame.mixer.Sound(os.path.join(settings.fxdir,'slide_down.wav'))
+        self.fx.set_volume(settings.voicevol)
         self.timer = 0
         if self.flipped:
             self.image =  pygame.transform.flip(self.image,True, False)
@@ -30,7 +30,7 @@ class Slide(static.Static):
     def on_collide(self,sprite):
         #Called when a sprite collides with the barrier
         if time.time() - self.timer > 1:
-            #self.fx.play()
+            self.fx.play()
             self.timer = time.time()
         sprite.set_onslide(self)
 

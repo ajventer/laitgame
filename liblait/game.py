@@ -215,7 +215,7 @@ class Game(object):
             if inputhandler.quit:
                 return 'quit'
             if inputhandler.select:
-                if time.time() - ptimer > 1:
+                if time.time() - ptimer > 0.1:
                     self.paused = not self.paused
                     ptimer = time.time()
             if self.paused:
