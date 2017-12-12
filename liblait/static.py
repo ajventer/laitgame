@@ -50,7 +50,6 @@ class Static(pygame.sprite.Sprite):
     def collision_func(self, sprite):
         return self.rect.colliderect(sprite.rect)
 
-
     def on_collide(self,sprite):
         #Called when a sprite collides with the barrier
         #Overwrite in child classes

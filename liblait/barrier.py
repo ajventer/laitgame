@@ -9,6 +9,13 @@ class Barrier(static.Static):
         self.statictype = static.BARRIER   
 
 
+    def collision_func(self, sprite):
+        if self.image:
+            return pygame.sprite.collide_mask(self, sprite)
+        else:
+            return self.rect.colliderect(sprite.rect)
+
+
     def on_collide(self,sprite):
         #Called when a sprite collides with the barrier
         col_side = 'unknown'

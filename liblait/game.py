@@ -91,7 +91,6 @@ class Game(object):
             self.camera.sprites.add(s)
 
         for t in self.level.get_triggers(self):
-            print (t.name, t.image)
             self.collidergroup.add(t)
             if t.image:
                 self.camera.sprites.add(t)
