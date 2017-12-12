@@ -11,8 +11,8 @@ LOADLEVEL="LOADLEVEL"
 
 
 class Trigger(static.Static):
-    def __init__(self,x,y,w,h, settings, game, actions, name, image=None):
-        static.Static.__init__(self, x, y, w, h, settings, name, image)
+    def __init__(self,x,y,w,h, settings, game, actions, name, image=None, rows=None, cols=None):
+        static.Static.__init__(self, x, y, w, h, settings, name, image, rows, cols)
         self.game = game
         self.actions = actions
         self.actionMap = {
