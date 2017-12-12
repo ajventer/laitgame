@@ -24,7 +24,20 @@ triggers:
   h: 280
   actions:
     - key: PLAYVOICE
-      value: slide.wav      
+      value: slide.wav  
+- name: butterflyspellbook
+  image: Spellbooks.png
+  x: 1400
+  y: 800
+  w: 0
+  h: 0
+  actions:
+    - key: ADDSPELL
+      value: BUTTERFLY
+  animation:
+    rows: 4
+    cols: 4
+    row: 0    
 ladders:
 - image: ladder1.png
   name: l1 

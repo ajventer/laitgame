@@ -24,7 +24,6 @@ class Static(pygame.sprite.Sprite):
             self.animation = Animation(self.sheet, max(0, row),10)
             if row == -1:
                 self.animation.allrows = True
-            self.animation.stop()
         elif self.my_image and (rows is None or cols is None):
             self.my_image = pygame.image.load(os.path.join(self.settings.staticsdir,image))
 
@@ -35,7 +34,7 @@ class Static(pygame.sprite.Sprite):
         else:
             self.rect = pygame.Rect(x,y,w,h)
         if self.animation:
-            self.animation.play()
+            self.animation.play(True)
 
 
     @property

@@ -32,7 +32,7 @@ class Level(object):
         self.width = self.leveldict['width']
         self.music = self.leveldict['music']
         assert self.background_mode in ['follow','tile','stretch']
-        self.player = player.Player(self.settings,self.playerx, self.playery)
+        self.player = player.Player(self.settings,self.playerx, self.playery, self)
 
         self.thingmap = {
         "barriers": Barrier,
@@ -50,10 +50,15 @@ class Level(object):
         if not 'triggers' in self.leveldict:
             return []
         for item in self.leveldict['triggers']:
+            rows, cols, row = None, None, 0
             image = None
             if 'image' in item:
                 image = item['image']
-            yield Trigger(item['x'],item['y'],item['w'],item['h'],self.settings,game,item['actions'],item['name'],image)
+            if 'animation' in item:
+                rows = item['animation']['rows']
+                cols = item['animation']['cols']
+                row = item['animation']['row']
+            yield Trigger(item['x'],item['y'],item['w'],item['h'],self.settings,game,item['actions'],item['name'],image, rows=rows, cols=cols, row=row)
 
     def get_statics(self, thing):
         if not thing in self.leveldict:
@@ -61,12 +66,17 @@ class Level(object):
         for item in self.leveldict[thing]:
             name = item['name']
             image = None
+            rows, cols, row = None, None, 0
             if 'image' in item:
                 image = item['image']
+            if 'animation' in item:
+                rows = item['animation']['rows']
+                cols = item['animation']['cols']
+                row = item['animation']['row']
             if not thing == 'slides':
                 yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, name=name, image=image)
             else: 
-                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image)
+                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image, rows=rows, cols=cols, row=row)
 
     def save():
         #TODO - for editor

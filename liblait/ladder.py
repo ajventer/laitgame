@@ -4,14 +4,14 @@ from . import static
 import os
 
 class Ladder(static.Static):
-    def __init__(self,x,y,w,h, settings, name=None, image=None):
+    def __init__(self,x,y,w,h, settings, name=None, image=None, rows=None, cols=None, row=0):
         self.statictype = static.LADDER
         self.settings = settings
         if name:
             self.name = name
         else:
             self.name = 'UNKNOWN LADDER'
-        static.Static.__init__(self, x, y, w, h, settings, name, image)
+        static.Static.__init__(self, x, y, w, h, settings, name, image, rows=rows, cols=cols, row=row)
 
 
     def on_collide(self,sprite):
