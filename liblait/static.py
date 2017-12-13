@@ -10,7 +10,7 @@ TRIGGER=3
 
 
 class Static(pygame.sprite.Sprite):
-    def __init__(self,x,y,w,h, settings, name, image=None, rows=None, cols=None, row=0):
+    def __init__(self,x,y,w,h, settings, name, image=None, rows=None, cols=None, row=0, fpf=5):
         pygame.sprite.Sprite.__init__(self)   
         self.rect = pygame.Rect(x,y,w,h)
         self.settings = settings
@@ -21,7 +21,7 @@ class Static(pygame.sprite.Sprite):
         if self.my_image and rows is not None and cols is not None:
             sheetfile = os.path.join(settings.spritesdir,self.image)
             self.sheet = Sheet(sheetfile,rows=rows,cols=cols)
-            self.animation = Animation(self.sheet, max(0, row),10)
+            self.animation = Animation(self.sheet, max(0, row),fpf)
             if row == -1:
                 self.animation.allrows = True
         elif self.my_image and (rows is None or cols is None):

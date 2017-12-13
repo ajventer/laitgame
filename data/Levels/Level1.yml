@@ -36,8 +36,9 @@ triggers:
       value: BUTTERFLY
   animation:
     rows: 4
-    cols: 4
-    row: 0    
+    cols: 3
+    row: 0 
+    fpf: 5   
 ladders:
 - image: ladder1.png
   name: l1 

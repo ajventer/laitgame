@@ -4,7 +4,7 @@ from . import static
 import os, time
 
 class Slide(static.Static):
-    def __init__(self,x,y,w,h, settings,flipped, name, image, rows=None, cols=None, row=0):
+    def __init__(self,x,y,w,h, settings,flipped, name, image, rows=None, cols=None, row=0, fpf=5):
         assert image is not None
         self.statictype = static.LADDER
         self.settings = settings
@@ -12,7 +12,7 @@ class Slide(static.Static):
             self.name = name
         else:
             self.name = 'UNKNOWN SLIDE'
-        static.Static.__init__(self, x, y, w, h, settings, name, image, rows=rows, cols=cols, row=row)
+        static.Static.__init__(self, x, y, w, h, settings, name, image, rows=rows, cols=cols, row=row, fpf=fpf)
         self.mask = pygame.mask.from_surface(self.image)
         self.flipped = flipped
         self.fx = pygame.mixer.Sound(os.path.join(settings.fxdir,'slide_down.wav'))

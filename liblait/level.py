@@ -66,6 +66,7 @@ class Level(object):
         for item in self.leveldict[thing]:
             name = item['name']
             image = None
+            fpf = 5
             rows, cols, row = None, None, 0
             if 'image' in item:
                 image = item['image']
@@ -73,10 +74,11 @@ class Level(object):
                 rows = item['animation']['rows']
                 cols = item['animation']['cols']
                 row = item['animation']['row']
+                fpf = item['animation']['fpf']
             if not thing == 'slides':
                 yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, name=name, image=image)
             else: 
-                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image, rows=rows, cols=cols, row=row)
+                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image, rows=rows, cols=cols, row=row, fpf=fpf)
 
     def save():
         #TODO - for editor

@@ -12,8 +12,8 @@ ADDSPELL="ADDSPELL"
 
 
 class Trigger(static.Static):
-    def __init__(self,x,y,w,h, settings, game, actions, name, image=None, rows=None, cols=None, row=0):
-        static.Static.__init__(self, x, y, w, h, settings, name, image, rows, cols, row)
+    def __init__(self,x,y,w,h, settings, game, actions, name, image=None, rows=None, cols=None, row=0, fpf=5):
+        static.Static.__init__(self, x, y, w, h, settings, name, image, rows, cols, row, fpf)
         self.game = game
         self.actions = actions
         self.actionMap = {

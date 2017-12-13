@@ -4,8 +4,8 @@ from . import static
 import os
 
 class Barrier(static.Static):
-    def __init__(self,x,y,w,h, settings, name, image=None):
-        static.Static.__init__(self, x, y, w, h, settings, name, image)
+    def __init__(self,x,y,w,h, settings, name, image=None, rows=None, cols=None, row=0, fpf=5):
+        static.Static.__init__(self, x, y, w, h, settings, name, image, rows=rows, cols=cols, row=row, fpf=fpf)
         self.statictype = static.BARRIER   
 
 
