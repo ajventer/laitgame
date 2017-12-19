@@ -38,6 +38,10 @@ triggers:
   w: 0
   h: 0
   actions:
+    - script: play_sound.py
+      params:
+        - guifx
+        - positive.wav
     - script: player_add_spell.py
       params: 
         - BUTTERFLY
