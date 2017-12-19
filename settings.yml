@@ -1,15 +1,15 @@
-Borderless: False
+Borderless: true
 Fullscreen: false
 Joystick: 360.yml
 JoystickNumber: 0
 Language: English
 Languages:
 - English
-Loglevel: DEBUG
 Logfile: lait.log
+Loglevel: DEBUG
 Resolution:
-  h: 768
-  w: 1024
+  h: 1080
+  w: 1920
 Volume:
   fx: 20.0
   music: 20.0

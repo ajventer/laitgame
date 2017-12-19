@@ -7,24 +7,27 @@ triggers:
   w: 100
   h: 1080
   actions:
-    - key: PLAYVOICE
-      value: JoystickWalk.wav
+    - script: play_voice_once.py
+      params:
+      - JoystickWalk.wav  
 - name: t2
   x: 860
   y: 841
   w: 140
   h: 172
   actions:
-    - key: PLAYVOICE
-      value: ladder.wav
+    - script: play_voice_once.py
+      params:
+        - ladder.wav
 - name: t3
   x: 1800
   y: 0
   w: 100
   h: 280
   actions:
-    - key: PLAYVOICE
-      value: slide.wav  
+    - script: play_voice_once.py
+      params:
+        - slide.wav  
 - name: butterflyspellbook
   image: Spellbooks.png
   x: 1400
@@ -32,13 +35,14 @@ triggers:
   w: 0
   h: 0
   actions:
-    - key: ADDSPELL
-      value: BUTTERFLY
+    - script: player_add_spell.py
+      params: 
+        - BUTTERFLY
   animation:
     rows: 4
     cols: 3
     row: 0 
-    fpf: 5   
+    fpf: 5 
 ladders:
 - image: ladder1.png
   name: l1 

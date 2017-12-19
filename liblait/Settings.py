@@ -28,6 +28,7 @@ class SETTINGS(object):
 
 
         self.gamedir = gamedir
+        self.actionsdir = os.path.join(self.gamedir,'Actions')
         self.savefile = os.path.join(self.gamedir,'savegame.yml')
         self.datadir = os.path.join(self.gamedir,'data')
         self.snddir = os.path.join(self.datadir,'Sound')
