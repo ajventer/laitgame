@@ -7,17 +7,19 @@ triggers:
   w: 100
   h: 1080
   actions:
-    - script: play_voice_once.py
+    - script: play_sound.py
       params:
-      - JoystickWalk.wav  
+        - voice  
+        - JoystickWalk.wav  
 - name: t2
   x: 860
   y: 841
   w: 140
   h: 172
   actions:
-    - script: play_voice_once.py
+    - script: play_sound.py
       params:
+        - voice 
         - ladder.wav
 - name: t3
   x: 1800
@@ -25,8 +27,9 @@ triggers:
   w: 100
   h: 280
   actions:
-    - script: play_voice_once.py
+    - script: play_sound.py
       params:
+        - voice 
         - slide.wav  
 - name: butterflyspellbook
   image: Spellbooks.png

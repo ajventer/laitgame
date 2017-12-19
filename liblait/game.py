@@ -7,6 +7,7 @@ from . import living
 from . barrier import Barrier
 from .level import Level
 from .animation import Rect
+from .trigger import importer
 import os
 import time
 import glob
@@ -100,12 +101,9 @@ class Game(object):
         #Always add the player last
         self.camera.sprites.add(self.player)
 
+        playmusic = importer('play_music.py', self.settings).collision
+        playmusic(self, None, self.settings, self.level.music)
 
-
-
-        pygame.mixer.music.load(os.path.join(self.settings.musicdir,self.level.music))
-        pygame.mixer.music.set_volume(self.settings.musicvol)
-        pygame.mixer.music.play(-1)
 
     def gravity(self):
         unsupported = []

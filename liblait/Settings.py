@@ -28,12 +28,12 @@ class SETTINGS(object):
 
 
         self.gamedir = gamedir
-        self.actionsdir = os.path.join(self.gamedir,'Actions')
         self.savefile = os.path.join(self.gamedir,'savegame.yml')
         self.datadir = os.path.join(self.gamedir,'data')
-        self.snddir = os.path.join(self.datadir,'Sound')
-        self.voicedir = os.path.join(self.snddir,'Voice')
-        self.fxdir = os.path.join(self.snddir,'FX')
+        self.actionsdir = os.path.join(self.datadir,'Actions')        
+        snddir = os.path.join(self.datadir,'Sound')
+        self.voicedir = os.path.join(snddir,'Voice')
+        self.fxdir = os.path.join(snddir,'FX')
         self.guifxdir = os.path.join(self.fxdir,'GUI')
         self.settingsfile = os.path.join(self.gamedir,'settings.yml')
         self.buttonsdir = os.path.join(self.datadir,'Buttons')

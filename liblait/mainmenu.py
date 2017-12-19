@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from .scalehandler import ScaleHandler
 from .inputhandler import InputHandler
+from .trigger import importer
 import os
 
 class Option(object):
@@ -10,8 +11,7 @@ class Option(object):
         self.surface_hi=surface_hi
         self.activate=activate
         if voice:
-            self.voice = pygame.mixer.Sound(os.path.join(settings.voicedir,voice))
-            self.voice.set_volume(settings.voicevol)
+            self.voice = voice
         else:
             self.voice = None
 
@@ -22,9 +22,9 @@ class mainMenu(object):
         self.flags = flags
         self.activeButton = 0
         self.BASEW = 960 #Centerpoint on a 1080 screen
-        pygame.mixer.music.load(os.path.join(self.settings.musicdir,'prologue.ogg'))
-        pygame.mixer.music.set_volume(self.settings.musicvol)
-        pygame.mixer.music.play(-1)
+        playmusic = importer('play_music.py', self.settings).collision
+        self.playvoice = importer('play_sound.py', self.settings).collision
+        playmusic(self, None, self.settings, 'prologue.ogg')
         self.last_active = 1
 
     def __continue(self):
@@ -88,9 +88,9 @@ class mainMenu(object):
             return
         self.last_active = self.activeButton
         if self.options[self.activeButton].voice:
-            self.options[self.activeButton].voice.play()
+            self.playvoice(self, None, self.settings, 'voice', self.options[self.activeButton].voice)
         else:
-            self.downsnd.play()
+            self.playvoice(self, None, self.settings, 'guifx', 'misc_menu.wav')
 
     def down(self):
         self.activeButton += 1
