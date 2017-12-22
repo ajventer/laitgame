@@ -51,7 +51,7 @@ class Game(object):
         self.paused = False
         self.pauseimg = pygame.image.load(os.path.join(settings.staticsdir,'Paused.png'))
         self.flags = flags
-        self.level = Level(settings)
+        self.level = Level(settings, self)
         if levelfile:
             self.level.load(levelfile)
         else: 
@@ -91,10 +91,14 @@ class Game(object):
             self.collidergroup.add(s)
             self.camera.sprites.add(s)
 
-        for t in self.level.get_triggers(self):
+        for t in self.level.get_triggers():
             self.collidergroup.add(t)
             if t.image:
                 self.camera.sprites.add(t)
+
+        for a in self.level.get_actors():
+            self.livinggroup.add(a)
+            self.camera.sprites.add(a)
 
 
 
@@ -102,7 +106,7 @@ class Game(object):
         self.camera.sprites.add(self.player)
 
         playmusic = importer('play_music.py', self.settings).collision
-        playmusic(self, None, self.settings, self.level.music)
+        playmusic(None, None, self.settings, self, self.level.music)
 
 
     def gravity(self):
@@ -222,7 +226,7 @@ class Game(object):
                 if time.time() - ptimer > 0.1:
                     self.paused = not self.paused
                     if self.paused:
-                        importer('play_sound.py', self.settings).collision(self, None, self.settings, 'voice','GamePaused.wav')
+                        importer('play_sound.py', self.settings).collision(None, None, self.settings, self, 'voice','GamePaused.wav')
 
                     ptimer = time.time()
             if self.paused:

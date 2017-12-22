@@ -10,7 +10,7 @@ TRIGGER=3
 
 
 class Static(pygame.sprite.Sprite):
-    def __init__(self,x,y,w,h, settings, name, image=None, rows=None, cols=None, row=0, fpf=5):
+    def __init__(self,x,y,w,h, settings, name, image=None, rows=None, cols=None, row=0, fpf=5, game=None):
         pygame.sprite.Sprite.__init__(self)   
         self.rect = pygame.Rect(x,y,w,h)
         self.settings = settings

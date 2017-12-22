@@ -4,14 +4,16 @@ from .barrier import Barrier
 from .ladder import Ladder
 from .slide import Slide
 from .trigger import Trigger
+from .actor import Actor
 from . import player
 import yaml
 import os
 
 
 class Level(object):
-    def __init__(self, settings):
+    def __init__(self, settings, game):
         self.settings = settings
+        self.game = game
 
     def save_game(self):
         save = {
@@ -46,7 +48,15 @@ class Level(object):
         self.load(save['levelfile'])
         self.player.spells = save['player_spells']
 
-    def get_triggers(self, game):
+    def get_actors(self):
+        if not 'actors' in self.leveldict:
+            return []
+        for actor in self.leveldict['actors']:
+            yield Actor(self.settings,actor['actions'], actor['x'], actor['y'], actor['sheet'], actor['rows'], 
+                actor['cols'], actor['allsheet'],  actor['loop'], actor['row'], actor['fpf'],actor['name'],actor['gravity'], self.game)
+
+
+    def get_triggers(self):
         if not 'triggers' in self.leveldict:
             return []
         for item in self.leveldict['triggers']:
@@ -58,7 +68,7 @@ class Level(object):
                 rows = item['animation']['rows']
                 cols = item['animation']['cols']
                 row = item['animation']['row']
-            yield Trigger(item['x'],item['y'],item['w'],item['h'],self.settings,game,item['actions'],item['name'],image, rows=rows, cols=cols, row=row)
+            yield Trigger(item['x'],item['y'],item['w'],item['h'],self.settings,item['actions'],item['name'],image, rows=rows, cols=cols, row=row, game=self.game)
 
     def get_statics(self, thing):
         if not thing in self.leveldict:
@@ -76,9 +86,9 @@ class Level(object):
                 row = item['animation']['row']
                 fpf = item['animation']['fpf']
             if not thing == 'slides':
-                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, name=name, image=image)
+                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, name=name, image=image, game=self.game)
             else: 
-                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image, rows=rows, cols=cols, row=row, fpf=fpf)
+                yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image, rows=rows, cols=cols, row=row, fpf=fpf, game=self.game)
 
     def save():
         #TODO - for editor

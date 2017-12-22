@@ -32,8 +32,8 @@ def get_function(actionlib, functioname):
 
 
 class Trigger(static.Static):
-    def __init__(self,x,y,w,h, settings, game, actions, name, image=None, rows=None, cols=None, row=0, fpf=5):
-        static.Static.__init__(self, x, y, w, h, settings, name, image, rows, cols, row, fpf)
+    def __init__(self,x,y,w,h, settings, actions, name, image=None, rows=None, cols=None, row=0, fpf=5, game=None):
+        static.Static.__init__(self, x, y, w, h, settings, name, image, rows, cols, row, fpf, game)
         self.game = game
         self.actions = actions
         self.firstCollision = True
@@ -59,11 +59,11 @@ class Trigger(static.Static):
 
 
     def update(self):
-        self.do_actions('update')         
+        self.do_actions('update', self.game)         
 
     def on_collide(self,sprite):
         if sprite.name == 'Player' and self.firstCollision:
             self.firstCollision = False
-            self.do_actions('collision',sprite, self.settings)
+            self.do_actions('collision',sprite, self.settings, self.game)
 
             

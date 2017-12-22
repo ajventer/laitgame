@@ -14,12 +14,14 @@ On any collision event the function will receive:
 - The sprite calling the event
 - The sprite that collided with it
 - The calling sprite's settings object
+- A reference to the current game
 - Any parameter values defined in the level file. 
-The fist three parameters must be supported by any collision function, all other parameters are optional 
+The first three parameters must be supported by any collision function, all other parameters are optional 
 as long as the action and the level agree.
+These parameters do not have to be used by all functions, just received.
 Example:
 
-```def collision(me, collider, settings,  spellname):
+```def collision(me, collider, settings, game,  spellname):
     if collider.name == 'Player':
         collider.addspell(spellname.upper())
         me.kill()```

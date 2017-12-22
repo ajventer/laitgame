@@ -24,7 +24,7 @@ class mainMenu(object):
         self.BASEW = 960 #Centerpoint on a 1080 screen
         playmusic = importer('play_music.py', self.settings).collision
         self.playvoice = importer('play_sound.py', self.settings).collision
-        playmusic(self, None, self.settings, 'prologue.ogg')
+        playmusic(self, None, self.settings, None, 'prologue.ogg')
         self.last_active = 1
 
     def __continue(self):
@@ -88,9 +88,9 @@ class mainMenu(object):
             return
         self.last_active = self.activeButton
         if self.options[self.activeButton].voice:
-            self.playvoice(self, None, self.settings, 'voice', self.options[self.activeButton].voice)
+            self.playvoice(self, None, self.settings, None, 'voice', self.options[self.activeButton].voice)
         else:
-            self.playvoice(self, None, self.settings, 'guifx', 'misc_menu.wav')
+            self.playvoice(self, None, self.settings, None, 'guifx', 'misc_menu.wav')
 
     def down(self):
         self.activeButton += 1

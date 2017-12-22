@@ -118,7 +118,21 @@ slides:
     name: s4
     x: 2018
     y: 723
-    flipped: True    
+    flipped: True 
+actors:
+  - sheet: small_hanging_spider.png
+    name: small hanging spider
+    rows: 1
+    cols: 5
+    row: 0
+    fpf: 60
+    allsheet: false
+    loop: true
+    mode: STAND
+    gravity: False
+    x: 400
+    y: 0 
+    actions: []  
 music: Arabesque.ogg
 player_pos:
   x: 20
