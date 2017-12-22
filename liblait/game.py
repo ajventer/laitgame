@@ -120,9 +120,6 @@ class Game(object):
                     if barrier.rect.collidepoint(point):
                         colidx = gpoints.index(point)
                         supported = True
-                        # while barrier.rect.collidepoint(sprite.gravitypoints()[colidx]):
-                        #     sprite.rect.y -= 1
-                        # sprite.rect.y += 1
                         continue
             if not supported:
                 unsupported.append (sprite)
