@@ -27,6 +27,9 @@ def importer(path, settings):
 def has_function(actionlib, functioname):
     return functioname in list(actionlib.__dict__.keys())
 
+def get_function(actionlib, functioname):
+    return getattr(actionlib, functioname)
+
 
 class Trigger(static.Static):
     def __init__(self,x,y,w,h, settings, game, actions, name, image=None, rows=None, cols=None, row=0, fpf=5):
@@ -45,11 +48,22 @@ class Trigger(static.Static):
             pass
         self.game.nextlevel = loadlevel
 
+    def do_actions(self, event, *params):
+        for action in self.actions:
+            if not 'event' in action:
+                print ('Missing EVENT for ',action)
+        for action in [i for i in self.actions if i['event'] == event]:
+            self.settings.debug('Action: %s' % action)
+            actionlib = importer(action['script'], self.settings)
+            get_function(actionlib, action['method'])(self, *params, **action['params']) 
+
+
+    def update(self):
+        self.do_actions('update')         
+
     def on_collide(self,sprite):
         if sprite.name == 'Player' and self.firstCollision:
             self.firstCollision = False
-            for action in self.actions:
-                actionlib = importer(action['script'], self.settings)
-                actionlib.collision(self, sprite, self.settings, *action['params'])
+            self.do_actions('collision',sprite, self.settings)
 
             

@@ -215,6 +215,9 @@ class Game(object):
             if inputhandler.select:
                 if time.time() - ptimer > 0.1:
                     self.paused = not self.paused
+                    if self.paused:
+                        importer('play_sound.py', self.settings).collision(self, None, self.settings, 'voice','GamePaused.wav')
+
                     ptimer = time.time()
             if self.paused:
                 self.screen.blit(self.pauseimg,(self.screen.get_rect().centerx - (self.pauseimg.get_width()/2),self.screen.get_rect().centery))

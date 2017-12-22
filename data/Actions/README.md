@@ -30,3 +30,9 @@ Update events, like collision events, have mandatory and optional parameters. Al
 will receive an instance of the sprite calling it, as well as that sprite's settings object. 
 Update events can be used to code custom movements, ai's etc for enemies and allies. Because they 
 are simple, single scripts - any compatible actor can reuse the actions created for another.
+
+
+Any action must declare what type of event is responds to. It also has a method field which indicates
+the name of the function to call from the script. This allows significant flexibility in calling 
+actions from level files. Parameters are given as a dictionary and passed on using the kwargs approach. 
+Thus you should name your function parameters according to what you will specify in the level file.

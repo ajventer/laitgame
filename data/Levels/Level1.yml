@@ -8,9 +8,11 @@ triggers:
   h: 1080
   actions:
     - script: play_sound.py
+      method: collision
+      event: collision
       params:
-        - voice  
-        - JoystickWalk.wav  
+        sndtype: voice  
+        sndfile: JoystickWalk.wav  
 - name: t2
   x: 860
   y: 841
@@ -18,9 +20,11 @@ triggers:
   h: 172
   actions:
     - script: play_sound.py
+      method: collision
+      event: collision
       params:
-        - voice 
-        - ladder.wav
+        sndtype: voice 
+        sndfile: ladder.wav
 - name: t3
   x: 1800
   y: 0
@@ -28,9 +32,11 @@ triggers:
   h: 280
   actions:
     - script: play_sound.py
+      method: collision
+      event: collision
       params:
-        - voice 
-        - slide.wav  
+        sndtype: voice 
+        sndfile: slide.wav  
 - name: butterflyspellbook
   image: Spellbooks.png
   x: 1400
@@ -39,12 +45,16 @@ triggers:
   h: 0
   actions:
     - script: play_sound.py
+      method: collision
+      event: collision
       params:
-        - guifx
-        - positive.wav
+        sndtype: guifx
+        sndfile: positive.wav
     - script: player_add_spell.py
+      method: collision
+      event: collision
       params: 
-        - BUTTERFLY
+        spellname: BUTTERFLY
   animation:
     rows: 4
     cols: 3
