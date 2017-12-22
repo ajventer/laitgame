@@ -5,6 +5,7 @@ from . import static
 import os
 import time
 
+
 #TODO map to actual spell classes
 SPELLMAP = {
     "BUTTERFLY": None,
@@ -24,6 +25,13 @@ class Player(living.Living):
         self.magic = 10
         self.name = 'Player'   
         self.level = level   
+
+
+    def take_damage(self, damage):
+        self.health -= damage
+        self.health = max(self.health, 0)
+        self.playsound(self, None, self.settings, 'voice','ouch!.wav')
+
 
 
     def addspell(self, spellname):

@@ -3,6 +3,7 @@ from pygame.locals import *
 import copy
 import os
 from .animation import Sheet, Animation
+from .trigger import importer
 
 WALK=0
 CAST=1
@@ -32,6 +33,8 @@ class Living(pygame.sprite.Sprite):
         self.antigrav_default = False
         self.onladder = pygame.sprite.Group()
         self.onslide = pygame.sprite.Group()
+        self.fallstart = 0
+        self.playsound = importer('play_sound.py', settings).collision
 
         sheetfile = os.path.join(settings.spritesdir,sheet)
         self.sheet = Sheet(sheetfile,rows=rows,cols=cols)
@@ -39,6 +42,11 @@ class Living(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+    def take_damage(self, damage):
+        #Overwrite this function for specific subclasses
+        pass
+
 
     def gravitypoints(self):
         l = []
@@ -112,6 +120,7 @@ class Living(pygame.sprite.Sprite):
         self.mode = FALLING
         self.animation = Animation(self.sheet, FALL, 10)
         self.animation.play(True)
+        self.fallstart = self.rect.y
 
     def climb(self,direction):
         self.moving = True

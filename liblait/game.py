@@ -127,6 +127,13 @@ class Game(object):
                 if sprite.mode == living.FALLING:
                     sprite.stop()
                     sprite.stand()
+                    falldistance = sprite.rect.y - sprite.fallstart
+                    if  falldistance > sprite.rect.h: 
+                        #Take damage if a sprite falls further than it's own height
+                        dmg = (falldistance / sprite.rect.y) * 5
+                        sprite.fallstart = sprite.rect.y
+                        sprite.take_damage(dmg)
+
 
         for sprite in unsupported:
             if sprite.mode != living.FALLING and not sprite.antigrav:
@@ -202,6 +209,8 @@ class Game(object):
         if self.nextlevel:
             return "loadlevel %s" %self.loadlevel
         while True:
+            if self.player.health == 0:
+                return 'continue'
             if self.player.mode != living.FALLING:
                 self.player.stop()
             self.gravity()
