@@ -48,8 +48,8 @@ triggers:
       method: collision
       event: collision
       params:
-        sndtype: guifx
-        sndfile: positive.wav
+        sndtype: voice
+        sndfile: This Spell is called PP.wav
     - script: player_add_spell.py
       method: collision
       event: collision

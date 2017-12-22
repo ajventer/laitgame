@@ -30,7 +30,7 @@ class Player(living.Living):
     def take_damage(self, damage):
         self.health -= damage
         self.health = max(self.health, 0)
-        self.playsound(self, None, self.settings, 'voice','ouch!.wav')
+        self.playsound(self, None, self.settings, None, 'voice','ouch!.wav')
 
 
 
