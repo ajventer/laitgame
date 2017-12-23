@@ -8,6 +8,7 @@ from . barrier import Barrier
 from .level import Level
 from .animation import Rect
 from .trigger import importer
+from .spellbutton import SpellButton
 import os
 import time
 import glob
@@ -100,7 +101,7 @@ class Game(object):
             self.livinggroup.add(a)
             self.camera.sprites.add(a)
 
-
+        self.aButton = SpellButton(self.settings, 'a')
 
         #Always add the player last
         self.camera.sprites.add(self.player)
@@ -176,9 +177,12 @@ class Game(object):
         #Draw the magica bar
         self.display.fill((220,220,220),pygame.Rect(1678,1018,204,44))
         offset = 20*(10 - self.player.magic)
-        self.display.fill((0,0,128),pygame.Rect(1680 + offset,1020,200 - offset,40))                
-        
-        
+        self.display.fill((0,0,128),pygame.Rect(1680 + offset,1020,200 - offset,40))   
+
+        #Draw the visible spell buttons
+        if 'BUTTERFLY' in self.player.spells:
+            self.display.blit(self.aButton.image, (600,1000))             
+                
         if self.screen.get_size() != (1920,1080):
             #If the player is not using 1080p resolution, scale the display to match the screen
             scaled = pygame.transform.smoothscale(self.display, self.screen.get_size())
@@ -241,6 +245,7 @@ class Game(object):
             if self.paused:
                 self.screen.blit(self.pauseimg,(self.screen.get_rect().centerx - (self.pauseimg.get_width()/2),self.screen.get_rect().centery))
             else:
+                self.aButton.pushed = inputhandler.a
                 if inputhandler.screenshot:
                     self.take_screenshot()
                 if inputhandler.start:
