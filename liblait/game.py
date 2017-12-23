@@ -106,7 +106,7 @@ class Game(object):
         self.camera.sprites.add(self.player)
 
         playmusic = importer('play_music.py', self.settings).collision
-        playmusic(None, None, self.settings, self, self.level.music)
+        playmusic(self, None, self.level.music)
 
 
     def gravity(self):
@@ -156,6 +156,12 @@ class Game(object):
             for collider in self.collidergroup.sprites():
                 if collider.collision_func(sprite):
                     collider.on_collide(sprite)
+            for collided in pygame.sprite.spritecollide(sprite,self.livinggroup, False, collided=pygame.sprite.collide_mask):
+                #Note to self - this may not be very efficient, need to think it through and possibly refactor
+                if collided != sprite: #Ignore the false recording of sprites colliding with themselves
+                    self.settings.debug('Actor %s collided with actor %s' %(sprite, collided))
+                    collided.on_collide(sprite)
+
 
 
     def draw(self):
@@ -204,7 +210,10 @@ class Game(object):
             self.settings.debug('Screenshot saved')
             self.sctimer = time.time()
 
-    def run(self):
+    def run(self,  forcepos=None):
+        if forcepos:
+            self.player.rect.x = forcepos[0]
+            self.player.rect.y = forcepos[1]
         FPS=60
         fpsclock = pygame.time.Clock()
         self.sctimer = 0

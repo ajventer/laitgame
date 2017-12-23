@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from .animation import Sheet, Animation
-from .trigger import importer
+from .trigger import importer, get_function
 from .living import Living
 
 
@@ -10,10 +10,12 @@ class Actor(Living):
         Living.__init__(self, settings, x, y, sheet, rows, cols)
         self.game = game
         self.name = name
+        self.settings = settings
         self.animation = Animation(self.sheet, row,fpf)
         self.animation.play(loop)
         self.actions = actions
         self.antigrav = not gravity
+        self.statictype = None #Because actors aren't statics
 
     
     def do_actions(self, event, *params):
@@ -27,11 +29,10 @@ class Actor(Living):
 
 
     def update(self):
-        self.do_actions('update')
+        self.do_actions('update', self)
         self.move()         
 
-    def on_collide(self,sprite, direction):
-        if sprite.name == 'Player' and self.firstCollision:
-            self.firstCollision = False
-            self.do_actions('collision',sprite, self.settings)
+    def on_collide(self,sprite, direction=None):
+        if sprite.name == 'Player':
+            self.do_actions('collision',sprite, self.settings, self.game)
 

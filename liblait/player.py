@@ -30,7 +30,7 @@ class Player(living.Living):
     def take_damage(self, damage):
         self.health -= damage
         self.health = max(self.health, 0)
-        self.playsound(self, None, self.settings, None, 'voice','ouch!.wav')
+        self.playsound(self, None, 'voice','ouch!.wav')
 
 
 
@@ -39,7 +39,7 @@ class Player(living.Living):
             self.spells.append(spellname)
             self.level.save_game()
 
-    def on_collide(self, sprite, direction):
+    def on_collide(self, sprite, direction=None):
         #Called when we collide with a sprite
         #This is an empty function - to be overriden by specific classes
         self.stop()

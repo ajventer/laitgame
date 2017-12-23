@@ -59,11 +59,11 @@ class Trigger(static.Static):
 
 
     def update(self):
-        self.do_actions('update', self.game)         
+        self.do_actions('update')         
 
     def on_collide(self,sprite):
         if sprite.name == 'Player' and self.firstCollision:
             self.firstCollision = False
-            self.do_actions('collision',sprite, self.settings, self.game)
+            self.do_actions('collision',sprite)
 
             

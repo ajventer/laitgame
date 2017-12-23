@@ -27,12 +27,22 @@ if __name__ == '__main__':
     settings, screen,flags = initall()
     nextaction = 'mainmenu'
     while nextaction != 'quit':
+        if nextaction == 'mainmenu' and 'forcelevel' in sys.argv:
+            #This is very undefensive and fragile, but it's a developer only feature so screw it.
+            levelfile = sys.argv[sys.argv.index('forcelevel') + 1]
+            if 'forcepos' in sys.argv:
+                forcepos = sys.argv[sys.argv.index('forcepos') + 1]
+                forcepos = tuple([int(i) for i in forcepos.split('x')])
+                nextaction = game.Game(settings, screen, flags, levelfile=levelfile).run(forcepos)
+            else:
+                nextaction = game.Game(settings, screen, flags, levelfile=levelfile).run()
         if nextaction == 'mainmenu':
             nextaction = mainmenu.mainMenu(screen,settings,flags).run()
         if nextaction == 'settings':
             nextaction = settingsmenu.settingsMenu(screen,settings, flags).run()
         if nextaction == 'save_settings':
             settings,screen,flags == initall()
+            nextaction = 'mainmenu'
         if nextaction == "continue":
             nextaction = game.Game(settings, screen, flags).run()
         if nextaction == 'new':

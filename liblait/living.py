@@ -26,7 +26,7 @@ CLIMBING=8
 class Living(pygame.sprite.Sprite):
     def __init__(self, settings, x, y, sheet, rows, cols):
         pygame.sprite.Sprite.__init__(self)
-        self.speed = 5
+        self.speed = 10
         self.moving = False
         self.mode = STANDING
         self.antigrav = False 

@@ -36,7 +36,19 @@ triggers:
       event: collision
       params:
         sndtype: voice 
-        sndfile: slide.wav  
+        sndfile: slide.wav
+- name: t4
+  x: 1800
+  y: 800
+  w: 100
+  h: 280
+  actions:
+    - script: play_sound.py
+      method: collision
+      event: collision
+      params:
+        sndtype: voice
+        sndfile: magicSpellBook.wav  
 - name: butterflyspellbook
   image: Spellbooks.png
   x: 1400
@@ -54,6 +66,11 @@ triggers:
       method: collision
       event: collision
       params: 
+        spellname: BUTTERFLY
+    - script: player_add_spell.py
+      method: update
+      event: update
+      params:
         spellname: BUTTERFLY
   animation:
     rows: 4
@@ -84,18 +101,38 @@ ladders:
 - image: ladder6.png
   name: l4 
   x: 860
-  y: 141             
+  y: 141
+- image: ladder3.png
+  name: l5 
+  x: 2800
+  y: 841 
+- image: ladder5.png
+  name: l6 
+  x: 2800
+  y: 695            
 barriers:
+- image: wall_h_l_red.png
+  name: b1 
+  x: 2940
+  y: 260 
 - image: wall_single_yellow.png
   name: b2 
+  x: 2940
+  y: 841 
+- image: wall_h_l_yellow.png
+  name: b3 
+  x: 2940
+  y: 720
+- image: wall_single_yellow.png
+  name: b4 
   x: 1000
   y: 800   
 - image: wall_v_l_blue.png
-  name: b2 
+  name: b5 
   x: 1000
   y: 370  
 - image: wall_h_l_yellow.png
-  name: b2 
+  name: b6 
   x: 1000
   y: 250
 slides:
@@ -130,9 +167,14 @@ actors:
     loop: true
     mode: STAND
     gravity: False
-    x: 400
-    y: 0 
-    actions: []  
+    x: 3500
+    y: 450
+    actions: 
+      - script: collide_enemy_basic.py
+        method: collision
+        event: collision
+        params:
+          damage: 1
 music: Arabesque.ogg
 player_pos:
   x: 20
