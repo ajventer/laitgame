@@ -239,7 +239,7 @@ class Game(object):
                 if time.time() - ptimer > 0.1:
                     self.paused = not self.paused
                     if self.paused:
-                        importer('play_sound.py', self.settings).collision(None, None, self.settings, self, 'voice','GamePaused.wav')
+                        importer('play_sound.py', self.settings).collision(self, None, 'voice','GamePaused.wav')
 
                     ptimer = time.time()
             if self.paused:
@@ -255,6 +255,8 @@ class Game(object):
                         self.player.walk(living.RIGHT)
                     if inputhandler.left:
                         self.player.walk(living.LEFT)
+                    if inputhandler.a and (time.time() - self.player.cast_timer) > 2.5:
+                        self.player.cast('BUTTERFLY')
                 if self.player.onladder:
                     if inputhandler.up:
                         self.player.climb(living.UP)

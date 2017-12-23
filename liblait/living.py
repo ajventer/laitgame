@@ -21,6 +21,7 @@ FALLING=5
 SLIDING_LEFT=6
 SLIDING_RIGHT=7
 CLIMBING=8
+CASTING=9
 
 
 class Living(pygame.sprite.Sprite):
