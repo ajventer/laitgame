@@ -40,6 +40,10 @@ class Camera(object):
         self.sprites.update()
         self.sprites.draw(self.playarea)
         self.update_camera_position()
+        for spell in self.game.spellgroup:
+            #Do not let spells leave the visible area
+            if spell.rect.left > self.rect.right or spell.rect.right < self.rect.left:
+                spell.kill()
 
     def update_camera_position(self):
         if abs(self.rect.centerx - self.player.rect.centerx) > self.slack:
@@ -72,6 +76,7 @@ class Game(object):
         self.rightEdge = Barrier(self.camera.playarea.get_width() - 20,0,self.camera.playarea.get_width(),1920,self.settings,'rightedge')
         self.barriergroup = pygame.sprite.Group(self.floor, self.roof, self.leftEdge, self.rightEdge)
         self.livinggroup = pygame.sprite.Group(self.player) 
+        self.spellgroup = pygame.sprite.Group()
 
         self.collidergroup = self.barriergroup.copy()
         self.nextlevel = None
@@ -145,6 +150,11 @@ class Game(object):
                 sprite.fall()
 
     def collision_checks(self):
+        for sprite in self.spellgroup:
+            for collider in pygame.sprite.spritecollide(sprite,self.collidergroup, False):
+                sprite.on_collide(collider)
+            for collider in pygame.sprite.spritecollide(sprite,self.livinggroup, False):
+                sprite.on_collide(collider)                
         for sprite in self.livinggroup.sprites():
             if sprite.onslide.sprites():
                 for slide in sprite.onslide.sprites():
@@ -223,9 +233,9 @@ class Game(object):
         self.sctimer = 0
         ptimer = 0
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
-        if self.nextlevel:
-            return "loadlevel %s" %self.loadlevel
         while True:
+            if self.nextlevel:
+                return "loadlevel %s" %self.nextlevel
             if self.player.health == 0:
                 return 'continue'
             if self.player.mode != living.FALLING:

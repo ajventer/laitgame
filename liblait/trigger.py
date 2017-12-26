@@ -37,6 +37,7 @@ class Trigger(static.Static):
         self.game = game
         self.actions = actions
         self.firstCollision = True
+        self.do_actions('onload')
 
 
     def loadlevel(self, loadlevel):

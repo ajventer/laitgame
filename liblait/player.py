@@ -57,7 +57,7 @@ class Player(living.Living):
             if not self.animation.playing:
                 self.animation.play(True)
             b = Butterfly(self.settings, self.game, spellpos, spelldirection)
-            self.game.collidergroup.add(b)
+            self.game.spellgroup.add(b)
             self.game.camera.sprites.add(b)
 
 

@@ -36,6 +36,9 @@ if __name__ == '__main__':
                 nextaction = game.Game(settings, screen, flags, levelfile=levelfile).run(forcepos)
             else:
                 nextaction = game.Game(settings, screen, flags, levelfile=levelfile).run()
+        if nextaction.startswith('loadlevel'):
+            levelfile = nextaction.split()[1]
+            nextaction = game.Game(settings, screen, flags, levelfile=levelfile).run()
         if nextaction == 'mainmenu':
             nextaction = mainmenu.mainMenu(screen,settings,flags).run()
         if nextaction == 'settings':

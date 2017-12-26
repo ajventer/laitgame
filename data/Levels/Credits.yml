@@ -1,0 +1,23 @@
+background: battleback1.png
+background_mode: tile
+music: DarkWinds.ogg
+player_pos:
+  x: 20
+  y: 841
+width: 1920
+triggers:
+  - name: credits
+    image: blank.png
+    x: 0
+    y: 1100
+    w: 1920
+    h: 1080
+    actions:
+      - script: rollcredits.py
+        event: onload
+        method: onload
+        params: {}
+      - script: rollcredits.py
+        event: update
+        method: update
+        params: {}
