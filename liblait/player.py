@@ -37,6 +37,8 @@ class Player(living.Living):
 
 
     def cast(self, spellname):
+        if not spellname in self.spells:
+            return
         if not self.casting:
             self.cast_timer = time.time()
             if self.magic == 0:

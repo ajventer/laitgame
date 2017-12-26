@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from ..animation import Animation,  Sheet
-from ..trigger import Trigger
+from ..trigger import Trigger, importer
 from ..actor import Actor
 from random import randrange
 import os
@@ -61,6 +61,7 @@ class Butterfly(pygame.sprite.Sprite):
         self.rect.h = 50
         self.rect.center = pos
         self.animation.play(True)
+        self.playsound = importer('play_sound.py', self.settings).collision
 
     def update(self):
         print (self.speed)
@@ -71,8 +72,10 @@ class Butterfly(pygame.sprite.Sprite):
         if sprite.name == 'Player' or isinstance(sprite,Trigger):
             return
         if not isinstance(sprite,Actor):
+            self.playsound(self, sprite, 'fx', 'bird_splat.wav')    
             self.kill()
             return
+        self.playsound(self, sprite, 'fx', 'magical_1.ogg')
         flutterby = Flutterby(self.settings, self.game, sprite.rect.center)
         self.game.camera.sprites.add(flutterby)
         sprite.kill()
