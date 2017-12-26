@@ -66,8 +66,8 @@ class Butterfly(pygame.sprite.Sprite):
         else:
             self.speed = -SPEED
         self.rect = self.image.get_rect()
-        self.rect.w = 50
-        self.rect.h = 50
+        #self.rect.w = 50
+        #self.rect.h = 50
         self.rect.center = pos
         self.animation.play(True)
         self.playsound = importer('play_sound.py', self.settings).collision

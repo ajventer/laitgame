@@ -28,7 +28,7 @@ class Player(living.Living):
         self.level = level
         self.casting = None
         self.cast_timer = 0
-        butterflys = []   
+ 
 
     def voice(self, voicefile):
         voice = pygame.mixer.Sound(os.path.join(self.settings.voicedir,voicefile))
@@ -75,6 +75,9 @@ class Player(living.Living):
         self.playsound(self, None, 'voice','ouch!.wav')
 
     def update(self):
+        #This code is only really here to support the developer debug launches
+        if self.level != 'Level1' and not 'BUTTERFLY' in self.spells:
+            self.spells.append('BUTTERFLY')
         #When overriding - ensure you call move at the end
         if self.casting and (time.time() - self.cast_timer > 1):
             self.stopcasting()

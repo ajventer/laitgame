@@ -83,7 +83,7 @@ class Living(pygame.sprite.Sprite):
         self.moving = True
         if self.mode != direction:
             self.mode = direction
-            self.animation = Animation(self.sheet, WALK, 5)
+            self.animation = Animation(self.sheet, WALK, 10)
             if direction == LEFT:
                 self.animation.flip()
         if not self.animation.playing:
@@ -97,7 +97,7 @@ class Living(pygame.sprite.Sprite):
         self.moving = True
         self.onslide.add(sprite)
         self.antigrav = True
-        self.animation = Animation(self.sheet, SLIDE, 5)
+        self.animation = Animation(self.sheet, SLIDE, 10)
         self.animation.stop()
         if sprite.flipped:
             self.mode=SLIDING_LEFT
@@ -130,7 +130,7 @@ class Living(pygame.sprite.Sprite):
         self.moving = True
         if self.mode != direction:
             self.mode = direction
-            self.animation = Animation(self.sheet, CLIMB, 5)
+            self.animation = Animation(self.sheet, CLIMB, 15)
         if not self.animation.playing:
             self.animation.play(True)
 

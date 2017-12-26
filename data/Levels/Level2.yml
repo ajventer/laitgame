@@ -12,7 +12,7 @@ barriers:
   y: 820
 - image: wall_single_yellow.png
   name: b2 
-  x: 1230
+  x: 1232
   y: 660  
 ladders:
 - image: ladder1.png
@@ -42,3 +42,16 @@ actors:
         event: collision
         params:
           damage: 1
+triggers:
+- name: nextLevel
+  x: 4500
+  y: 750
+  w: 0
+  h: 9
+  image: Door_2_progress_1.png
+  actions:
+    - script: next_level.py
+      method: collision
+      event: collision
+      params:
+        level: Credits.yml  

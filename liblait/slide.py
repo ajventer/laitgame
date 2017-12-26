@@ -25,7 +25,8 @@ class Slide(static.Static):
     def collision_func(self, sprite):
         if sprite.rect.bottom > self.rect.bottom:
             return False
-        return pygame.sprite.collide_mask(self, sprite)
+        #return pygame.sprite.collide_mask(self, sprite)
+        return sprite.rect.collidepoint(self.rect.center)
 
     def on_collide(self,sprite):
         #Called when a sprite collides with the barrier
