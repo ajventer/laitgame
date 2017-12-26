@@ -35,6 +35,8 @@ def onload(me):
 
 def update(me):
     me.rect.y -= 1
+    if me.rect.bottom < 0:
+        me.game.exit = True
 
 
 

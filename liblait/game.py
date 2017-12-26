@@ -80,6 +80,7 @@ class Game(object):
 
         self.collidergroup = self.barriergroup.copy()
         self.nextlevel = None
+        self.exit = False
 
         #Remember the order of addition matters ! 
         #First add barriers
@@ -260,7 +261,7 @@ class Game(object):
                 self.aButton.pushed = inputhandler.a
                 if inputhandler.screenshot:
                     self.take_screenshot()
-                if inputhandler.start:
+                if inputhandler.start or self.exit:
                     return 'mainmenu'
                 if not self.player.mode == living.FALLING:
                     if inputhandler.right:
