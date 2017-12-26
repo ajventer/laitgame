@@ -92,8 +92,8 @@ triggers:
       params: 
         spellname: BUTTERFLY
     - script: player_add_spell.py
-      method: update
-      event: update
+      method: onload
+      event: onload
       params:
         spellname: BUTTERFLY
   animation:

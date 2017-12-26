@@ -4,6 +4,7 @@ import copy
 import os
 from .animation import Sheet, Animation
 from .trigger import importer
+import time
 
 WALK=0
 CAST=1
@@ -28,7 +29,8 @@ class Living(pygame.sprite.Sprite):
     def __init__(self, settings, game, x, y, sheet, rows, cols):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
-        self.speed = 10
+        self.pps = 150
+        self.lasttime = time.time()
         self.moving = False
         self.mode = STANDING
         self.antigrav = False 
@@ -133,23 +135,29 @@ class Living(pygame.sprite.Sprite):
             self.animation.play(True)
 
     def move(self):
+        now = time.time()
+        tick = (now - self.lasttime)
+        speed = self.pps * tick
+        self.lasttime = now
+
+        print (speed)
         if self.moving:
             if self.mode == LEFT:
-                self.rect.x -= self.speed
+                self.rect.x -= speed
             elif self.mode == RIGHT:
-                self.rect.x += self.speed
+                self.rect.x += speed
             elif self.mode == UP:
-                self.rect.y -= self.speed
+                self.rect.y -= speed
             elif self.mode == DOWN:
-                self.rect.y += self.speed
+                self.rect.y += speed
             elif self.mode == FALLING:
-                self.rect.y += 2*self.speed
+                self.rect.y += 2*speed
             elif self.mode == SLIDING_RIGHT:
-                self.rect.y += self.speed + 2
-                self.rect.x += self.speed
+                self.rect.y += speed + 2
+                self.rect.x += speed
             elif self.mode == SLIDING_LEFT:
-                self.rect.y += self.speed + 2
-                self.rect.x -= self.speed
+                self.rect.y += speed + 2
+                self.rect.x -= speed
 
     def update(self):
         #When overriding - ensure you call move at the end

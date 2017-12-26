@@ -1,5 +1,5 @@
-Borderless: true
-Fullscreen: false
+Borderless: false
+Fullscreen: true
 Joystick: 360.yml
 JoystickNumber: 0
 Language: English

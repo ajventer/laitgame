@@ -3,6 +3,7 @@ from pygame.locals import *
 import pprint
 import copy
 import os
+import time
 
 class Rect(pygame.Rect):
     def __init__(self,x,y,w,h):
@@ -54,14 +55,15 @@ class Sheet(object):
 
 class Animation(object):
     def __init__(self, sheet, row, fpf=20):
-        self.frametime = 60/fpf
+        self.frametime = fpf/60
+        self.lastframe = 0
         self.sheet = sheet
         self.row = row
         self.playing = False
         self.loop = False
         #FPF = Frames per Frame = that is, how many screen updates before changing frame
         self.fpf = fpf
-        self.framecount = 0
+        #self.framecount = 0
         self.frame = 0
         self.advance = 1
         self.row_advance = 1
@@ -89,9 +91,12 @@ class Animation(object):
 
     def image(self):
         if self.playing:
-            self.framecount += 1
-            if self.framecount >= self.fpf:
-                self.framecount = 0               
+            #self.framecount += 1
+            #if self.framecount >= self.fpf:
+            #    self.framecount = 0
+            now = time.time()
+            if now - self.lastframe > self.frametime:
+                self.lastframe = now               
                 self.frame += self.advance
                 if self.frame >= self.sheet.row_count() or self.frame <= 0:
                     if self.allrows:

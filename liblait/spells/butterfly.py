@@ -6,10 +6,13 @@ from ..actor import Actor
 from random import randrange
 import os
 SPEED=10
+import time
 
 class Flutterby(pygame.sprite.Sprite):
     def __init__(self, settings, game, pos):
         self.settings = settings
+        self.pps = 50
+        self.lasttime = time.time()        
         self.game = game
         pygame.sprite.Sprite.__init__(self)
         sheetfile = os.path.join(self.settings.spritesdir,'butterfly.png')
@@ -19,22 +22,26 @@ class Flutterby(pygame.sprite.Sprite):
         self.rect.center = pos
 
         self.animation.play(True)
-        self.speed = 5
+
 
     def update(self):
+        now = time.time()
+        tick = (now - self.lasttime)
+        speed = self.pps * tick
+        self.lasttime = now        
         direction = randrange(2000)
         if direction < 200:
-            self.rect.x -= self.speed 
+            self.rect.x -= speed 
             return
         if direction < 400:
-            self.rect.x += self.speed 
+            self.rect.x += speed 
             return
         if direction < 600:
-            self.rect.y += self.speed 
+            self.rect.y += speed 
             return
         if direction < 1000:
             return
-        self.rect.y -= self.speed
+        self.rect.y -= speed
         if not self.rect.colliderect(self.game.camera.rect):
             self.kill()
 
@@ -44,6 +51,8 @@ class Flutterby(pygame.sprite.Sprite):
 
 class Butterfly(pygame.sprite.Sprite):
     def __init__(self, settings, game, pos, direction):
+        self.pps = 250
+        self.lasttime = time.time()          
         self.settings = settings
         self.game = game
         pygame.sprite.Sprite.__init__(self)
@@ -64,8 +73,11 @@ class Butterfly(pygame.sprite.Sprite):
         self.playsound = importer('play_sound.py', self.settings).collision
 
     def update(self):
-        print (self.speed)
-        self.rect.x += self.speed
+        now = time.time()
+        tick = (now - self.lasttime)
+        speed = self.pps * tick
+        self.lasttime = now          
+        self.rect.x += speed
 
     def on_collide(self, sprite):
         self.settings.debug ("%s has collided with %s" %(self,sprite))

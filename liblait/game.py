@@ -229,7 +229,6 @@ class Game(object):
         if forcepos:
             self.player.rect.x = forcepos[0]
             self.player.rect.y = forcepos[1]
-        FPS=60
         fpsclock = pygame.time.Clock()
         self.sctimer = 0
         ptimer = 0
@@ -276,7 +275,8 @@ class Game(object):
                     if inputhandler.down:
                         self.player.climb(living.DOWN)                
                 self.draw()
-            fpsclock.tick(FPS)
+            fpsclock.tick_busy_loop(60)
+            self.settings.debug(fpsclock.get_fps())
             pygame.display.flip()       
         
 

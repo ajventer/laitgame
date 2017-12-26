@@ -8,7 +8,7 @@ def collision(me, collider, spellname):
         me.kill()
         me.game.level.save_game()
 
-def update(me, spellname):
+def onload(me, spellname):
     if spellname.upper() in me.game.player.spells:
         me.kill()
 
