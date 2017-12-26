@@ -72,7 +72,7 @@ triggers:
       method: collision
       event: collision
       params:
-        level: Credits.yml
+        level: Level2.yml
 - name: butterflyspellbook
   image: Spellbooks.png
   x: 1400

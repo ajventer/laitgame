@@ -54,6 +54,7 @@ class Sheet(object):
 
 class Animation(object):
     def __init__(self, sheet, row, fpf=20):
+        self.frametime = 60/fpf
         self.sheet = sheet
         self.row = row
         self.playing = False

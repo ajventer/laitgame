@@ -1,0 +1,44 @@
+background: level2.png
+background_mode: tile
+music: FoxieEpic.ogg
+player_pos:
+  x: 20
+  y: 841
+width: 4800
+barriers:
+- image: wall_h_l_red.png
+  name: b1 
+  x: 600
+  y: 820
+- image: wall_single_yellow.png
+  name: b2 
+  x: 1230
+  y: 660  
+ladders:
+- image: ladder1.png
+  name: l1 
+  x: 460
+  y: 841
+- image: ladder2.png
+  name: l2 
+  x: 1090
+  y: 660
+actors:
+  - sheet: skeleton.png
+    name: Friendly Skeleton
+    rows: 1
+    cols: 4
+    row: 0
+    fpf: 20
+    allsheet: false
+    loop: true
+    mode: STAND
+    gravity: False
+    x: 1900
+    y: 820
+    actions: 
+      - script: collide_ally_basic.py
+        method: collision
+        event: collision
+        params:
+          damage: 1
