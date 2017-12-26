@@ -90,6 +90,3 @@ class Level(object):
             else: 
                 yield self.thingmap[thing](item['x'],item['y'],0,0, self.settings, item['flipped'], name=name, image=image, rows=rows, cols=cols, row=row, fpf=fpf, game=self.game)
 
-    def save():
-        #TODO - for editor
-        pass

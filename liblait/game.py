@@ -235,7 +235,9 @@ class Game(object):
         inputhandler = InputHandler(self.settings,self.screen, self.flags)
         while True:
             if self.nextlevel:
-                return "loadlevel %s" %self.nextlevel
+                self.level.levelfile = self.nextlevel
+                self.level.save_game()
+                return  "continue"
             if self.player.health == 0:
                 return 'continue'
             if self.player.mode != living.FALLING:

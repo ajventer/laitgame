@@ -49,6 +49,18 @@ triggers:
       params:
         sndtype: voice
         sndfile: magicSpellBook.wav  
+- name: t5
+  x: 2940
+  y: 260
+  w: 100
+  h: 1000
+  actions:
+    - script: play_sound.py
+      method: collision
+      event: collision
+      params:
+        sndtype: voice
+        sndfile: PP Push the A button.wav  
 - name: nextLevel
   x: 4500
   y: 750

@@ -30,6 +30,8 @@ def onload(me):
         x = me.rect.centerx - int(t.get_rect().w /2)
         me.image.blit(t,(x,y))
         y += perline
+    me.game.level.levelfile = 'Level1.yml'
+    me.game.level.save_game()
 
 def update(me):
     me.rect.y -= 1
