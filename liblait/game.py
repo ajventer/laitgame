@@ -276,7 +276,7 @@ class Game(object):
                         self.player.climb(living.DOWN)                
                 self.draw()
             fpsclock.tick_busy_loop(60)
-            self.settings.debug(fpsclock.get_fps())
+            self.settings.debug('FPS %s' % fpsclock.get_fps())
             pygame.display.flip()       
         
 

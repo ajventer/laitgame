@@ -20,14 +20,14 @@ class SpellButton(object):
         self.animation.stop()
         self.pushed = False
 
-        buttons = pygame.image.load(os.path.join(self.settings.staticsdir,'xbox_360_buttons_sheet_zaph.png'))
+        buttons = pygame.image.load(os.path.join(self.settings.staticsdir,'xbox_360_buttons_sheet_zaph.png')).convert_alpha()
 
         self.button = pygame.Surface((buttonMap[button].w,buttonMap[button].h),pygame.SRCALPHA, 32)
         self.button.blit(buttons,(0,0),buttonMap[button])
 
         self.button = pygame.transform.smoothscale(self.button, (40,40))
 
-        self.icon = pygame.image.load(os.path.join(self.settings.staticsdir,iconMap[button]))
+        self.icon = pygame.image.load(os.path.join(self.settings.staticsdir,iconMap[button])).convert_alpha()
 
 
     @property

@@ -25,7 +25,8 @@ class Static(pygame.sprite.Sprite):
             if row == -1:
                 self.animation.allrows = True
         elif self.my_image and (rows is None or cols is None):
-            self.my_image = pygame.image.load(os.path.join(self.settings.staticsdir,image))
+            self.my_image = pygame.image.load(os.path.join(self.settings.staticsdir,image)).convert_alpha()
+            self.mask =  pygame.mask.from_surface(self.my_image)
 
         if self.image:
             self.rect = self.image.get_rect()
@@ -40,7 +41,9 @@ class Static(pygame.sprite.Sprite):
     @property
     def image(self):
         if self.animation:
-            return self.animation.image()
+            img = self.animation.image()
+            self.mask = self.animation.mask
+            return img
         return self.my_image
 
     @image.setter

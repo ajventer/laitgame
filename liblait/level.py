@@ -29,7 +29,7 @@ class Level(object):
         self.playerx = self.leveldict['player_pos']['x']
         self.playery = self.leveldict['player_pos']['y']
         self.background_mode = self.leveldict['background_mode']
-        self.background = pygame.image.load(os.path.join(self.settings.bgdir,self.leveldict['background']))
+        self.background = pygame.image.load(os.path.join(self.settings.bgdir,self.leveldict['background'])).convert()
         self.background = pygame.transform.smoothscale(self.background,(1920,834))
         self.width = self.leveldict['width']
         self.music = self.leveldict['music']

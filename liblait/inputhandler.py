@@ -39,7 +39,7 @@ class InputHandler(object):
 
     def get_events(self, scalefunc, menu=None, onceOnly=False):
         if onceOnly:
-            self.__reset_flags()
+            self.__reset_flags()   
         for event in pygame.event.get():
             #TODO flag buttons on joystick events
             answer = ''

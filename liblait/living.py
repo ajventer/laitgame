@@ -139,8 +139,6 @@ class Living(pygame.sprite.Sprite):
         tick = (now - self.lasttime)
         speed = self.pps * tick
         self.lasttime = now
-
-        print (speed)
         if self.moving:
             if self.mode == LEFT:
                 self.rect.x -= speed
@@ -166,7 +164,9 @@ class Living(pygame.sprite.Sprite):
 
     @property
     def image(self):
-        return self.animation.image()
+        img = self.animation.image()
+        self.mask = self.animation.mask
+        return img
 
 
 

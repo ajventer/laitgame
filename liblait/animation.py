@@ -70,6 +70,8 @@ class Animation(object):
         self.flipped = False
         self.allrows = False
         self.finished = False
+        self.mask = None
+        self.curframe = None
 
     def play(self, loop=False):
         self.playing = True
@@ -90,12 +92,9 @@ class Animation(object):
 
 
     def image(self):
-        if self.playing:
-            #self.framecount += 1
-            #if self.framecount >= self.fpf:
-            #    self.framecount = 0
+        if self.playing or not self.curframe:
             now = time.time()
-            if now - self.lastframe > self.frametime:
+            if (now - self.lastframe > self.frametime) or  not self.curframe:
                 self.lastframe = now               
                 self.frame += self.advance
                 if self.frame >= self.sheet.row_count() or self.frame <= 0:
@@ -108,9 +107,13 @@ class Animation(object):
                     else:
                         self.finish()
 
-        if self.flipped:
-            return pygame.transform.flip(self.sheet.get_image(self.row,self.frame), True, False)
-        return self.sheet.get_image(self.row,self.frame)
+                if self.flipped:
+                    self.curframe = pygame.transform.flip(self.sheet.get_image(self.row,self.frame), True, False)
+                else:
+                    self.curframe = self.sheet.get_image(self.row,self.frame)
+                self.mask = pygame.mask.from_surface(self.curframe)
+        return self.curframe
+
 
 
 
