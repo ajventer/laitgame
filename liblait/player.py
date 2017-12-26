@@ -1,19 +1,12 @@
 import pygame
 from pygame.locals import *
 from .animation import Animation
+from .spells.butterfly import Butterfly
 from . import living
 from . import static
 import os
 import time
 
-
-#TODO map to actual spell classes
-SPELLMAP = {
-    "BUTTERFLY": None,
-    "SMOKESCREEN": None,
-    "WALKONCLOUD": None,
-    "DOUSEFIRE": None
-}
 
 MANACOSTMAP = {
     "BUTTERFLY": 2,
@@ -24,8 +17,8 @@ MANACOSTMAP = {
 
 
 class Player(living.Living):
-    def __init__(self, settings, x, y, level):
-        living.Living.__init__(self, settings, x, y, 'Player.png', rows=6, cols=3)
+    def __init__(self, settings, game, x, y, level):
+        living.Living.__init__(self, settings, game, x, y, 'Player.png', rows=6, cols=3)
         self.settings = settings
         self.collidetime = 0
         self.spells = []
@@ -34,7 +27,8 @@ class Player(living.Living):
         self.name = 'Player'   
         self.level = level
         self.casting = None
-        self.cast_timer = 0   
+        self.cast_timer = 0
+        butterflys = []   
 
     def voice(self, voicefile):
         voice = pygame.mixer.Sound(os.path.join(self.settings.voicedir,voicefile))
@@ -53,11 +47,20 @@ class Player(living.Living):
             self.voice('PP.wav')
             self.casting = spellname
             self.animation = Animation(self.sheet, living.CAST, 1)
+            spelldirection = 'right'
+            spellpos = self.rect.midright
             if self.mode == living.LEFT:
+                spelldirection = 'left'
+                spellpos = self.rect.midleft
                 self.animation.flip()
             self.mode == living.CASTING
             if not self.animation.playing:
                 self.animation.play(True)
+            b = Butterfly(self.settings, self.game, spellpos, spelldirection)
+            self.game.collidergroup.add(b)
+            self.game.camera.sprites.add(b)
+
+
 
     def stopcasting(self):
         self.casting = None
@@ -77,7 +80,7 @@ class Player(living.Living):
 
 
     def addspell(self, spellname):
-        if spellname in SPELLMAP and not spellname in self.spells:
+        if spellname in MANACOSTMAP and not spellname in self.spells:
             self.spells.append(spellname)
             self.level.save_game()
 

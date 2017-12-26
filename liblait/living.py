@@ -25,8 +25,9 @@ CASTING=9
 
 
 class Living(pygame.sprite.Sprite):
-    def __init__(self, settings, x, y, sheet, rows, cols):
+    def __init__(self, settings, game, x, y, sheet, rows, cols):
         pygame.sprite.Sprite.__init__(self)
+        self.game = game
         self.speed = 10
         self.moving = False
         self.mode = STANDING

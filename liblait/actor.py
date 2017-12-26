@@ -7,8 +7,7 @@ from .living import Living
 
 class Actor(Living):
     def __init__(self, settings, actions, x, y, sheet, rows, cols, allsheet,  loop, row, fpf, name, gravity, game):
-        Living.__init__(self, settings, x, y, sheet, rows, cols)
-        self.game = game
+        Living.__init__(self, settings, game, x, y, sheet, rows, cols)
         self.name = name
         self.settings = settings
         self.animation = Animation(self.sheet, row,fpf)
