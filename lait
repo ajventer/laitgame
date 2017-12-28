@@ -26,22 +26,25 @@ def initall():
 if __name__ == '__main__':
     GAMEDIR=os.path.dirname(os.path.realpath(__file__))
     settings, screen,flags = initall()
-    faderect = pygame.Rect(int(settings.res_x/2),int(settings.res_y/2),0,0)
+    #faderect = pygame.Rect(int(settings.res_x/2),int(settings.res_y/2),0,0)
+    faderadius = 0
     fadetoblack = 0
     nextaction = 'mainmenu'
     while nextaction != 'quit':
         while fadetoblack == 1:
-            faderect.x -= 1
-            faderect.y -= 1
-            faderect.w += 2
-            faderect.h += 2
+            faderadius += 1
+            # faderect.x -= 1
+            # faderect.y -= 1
+            # faderect.w += 2
+            # faderect.h += 2
             #screen.fill((0,0,0),faderect)
-            pygame.draw.rect(screen,(randrange(254),randrange(254),randrange(254)),faderect,1)
+            #pygame.draw.rect(screen,(randrange(254),randrange(254),randrange(254)),faderect,1)
+            pygame.draw.circle(screen,(randrange(254),randrange(254),randrange(254)),(int(settings.res_x/2),int(settings.res_y/2)),faderadius,1)
             pygame.display.flip()
-            if faderect.w >= settings.res_x and faderect.h >= settings.res_y:
+            if faderadius >= settings.res_x /1.5 and faderadius >= settings.res_y /1.5:
+            #if faderect.w >= settings.res_x and faderect.h >= settings.res_y:
                 while time.time() - timer < 8:
                     pass
-
                 fadetoblack = 2
 
         if nextaction == 'mainmenu' and 'forcelevel' in sys.argv:
