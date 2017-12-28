@@ -4,6 +4,7 @@ from pygame.locals import *
 from liblait import scalehandler, Settings, mainmenu, settingsmenu, game
 import yaml
 import os, sys, time
+from random import randrange
 
 def initall():
     settings = Settings.SETTINGS(GAMEDIR)
@@ -25,8 +26,24 @@ def initall():
 if __name__ == '__main__':
     GAMEDIR=os.path.dirname(os.path.realpath(__file__))
     settings, screen,flags = initall()
+    faderect = pygame.Rect(int(settings.res_x/2),int(settings.res_y/2),0,0)
+    fadetoblack = 0
     nextaction = 'mainmenu'
     while nextaction != 'quit':
+        while fadetoblack == 1:
+            faderect.x -= 1
+            faderect.y -= 1
+            faderect.w += 2
+            faderect.h += 2
+            #screen.fill((0,0,0),faderect)
+            pygame.draw.rect(screen,(randrange(254),randrange(254),randrange(254)),faderect,1)
+            pygame.display.flip()
+            if faderect.w >= settings.res_x and faderect.h >= settings.res_y:
+                while time.time() - timer < 8:
+                    pass
+
+                fadetoblack = 2
+
         if nextaction == 'mainmenu' and 'forcelevel' in sys.argv:
             #This is very undefensive and fragile, but it's a developer only feature so screw it.
             levelfile = sys.argv[sys.argv.index('forcelevel') + 1]
@@ -46,13 +63,15 @@ if __name__ == '__main__':
         if nextaction == "continue":
             nextaction = game.Game(settings, screen, flags).run()
         if nextaction == 'new':
-            pygame.mixer.music.stop()
-            voice = pygame.mixer.Sound(os.path.join(settings.voicedir,'hi.wav'))
-            voice.set_volume(settings.voicevol)
-            voice.play()
-            timer = time.time()
-            while time.time() - timer < 7:
-                pass
-            nextaction = game.Game(settings, screen, flags, levelfile='Level1.yml').run()
+            if fadetoblack == 0:
+                pygame.mixer.stop()
+                voice = pygame.mixer.Sound(os.path.join(settings.voicedir,'hi.wav'))
+                voice.set_volume(settings.voicevol)
+                voice.play()
+                fadetoblack = 1
+                timer = time.time()
+            if fadetoblack == 2:
+                fadetoblack = 0
+                nextaction = game.Game(settings, screen, flags, levelfile='Level1.yml').run()
     pygame.quit()
     sys.exit()
