@@ -31,14 +31,9 @@ if __name__ == '__main__':
     fadetoblack = 0
     nextaction = 'mainmenu'
     while nextaction != 'quit':
+        print (fadetoblack)
         while fadetoblack == 1:
             faderadius += 1
-            # faderect.x -= 1
-            # faderect.y -= 1
-            # faderect.w += 2
-            # faderect.h += 2
-            #screen.fill((0,0,0),faderect)
-            #pygame.draw.rect(screen,(randrange(254),randrange(254),randrange(254)),faderect,1)
             pygame.draw.circle(screen,(randrange(254),randrange(254),randrange(254)),(int(settings.res_x/2),int(settings.res_y/2)),faderadius,1)
             pygame.display.flip()
             if faderadius >= settings.res_x /1.5 and faderadius >= settings.res_y /1.5:
@@ -75,6 +70,7 @@ if __name__ == '__main__':
                 timer = time.time()
             if fadetoblack == 2:
                 fadetoblack = 0
+                faderadius = 0
                 nextaction = game.Game(settings, screen, flags, levelfile='Level1.yml').run()
     pygame.quit()
     sys.exit()

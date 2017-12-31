@@ -35,6 +35,7 @@ class Level(object):
         self.music = self.leveldict['music']
         assert self.background_mode in ['follow','tile','stretch']
         self.player = player.Player(self.settings,self.game, self.playerx, self.playery, self)
+        self.player.spells = []
 
         self.thingmap = {
         "barriers": Barrier,

@@ -29,7 +29,7 @@ class Living(pygame.sprite.Sprite):
     def __init__(self, settings, game, x, y, sheet, rows, cols):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
-        self.pps = 150
+        self.pps = 200
         self.lasttime = time.time()
         self.moving = False
         self.mode = STANDING

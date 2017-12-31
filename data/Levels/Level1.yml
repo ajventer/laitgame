@@ -167,8 +167,8 @@ slides:
     flipped: false 
   - image: slide_pink.png
     name: s2
-    x: 2018
-    y: 403
+    x: 2000
+    y: 420
     flipped: false 
   - image: slide_pink.png
     name: s3

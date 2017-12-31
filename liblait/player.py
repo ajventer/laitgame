@@ -76,7 +76,8 @@ class Player(living.Living):
 
     def update(self):
         #This code is only really here to support the developer debug launches
-        if self.level != 'Level1' and not 'BUTTERFLY' in self.spells:
+        import sys
+        if 'forcelevel' in sys.argv or 'forcepos' in sys.argv and not 'BUTTERFLY' in self.spells:
             self.spells.append('BUTTERFLY')
         #When overriding - ensure you call move at the end
         if self.casting and (time.time() - self.cast_timer > 1):

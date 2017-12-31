@@ -51,7 +51,7 @@ class Flutterby(pygame.sprite.Sprite):
 
 class Butterfly(pygame.sprite.Sprite):
     def __init__(self, settings, game, pos, direction):
-        self.pps = 250
+        self.pps = 300
         self.lasttime = time.time()          
         self.settings = settings
         self.game = game
@@ -61,10 +61,9 @@ class Butterfly(pygame.sprite.Sprite):
         self.sheet = Sheet(sheetfile, rows=4, cols=5)
         self.animation = Animation(self.sheet, 0, 1)
         self.animation.allrows = True
-        if direction == 'right':
-            self.speed = SPEED
-        else:
-            self.speed = -SPEED
+        if direction != 'right':
+            self.pps *= -1
+
         self.rect = self.image.get_rect()
         #self.rect.w = 50
         #self.rect.h = 50
