@@ -99,6 +99,7 @@ class Game(object):
             self.camera.sprites.add(s)
 
         for t in self.level.get_triggers():
+            print (t)
             self.collidergroup.add(t)
             if t.image:
                 self.camera.sprites.add(t)
@@ -177,6 +178,7 @@ class Game(object):
 
 
     def draw(self):
+        print(self.player.rect.x,self.player.rect.y)
         self.camera.update_play_area()
         self.display.blit(self.camera.playarea,(0,0),self.camera.rect())
         self.display.blit(self.frame,(0,980))

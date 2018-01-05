@@ -52,6 +52,7 @@ class Flutterby(pygame.sprite.Sprite):
 class Butterfly(pygame.sprite.Sprite):
     def __init__(self, settings, game, pos, direction):
         self.pps = 300
+        self.name = 'butterfly_spell'
         self.lasttime = time.time()          
         self.settings = settings
         self.game = game
@@ -89,6 +90,7 @@ class Butterfly(pygame.sprite.Sprite):
         self.playsound(self, sprite, 'fx', 'magical_1.ogg')
         flutterby = Flutterby(self.settings, self.game, sprite.rect.center)
         self.game.camera.sprites.add(flutterby)
+        sprite.on_collide(self)
         sprite.kill()
         self.kill()
 

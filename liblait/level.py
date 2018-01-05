@@ -53,8 +53,12 @@ class Level(object):
         if not 'actors' in self.leveldict:
             return []
         for actor in self.leveldict['actors']:
+            if not 'collide_sleep' in actor:
+                collide_sleep = 0
+            else:
+                collide_sleep = actor['collide_sleep']
             yield Actor(self.settings,actor['actions'], actor['x'], actor['y'], actor['sheet'], actor['rows'], 
-                actor['cols'], actor['allsheet'],  actor['loop'], actor['row'], actor['fpf'],actor['name'],actor['gravity'], self.game)
+                actor['cols'], actor['allsheet'],  actor['loop'], actor['row'], actor['fpf'],actor['name'],actor['gravity'], collide_sleep, self.game)
 
 
     def get_triggers(self):
