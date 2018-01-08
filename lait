@@ -24,7 +24,10 @@ def initall():
     return settings,screen,flags    
 
 if __name__ == '__main__':
-    GAMEDIR=os.path.dirname(os.path.realpath(__file__))
+    if getattr(sys, 'frozen', False):
+        GAMEDIR=sys._MEIPASS
+    else:
+        GAMEDIR=os.path.dirname(os.path.realpath(__file__))
     settings, screen,flags = initall()
     #faderect = pygame.Rect(int(settings.res_x/2),int(settings.res_y/2),0,0)
     faderadius = 0

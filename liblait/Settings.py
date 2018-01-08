@@ -18,7 +18,7 @@ class SETTINGS(object):
         logfile=os.path.join(gamedir,'lait.log')
         try:
             os.unlink(logfile)
-        except FileNotFoundError:
+        except:
             pass
         self.logger = logging.getLogger()
         consoleHandler = logging.StreamHandler()
