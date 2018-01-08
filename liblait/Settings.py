@@ -3,6 +3,25 @@ import os
 import yaml
 import logging
 
+default_settings = {
+    "Borderless": False,
+    "Fullscreen": False,
+    "Joystick": "360.yml",
+    "JoystickNumber": 0,
+    "Language": "English",
+    "Languages": ["English"],
+    "Logfile": "lait.log",
+    "Loglevel": "DEBUG",
+    "Resolution":{
+      "h": 768,
+      "w": 1024
+    },
+    "Volume":{
+      "fx": 100.0,
+      "music": 100.0,
+      "voice": 100.0,
+    }
+}
 
 class SETTINGS(object):
     def __init__(self, gamedir):
@@ -59,7 +78,11 @@ class SETTINGS(object):
         self.logger.warning(message)
 
     def reload_settings(self):
-        self.settingsdict = yaml.safe_load(open(self.settingsfile))
+        if os.path.exists(self.settingsfile):
+            self.settingsdict = yaml.safe_load(open(self.settingsfile))
+        else:
+            self.settingsdict = default_settings
+            self.save_settings()
         if self.settingsdict['Logfile']:
             open(self.settingsdict['Logfile'],'w').write('')
             fileHandler = logging.FileHandler(self.settingsdict['Logfile'])
