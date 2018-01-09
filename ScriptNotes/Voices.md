@@ -18,11 +18,13 @@
 - ~~*the same magic word on it's own - so we can play it when she casts the spell*~~
 - ~~Push the A button to case *same magic word*. I will cast it in  the direction I am looking.~~
 - ~~We've finished this area ! Yay ! There's a door to the next area. Lets see what other adventures await~~
-- This spell is called **insert magic word for butterfly spell**
-- **butterfly spell word on it's own**
-- Ouch !
-- I'm out of magic power. 
+- ~~This spell is called **insert magic word for butterfly spell**~~
+- ~~**butterfly spell word on it's own**~~
+- ~~Ouch !~~
+- ~~I'm out of magic power. ~~
 
 
-## Level 2
-*When level one is playable and we start designing more, we'll figure out what level is needs
+## Level 3
+- This spell is called Ambulate in nube
+- Ambulate in nube
+

@@ -109,6 +109,7 @@ class Game(object):
             self.camera.sprites.add(a)
 
         self.aButton = SpellButton(self.settings, 'a')
+        self.bButton = SpellButton(self.settings, 'b')
 
         #Always add the player last
         self.camera.sprites.add(self.player)
@@ -195,6 +196,9 @@ class Game(object):
         #Draw the visible spell buttons
         if 'BUTTERFLY' in self.player.spells:
             self.display.blit(self.aButton.image, (600,1000))             
+        #Draw the visible spell buttons
+        if 'WALKONCLOUD' in self.player.spells:
+            self.display.blit(self.bButton.image, (800,1000))    
                 
         if self.screen.get_size() != (1920,1080):
             #If the player is not using 1080p resolution, scale the display to match the screen
@@ -260,6 +264,7 @@ class Game(object):
                 self.screen.blit(self.pauseimg,(self.screen.get_rect().centerx - (self.pauseimg.get_width()/2),self.screen.get_rect().centery))
             else:
                 self.aButton.pushed = inputhandler.a
+                self.bButton.pushed = inputhandler.b
                 if inputhandler.screenshot:
                     self.take_screenshot()
                 if inputhandler.start or self.exit:
@@ -269,9 +274,16 @@ class Game(object):
                         self.player.walk(living.RIGHT)
                     if inputhandler.left:
                         self.player.walk(living.LEFT)
-                    if inputhandler.a and (time.time() - self.player.cast_timer) > 2.5:
+                    if inputhandler.a and (time.time() - self.player.cast_timer) > 1:
                         self.player.cast('BUTTERFLY')
-                if self.player.onladder:
+                    if inputhandler.b and (time.time() - self.player.cast_timer) > 1:
+                        self.player.cast('WALKONCLOUD')
+                    if not inputhandler.b and 'WALKONCLOUD' in self.player.casting:
+                        self.player.stopcasting('WALKONCLOUD')
+
+
+
+                if self.player.antigrav:
                     if inputhandler.up:
                         self.player.climb(living.UP)
                     if inputhandler.down:

@@ -270,11 +270,11 @@ triggers:
   x: 5120
   y: 750
   w: 0
-  h: 9
+  h: 0
   image: Door_2_progress_1.png
   actions:
     - script: next_level.py
       method: collision
       event: collision
       params:
-        level: Credits.yml  
+        level: Level3.yml  

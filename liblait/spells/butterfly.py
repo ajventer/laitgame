@@ -51,7 +51,7 @@ class Flutterby(pygame.sprite.Sprite):
 
 class Butterfly(pygame.sprite.Sprite):
     def __init__(self, settings, game, pos, direction):
-        self.pps = 300
+        self.pps = 400
         self.name = 'butterfly_spell'
         self.lasttime = time.time()          
         self.settings = settings

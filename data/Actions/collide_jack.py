@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import os
+import time
 
 def play(me, voicefile):
     sound = pygame.mixer.Sound(os.path.join(me.settings.voicedir,voicefile))

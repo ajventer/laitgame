@@ -4,11 +4,15 @@ from .animation import Sheet, Animation
 import os
 
 buttonMap = {
-    "a": pygame.Rect(10,140,55,55)
+    "a": pygame.Rect(10,140,55,55),
+    "b": pygame.Rect(55,140,55,55),
+    "x": pygame.Rect(110,140,55,55), 
+    "y": pygame.Rect(165,140,55,55)
 }
 
 iconMap = {
-    "a": 'butterfly_icon.png'
+    "a": 'butterfly_icon.png',
+    "b": 'cloud_icon.png'
 }
 
 class SpellButton(object):
